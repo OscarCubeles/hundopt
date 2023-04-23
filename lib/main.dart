@@ -88,7 +88,7 @@ class App extends StatelessWidget {
       initialBinding: AppBinding(),
       smartManagement: SmartManagement.keepFactory,
       title: 'Hündopt',
-      theme: ThemeConfig.lightTheme,
+      theme: LightTheme.theme(),
       locale: TranslationService.locale,
       fallbackLocale: TranslationService.fallbackLocale,
       translations: TranslationService(),

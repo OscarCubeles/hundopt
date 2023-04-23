@@ -106,66 +106,66 @@ class ThemeConfig {
       fontFamily: 'DM Sans',
       unselectedWidgetColor: hexToColor('#DADCDD'),
       textTheme: TextTheme(
-        headline1: baseTextTheme.headline1!.copyWith(
+        displayLarge: baseTextTheme.displayLarge!.copyWith(
           color: primaryText,
           fontSize: 34.0,
           fontWeight: FontWeight.bold,
         ),
-        headline2: baseTextTheme.headline2!.copyWith(
+        displayMedium: baseTextTheme.displayMedium!.copyWith(
           color: primaryText,
           fontSize: 22,
           fontWeight: FontWeight.bold,
         ),
-        headline3: baseTextTheme.headline3!.copyWith(
+        displaySmall: baseTextTheme.displaySmall!.copyWith(
           color: secondaryText,
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
-        headline4: baseTextTheme.headline4!.copyWith(
+        headlineMedium: baseTextTheme.headline4!.copyWith(
           color: primaryText,
           fontSize: 18,
           fontWeight: FontWeight.w600,
         ),
-        headline5: baseTextTheme.headline5!.copyWith(
+        headlineSmall: baseTextTheme.headline5!.copyWith(
           color: primaryText,
           fontSize: 16,
           fontWeight: FontWeight.w700,
         ),
-        headline6: baseTextTheme.headline6!.copyWith(
+        titleLarge: baseTextTheme.headline6!.copyWith(
           color: primaryText,
           fontSize: 14,
           fontWeight: FontWeight.w700,
         ),
-        bodyText1: baseTextTheme.bodyText1!.copyWith(
+        bodyLarge: baseTextTheme.bodyText1!.copyWith(
           color: secondaryText,
           fontSize: 15,
         ),
-        bodyText2: baseTextTheme.bodyText2!.copyWith(
+        bodyMedium: baseTextTheme.bodyText2!.copyWith(
           color: primaryText,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
-        button: baseTextTheme.button!.copyWith(
+        labelLarge: baseTextTheme.button!.copyWith(
           color: primaryText,
           fontSize: 12.0,
           fontWeight: FontWeight.w700,
         ),
-        caption: baseTextTheme.caption!.copyWith(
+        bodySmall: baseTextTheme.caption!.copyWith(
           color: primaryText,
           fontSize: 11.0,
           fontWeight: FontWeight.w300,
         ),
-        overline: baseTextTheme.overline!.copyWith(
+        labelSmall: baseTextTheme.overline!.copyWith(
           color: secondaryText,
           fontSize: 11.0,
           fontWeight: FontWeight.w500,
         ),
-        subtitle1: baseTextTheme.subtitle1!.copyWith(
+        titleMedium: baseTextTheme.subtitle1!.copyWith(
           color: primaryText,
           fontSize: 16.0,
           fontWeight: FontWeight.w700,
         ),
-        subtitle2: baseTextTheme.subtitle2!.copyWith(
+        titleSmall: baseTextTheme.subtitle2!.copyWith(
           color: secondaryText,
           fontSize: 11.0,
           fontWeight: FontWeight.w500,

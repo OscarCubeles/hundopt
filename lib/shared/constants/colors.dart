@@ -12,6 +12,21 @@ class ColorConstants {
   static Color white = Color(0xFFFFFFFF);
   static Color background = Color(0xFFEEEEE0);
   static Color appColor = Color(0xFF2C6A4A);
+  static const MaterialColor appMaterialColor = MaterialColor(
+    0xFFE57373,
+    <int, Color>{
+      50: Color(0x0F2C6A4A),
+      100: Color(0x1F2C6A4A),
+      200: Color(0x2F2C6A4A),
+      300: Color(0x3F2C6A4A),
+      400: Color(0x4F2C6A4A),
+      500: Color(0x5F2C6A4A),
+      600: Color(0x6F2C6A4A),
+      700: Color(0x7F2C6A4A),
+      800: Color(0x8F2C6A4A),
+      900: Color(0xFF2C6A4A),
+    },
+  );
 }
 
 Color hexToColor(String hex) {
