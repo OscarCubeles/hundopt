@@ -12,6 +12,8 @@ class ColorConstants {
   static Color white = Color(0xFFFFFFFF);
   static Color background = Color(0xFFEEEEE0);
   static Color appColor = Color(0xFF2C6A4A);
+  static Color secondaryButtonOnPressed = Color(0x1F2C6A4A);
+  static Color primaryButtonOnPressed = Color(0x1FEEEEE0);
   static const MaterialColor appMaterialColor = MaterialColor(
     0xFFE57373,
     <int, Color>{
