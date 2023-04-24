@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/widgets.dart';
@@ -50,11 +48,11 @@ class AuthScreen extends GetView<AuthController> {
                         }),
                 const ButtonPadding(),
                 AppSecondaryButton(
-                    text: StringConstants.iniciarSession, onPressed: () => {
-                  Get.toNamed(Routes.AUTH + Routes.LOGIN,
-                      arguments: controller)
-                })
-                // TODO: ADD ONPRESSED
+                    text: StringConstants.iniciarSession,
+                    onPressed: () => {
+                          Get.toNamed(Routes.AUTH + Routes.LOGIN,
+                              arguments: controller)
+                        })
               ],
             ),
           )
