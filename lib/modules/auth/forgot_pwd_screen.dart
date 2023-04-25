@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hundopt/modules/auth/auth.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_pages.dart';
-import '../../shared/shared.dart';
+import '../../shared/constants/constants.dart';
+import '../../shared/widgets/widgets.dart';
+import 'auth_controller.dart';
 
-class RegisterScreen extends StatelessWidget {
+class ForgotPassword extends StatelessWidget {
   final AuthController controller = Get.arguments;
 
-  RegisterScreen({super.key});
+  ForgotPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +25,13 @@ class RegisterScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    StringConstants.crearCuenta,
+                    StringConstants.recuperarPwd,
                     style: Theme.of(context).textTheme.headlineLarge,
                     textAlign: TextAlign.left,
                   ),
                   Padding(
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.05)),
-                  const CustomTextField(
-                      labelText: StringConstants.nombreUsuario),
-                  SizedBox(
-                      // TODO: Change onerror for the form
-                      child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    height: 50,
-                    color: Colors.red,
-                    child: Text("a"),
-                  )),
                   const CustomTextField(labelText: StringConstants.email),
                   SizedBox(
                       // TODO: Change onerror for the form
@@ -50,20 +41,11 @@ class RegisterScreen extends StatelessWidget {
                     color: Colors.red,
                     child: Text("a"),
                   )),
-                  const CustomTextField(labelText: StringConstants.password),
-                  SizedBox(
-                      // TODO: Change onerror for the form
-                      child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    height: 50,
-                    color: Colors.red,
-                    child: Text("a"),
-                  )),
                   Padding(
                       padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.175)),
+                          0, 0, 0, MediaQuery.of(context).size.height * 0.26)),
                   AppPrimaryButton(
-                      text: StringConstants.crearCuenta,
+                      text: StringConstants.enviarEmail,
                       onPressed: () => {
                             Get.toNamed(Routes.AUTH + Routes.REGISTER,
                                 arguments: controller) // TODO: Change the route
@@ -72,26 +54,13 @@ class RegisterScreen extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.02)),
                   ClickableText(
-                      uText: StringConstants.iniciarSession,
-                      text: StringConstants.yesAccount,
-                      onPressed: () => {
-                            Get.toNamed(Routes.AUTH + Routes.LOGIN)
-                          }), // TODO: Add onpressed
+                      uText: StringConstants.atras,
+                      text: StringConstants.noRecuperarPwd,
+                      onPressed: () => {Get.toNamed(Routes.AUTH + Routes.LOGIN)}), // TODO: Add onpressed
                 ],
               ),
             )
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildForms(BuildContext context) {
-    return Form(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [],
         ),
       ),
     );

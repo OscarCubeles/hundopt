@@ -20,24 +20,64 @@ class LoginScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               color: ColorConstants.background,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    StringConstants.iniciarSession,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                    textAlign: TextAlign.left,
-                  ),
-                  const CustomTextField(labelText: StringConstants.emailOrUser),
-                  Padding(padding: EdgeInsets.all(10)),
-                  const CustomTextField(labelText: StringConstants.password),
-                  AppPrimaryButton(
-                      text: StringConstants.iniciarSession,
-                      onPressed: () => {
-                            Get.toNamed(Routes.AUTH + Routes.REGISTER,
-                                arguments: controller)
-                          }),
-                ],
+              child: Form(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      StringConstants.iniciarSession,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                      textAlign: TextAlign.left,
+                    ),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0,
+                            MediaQuery.of(context).size.height * 0.05)),
+                    const CustomTextField(
+                        labelText: StringConstants.emailOrUser),
+                    SizedBox(
+                        // TODO: Change onerror for the form
+                        child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      height: 50,
+                      color: Colors.red,
+                      child: Text("a"),
+                    )),
+                    const CustomTextField(labelText: StringConstants.password),
+                    SizedBox(
+                        // TODO: Change to onerror for the form
+                        child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      height: 50,
+                      color: Colors.red,
+                      child: Text("a"),
+                    )),
+                    ClickableText(
+                        uText: StringConstants.recuperar,
+                        text: StringConstants.forgotPwd,
+                        onPressed: () => {
+                              Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD)
+                            }), // TODO: Add onpressed
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0,
+                            MediaQuery.of(context).size.height * 0.215)),
+                    AppPrimaryButton(
+                        text: StringConstants.iniciarSession,
+                        onPressed: () => {
+                              Get.toNamed(Routes.AUTH + Routes.REGISTER,
+                                  arguments: controller)
+                              // TODO: CHange the place where it goes
+                            }),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0,
+                            MediaQuery.of(context).size.height * 0.02)),
+                    ClickableText(
+                        uText: StringConstants.crearCuenta,
+                        text: StringConstants.noAccount,
+                        onPressed: () => {
+                              Get.toNamed(Routes.AUTH + Routes.REGISTER)
+                            }) // TODO: Add onpressed
+                  ],
+                ),
               ),
             )
           ],

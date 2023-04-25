@@ -60,19 +60,25 @@ class LightTheme {
           color: ColorConstants.background),
       titleLarge: TextStyle(),
       titleMedium: TextStyle(),
-      titleSmall: TextStyle(),
-      bodyLarge: TextStyle(
+      titleSmall: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
+          color: ColorConstants.appColor,
+          fontFamily: "DM Sans",
+        decoration: TextDecoration.underline
+      ),
+      bodyLarge: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.normal,
           color: Colors.black,
           fontFamily: "DM Sans"
       ),
-      bodyMedium: TextStyle(
+      bodyMedium: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.normal,
           color: Colors.black,
           fontFamily: "DM Sans"),
-      bodySmall: TextStyle(
+      bodySmall: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.normal,
           color: Colors.black,
