@@ -55,7 +55,8 @@ class LoginScreen extends StatelessWidget {
                         uText: StringConstants.recuperar,
                         text: StringConstants.forgotPwd,
                         onPressed: () => {
-                              Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD)
+                              Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD,
+                                  arguments: controller)
                             }), // TODO: Add onpressed
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
@@ -74,7 +75,8 @@ class LoginScreen extends StatelessWidget {
                         uText: StringConstants.crearCuenta,
                         text: StringConstants.noAccount,
                         onPressed: () => {
-                              Get.toNamed(Routes.AUTH + Routes.REGISTER)
+                              Get.toNamed(Routes.AUTH + Routes.REGISTER,
+                                  arguments: controller)
                             }) // TODO: Add onpressed
                   ],
                 ),

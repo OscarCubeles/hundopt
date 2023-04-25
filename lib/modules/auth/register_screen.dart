@@ -28,55 +28,46 @@ class RegisterScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineLarge,
                     textAlign: TextAlign.left,
                   ),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.05)),
-                  const CustomTextField(
-                      labelText: StringConstants.nombreUsuario),
-                  SizedBox(
-                      // TODO: Change onerror for the form
-                      child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    height: 50,
-                    color: Colors.red,
-                    child: Text("a"),
-                  )),
+                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.05)),
+                  const CustomTextField(labelText: StringConstants.nombreUsuario),
+                SizedBox( // TODO: Change onerror for the form
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      height: 50,
+                      color: Colors.red,
+                      child: Text("a"),
+                    )
+                ),
                   const CustomTextField(labelText: StringConstants.email),
-                  SizedBox(
-                      // TODO: Change onerror for the form
+                  SizedBox( // TODO: Change onerror for the form
                       child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    height: 50,
-                    color: Colors.red,
-                    child: Text("a"),
-                  )),
+                        margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        height: 50,
+                        color: Colors.red,
+                        child: Text("a"),
+                      )
+                  ),
                   const CustomTextField(labelText: StringConstants.password),
-                  SizedBox(
-                      // TODO: Change onerror for the form
+                  SizedBox( // TODO: Change onerror for the form
                       child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    height: 50,
-                    color: Colors.red,
-                    child: Text("a"),
-                  )),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.175)),
+                        margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        height: 50,
+                        color: Colors.red,
+                        child: Text("a"),
+                      )
+                  ),
+                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.175)),
                   AppPrimaryButton(
                       text: StringConstants.crearCuenta,
                       onPressed: () => {
-                            Get.toNamed(Routes.AUTH + Routes.REGISTER,
-                                arguments: controller) // TODO: Change the route
-                          }),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.02)),
-                  ClickableText(
-                      uText: StringConstants.iniciarSession,
-                      text: StringConstants.yesAccount,
-                      onPressed: () => {
-                            Get.toNamed(Routes.AUTH + Routes.LOGIN)
-                          }), // TODO: Add onpressed
+                        Get.toNamed(Routes.AUTH + Routes.REGISTER,
+                            arguments: controller) // TODO: Change the route
+                      }),
+                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.02)),
+                  ClickableText(uText: StringConstants.iniciarSession, text: StringConstants.yesAccount, onPressed: () => {
+                    Get.toNamed(Routes.AUTH + Routes.LOGIN,
+                        arguments: controller)
+                  }), // TODO: Add onpressed
                 ],
               ),
             )
@@ -88,10 +79,12 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _buildForms(BuildContext context) {
     return Form(
+
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [],
+          children: [
+          ],
         ),
       ),
     );

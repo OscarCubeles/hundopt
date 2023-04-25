@@ -16,4 +16,8 @@ class StringConstants {
   static const String noRecuperarPwd = "¿No quieres cambiar la contraseña?";
   static const String atras = "Atrás";
   static const String enviarEmail = "Enviar Email";
+  static const String resetPwdMsg = "Si el correo electrónico que ha proporcionado está asociado a una cuenta en Hündopt, recibirá un correo electrónico con instrucciones sobre cómo cambiar su contraseña. Si no recibe un correo electrónico en los próximos minutos, es posible que el correo electrónico que ingresó no esté asociado con una cuenta de Hündopt.";
+  static const String continuar = "Continuar";
+  static const String correoEnviado = "Correo Enviado";
+  static const String cancel = "Cancelar";
 }

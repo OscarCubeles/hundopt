@@ -30,8 +30,14 @@ class ForgotPassword extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.05)),
+                    padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.of(context).size.height * 0.05),
+                    child: Text(
+                      StringConstants.infoRecuperarPwd,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
                   const CustomTextField(labelText: StringConstants.email),
                   SizedBox(
                       // TODO: Change onerror for the form
@@ -43,12 +49,83 @@ class ForgotPassword extends StatelessWidget {
                   )),
                   Padding(
                       padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.26)),
+                          0, 0, 0, MediaQuery.of(context).size.height * 0.24)),
                   AppPrimaryButton(
                       text: StringConstants.enviarEmail,
                       onPressed: () => {
-                            Get.toNamed(Routes.AUTH + Routes.REGISTER,
-                                arguments: controller) // TODO: Change the route
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SimpleDialog(
+                                      backgroundColor:
+                                          ColorConstants.background,
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.8,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.close,
+                                                  color:
+                                                      ColorConstants.appColor,
+                                                  size: 24,
+                                                ),
+                                                onPressed: () => Get.back(),
+                                              ),
+                                              Container(
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      20, 0, 20, 0),
+                                                  child: Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                      children: [
+
+                                                    Text(
+                                                      StringConstants
+                                                          .correoEnviado,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headlineSmall,
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                    ),
+                                                    Padding(
+                                                        padding:
+                                                        EdgeInsets.all(10)),
+                                                    Text(
+                                                      StringConstants
+                                                          .resetPwdMsg,
+                                                      textAlign:
+                                                          TextAlign.justify,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall,
+                                                    ),
+                                                    Padding(
+                                                        padding:
+                                                            EdgeInsets.all(10)),
+                                                    AppPrimaryButton(
+                                                        text: StringConstants
+                                                            .continuar,
+                                                        onPressed: () =>
+                                                            Get.back()),
+                                                        ClickableText(uText: StringConstants.cancel, text: "", onPressed: () =>
+                                                            Get.back())// TODO: MAke widget of this dialog, change the alignment of the clickabletext and change this onpressed
+                                                  ]),
+
+                                                  //margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                                                  ),
+                                            ],
+                                          ),
+                                        )
+                                      ]);
+                                }) // TODO: Change the route
                           }),
                   Padding(
                       padding: EdgeInsets.fromLTRB(
@@ -56,7 +133,10 @@ class ForgotPassword extends StatelessWidget {
                   ClickableText(
                       uText: StringConstants.atras,
                       text: StringConstants.noRecuperarPwd,
-                      onPressed: () => {Get.toNamed(Routes.AUTH + Routes.LOGIN)}), // TODO: Add onpressed
+                      onPressed: () => {
+                            Get.toNamed(Routes.AUTH + Routes.LOGIN,
+                                arguments: controller)
+                          }), // TODO: Add onpressed
                 ],
               ),
             )
