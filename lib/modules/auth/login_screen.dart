@@ -35,49 +35,39 @@ class LoginScreen extends StatelessWidget {
                     const CustomTextField(
                         labelText: StringConstants.emailOrUser),
                     SizedBox(
-                        // TODO: Change onerror for the form
+
                         child: Container(
                       margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
                       height: 50,
                       color: Colors.red,
-                      child: Text("a"),
+                      child: Text("a"),// TODO: Change onerror text for the form
                     )),
                     const CustomTextField(labelText: StringConstants.password),
                     SizedBox(
-                        // TODO: Change to onerror for the form
+
                         child: Container(
                       margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
                       height: 50,
                       color: Colors.red,
-                      child: Text("a"),
+                      child: Text("a"), // TODO: Change to onerror text for the form
                     )),
                     ClickableText(
                         uText: StringConstants.recuperar,
                         text: StringConstants.forgotPwd,
-                        onPressed: () => {
-                              Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD,
-                                  arguments: controller)
-                            }), // TODO: Add onpressed
+                        onPressed: () => controller.navigateToForgotPwd()),
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
                             MediaQuery.of(context).size.height * 0.215)),
                     AppPrimaryButton(
                         text: StringConstants.iniciarSession,
-                        onPressed: () => {
-                              Get.toNamed(Routes.AUTH + Routes.REGISTER,
-                                  arguments: controller)
-                              // TODO: CHange the place where it goes
-                            }),
+                        onPressed: () => controller.login()),
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
                             MediaQuery.of(context).size.height * 0.02)),
                     ClickableText(
                         uText: StringConstants.crearCuenta,
                         text: StringConstants.noAccount,
-                        onPressed: () => {
-                              Get.toNamed(Routes.AUTH + Routes.REGISTER,
-                                  arguments: controller)
-                            }) // TODO: Add onpressed
+                        onPressed: () => controller.navigateToRegister())
                   ],
                 ),
               ),

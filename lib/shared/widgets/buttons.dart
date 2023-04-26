@@ -71,3 +71,30 @@ class ButtonPadding extends StatelessWidget {
     return const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0));
   }
 }
+
+class AppButton extends StatelessWidget{
+  final String text;
+  final VoidCallback onPressed;
+  final Color buttonColor;
+
+  const AppButton({super.key, required this.text, required this.onPressed, required this.buttonColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      width: MediaQuery.of(context).size.width,
+      child: TextButton(
+        style: ButtonStyle(
+          backgroundColor:
+          MaterialStateProperty.all(buttonColor),
+          overlayColor: MaterialStateColor.resolveWith(
+                (states) => buttonColor.withOpacity(0.5),
+          ),),
+        onPressed: onPressed,
+        child: Text(text, style: Theme.of(context).textTheme.displaySmall),
+      ),
+    );
+  }
+
+}

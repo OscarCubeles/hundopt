@@ -30,44 +30,41 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.05)),
                   const CustomTextField(labelText: StringConstants.nombreUsuario),
-                SizedBox( // TODO: Change onerror for the form
+                SizedBox(
                     child: Container(
                       margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
                       height: 50,
                       color: Colors.red,
-                      child: Text("a"),
+                      child: Text("a"),// TODO: Change onerror text for the form
                     )
                 ),
                   const CustomTextField(labelText: StringConstants.email),
-                  SizedBox( // TODO: Change onerror for the form
+                  SizedBox(
                       child: Container(
                         margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
                         height: 50,
                         color: Colors.red,
-                        child: Text("a"),
+                        child: Text("a"), // TODO: Change onerror for the form
                       )
                   ),
                   const CustomTextField(labelText: StringConstants.password),
-                  SizedBox( // TODO: Change onerror for the form
+                  SizedBox(
                       child: Container(
                         margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
                         height: 50,
                         color: Colors.red,
-                        child: Text("a"),
+                        child: Text("a"), // TODO: Change onerror for the form
                       )
                   ),
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.175)),
                   AppPrimaryButton(
                       text: StringConstants.crearCuenta,
-                      onPressed: () => {
-                        Get.toNamed(Routes.AUTH + Routes.REGISTER,
-                            arguments: controller) // TODO: Change the route
-                      }),
+                      onPressed: () => controller.register()),
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.02)),
                   ClickableText(uText: StringConstants.iniciarSession, text: StringConstants.yesAccount, onPressed: () => {
                     Get.toNamed(Routes.AUTH + Routes.LOGIN,
                         arguments: controller)
-                  }), // TODO: Add onpressed
+                  }),
                 ],
               ),
             )
