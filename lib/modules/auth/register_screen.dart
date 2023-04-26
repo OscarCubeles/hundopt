@@ -29,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.05)),
-                  CustomTextField(labelText: StringConstants.nombreUsuario, controller: controller.userController, errorText: "", onChanged: '',),
+                  //CustomTextField(labelText: StringConstants.nombreUsuario, errorText: "", onChanged: null,),
                 SizedBox(
                     child: Container(
                       margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
@@ -38,7 +38,7 @@ class RegisterScreen extends StatelessWidget {
                       child: Text("a"),// TODO: Change onerror text for the form
                     )
                 ),
-                  CustomTextField(labelText: StringConstants.email, controller: controller.emailController, errorText: "", onChanged: '',),
+                  //CustomTextField(labelText: StringConstants.email, errorText: "", onChanged: null,),
                   SizedBox(
                       child: Container(
                         margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
@@ -47,7 +47,7 @@ class RegisterScreen extends StatelessWidget {
                         child: Text("a"), // TODO: Change onerror for the form
                       )
                   ),
-                  CustomTextField(labelText: StringConstants.password, controller: controller.userController, errorText: '', onChanged: '',),
+                  //CustomTextField(labelText: StringConstants.password, errorText: '', onChanged: null,),
                   SizedBox(
                       child: Container(
                         margin: EdgeInsets.fromLTRB(0, 5, 0, 0),

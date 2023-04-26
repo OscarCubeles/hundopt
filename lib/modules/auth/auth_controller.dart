@@ -5,37 +5,50 @@ import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/dialogs.dart';
 
-class AuthController extends GetxController {
+// TODO: source of the form code: https://stackoverflow.com/questions/64544571/flutter-getx-forms-validation
 
+class AuthController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final userController = TextEditingController();
   RxString username = RxString('');
-  RxnString errorText = RxnString("");
-  Rxn<Function()> submitFunc = Rxn<Function()>(null);
+  RxnString fEmailErrText = RxnString(null);
 
-
+  Rxn<Function()> submitFunc = Rxn<Function()>(() => {});
 
   @override
   void onInit() {
-    debounce<String>(username, validations, time: const Duration(milliseconds: 500));
+    super.onInit();
+    debounce<String>(username, fEmailValidations,
+        time: const Duration(milliseconds: 500));
   }
 
-  void validations(String val) async {
-    errorText.value = ""; // reset validation errors to nothing
-    submitFunc.value = null; // disable submit while validating
+  void fEmailValidations(String val) async {
+    fEmailErrText.value = null; // reset validation errors to nothing
+    submitFunc.value = () => {}; // disable submit while validating
     if (val.isNotEmpty) {
-      if (lengthOK(val) && await available(val)) {
-        print('All validations passed, enable submit btn...');
-        submitFunc.value = submitFunction();
-        errorText.value = "";
+      if (isValidEmail(val) /*&& await available(val)*/) {
+        submitFunc.value = () {
+          showResetPwdDialog();
+        };
+        fEmailErrText.value = "";
       }
     }
   }
 
+  bool isValidEmail(String val) {
+    if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(val)) {
+      fEmailErrText.value = 'Error. Formato de email no válido.';
+      return false;
+    }
+    return true;
+  }
+
   bool lengthOK(String val, {int minLen = 5}) {
     if (val.length < minLen) {
-      errorText.value = 'min. 5 chars';
+      fEmailErrText.value = 'min. 5 chars';
       return false;
     }
     return true;
@@ -44,12 +57,9 @@ class AuthController extends GetxController {
   Future<bool> available(String val) async {
     print('Query availability of: $val');
     await Future.delayed(
-        const Duration(seconds: 1),
-            () => print('Available query returned')
-    );
-
+        const Duration(seconds: 1), () => print('Available query returned'));
     if (val == "Sylvester") {
-      errorText.value = 'Name Taken';
+      fEmailErrText.value = 'Name Taken';
       return false;
     }
     return true;
@@ -59,10 +69,15 @@ class AuthController extends GetxController {
     username.value = val;
   }
 
+  Function() sendForgotPwdEmail() {
+    return () {};
+  }
+
   Future<bool> Function() submitFunction() {
     return () async {
       print('Make database call to create ${username.value} account');
-      await Future.delayed(const Duration(seconds: 1), () => print('User account created'));
+      await Future.delayed(
+          const Duration(seconds: 1), () => print('User account created'));
       return true;
     };
   }
@@ -71,8 +86,13 @@ class AuthController extends GetxController {
   void onReady() {
     super.onReady();
   }
+
   @override
-  void onClose() {
+  void onClose() {}
+
+  void sendResetPwdEmail() {
+    // TODO: Make API Call to reset password
+    print("Email sent");
   }
 
   void showResetPwdDialog() {
@@ -89,9 +109,10 @@ class AuthController extends GetxController {
             onClose: () => Get.back(),
           );
         });
+    sendResetPwdEmail();
   }
 
-  void resetPwd(){
+  void resetPwd() {
     showResetPwdDialog();
   }
 
@@ -107,11 +128,11 @@ class AuthController extends GetxController {
     Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD, arguments: this);
   }
 
-  void login(){
+  void login() {
     print("Login");
   }
 
-  void register(){
+  void register() {
     print("Register");
   }
 }

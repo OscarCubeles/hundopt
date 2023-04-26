@@ -40,40 +40,21 @@ class ForgotPassword extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                   ),
-                  CustomTextField(labelText: StringConstants.email, controller: controller.emailController, errorText: "", onChanged: '',),
-                  Obx(
-                        () {
-                      print('rebuild TextFormField ${fx.errorText.value}');
-                      return Column(
-                        children: [
-                          TextFormField(
-                          onChanged: fx.usernameChanged, // controller func
-                          decoration: InputDecoration(
-                              labelText: 'Username',
-                              errorText: fx.errorText.value! // obs
-                          )
-                      ),Text(fx.errorText.value!)
-                        ],
-                      );
-                    },
-                  ),
-                  SizedBox(
-                      child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    height: 50,
-                    color: Colors.red,
-                    child:
-                        Text("a"), // TODO: Change this text to the error text
-                  )),
+                  Obx(() {
+                    return CustomTextField(
+                        labelText: StringConstants.email,
+                        errorText: fx.fEmailErrText.value ?? "",
+                        onChanged: fx.usernameChanged);
+                  }),
                   Padding(
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.24)),
-                  AppPrimaryButton(
+                  Obx(() =>
+                    AppPrimaryButton(
                       text: StringConstants.enviarEmail,
-                      onPressed: () => controller.resetPwd(),
+                      onPressed: fx.submitFunc.value!,
+                    )
                   ),
-
-
                   Padding(
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.02)),
