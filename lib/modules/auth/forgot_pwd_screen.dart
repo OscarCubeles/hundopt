@@ -42,9 +42,10 @@ class ForgotPassword extends StatelessWidget {
                   ),
                   Obx(() {
                     return CustomTextField(
+                      isPassword: false,
                         labelText: StringConstants.email,
                         errorText: fx.fEmailErrText.value ?? "",
-                        onChanged: fx.usernameChanged);
+                        onChanged: fx.fEmailChanged);
                   }),
                   Padding(
                       padding: EdgeInsets.fromLTRB(

@@ -32,25 +32,21 @@ class LoginScreen extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
                             MediaQuery.of(context).size.height * 0.05)),
-                    /*CustomTextField(
-                        labelText: StringConstants.emailOrUser,errorText: "", onChanged: null),*/
-                    SizedBox(
-
-                        child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                      height: 50,
-                      color: Colors.red,
-                      child: Text("a"),// TODO: Change onerror text for the form
-                    )),
-                    //CustomTextField(labelText: StringConstants.password, errorText: "", onChanged: null,),
-                    SizedBox(
-
-                        child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                      height: 50,
-                      color: Colors.red,
-                      child: Text("a"), // TODO: Change to onerror text for the form
-                    )),
+                    Obx(() {
+                      return CustomTextField(
+                        isPassword: false,
+                          labelText: StringConstants.email,
+                          errorText: controller.lEmailErrText.value ?? "",
+                          onChanged: controller.lEmailChanged);
+                    }),
+                    Obx(() {
+                      return CustomTextField(
+                        isPassword: true,
+                          labelText: StringConstants.password,
+                          errorText: controller.lPwdErrText.value ?? "",
+                          onChanged: controller.lPwdChanged);
+                    }),
+                    Padding(padding: EdgeInsets.all(5)),
                     ClickableText(
                         uText: StringConstants.recuperar,
                         text: StringConstants.forgotPwd,
@@ -58,9 +54,11 @@ class LoginScreen extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
                             MediaQuery.of(context).size.height * 0.215)),
+
                     AppPrimaryButton(
                         text: StringConstants.iniciarSession,
                         onPressed: () => controller.login()),
+
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
                             MediaQuery.of(context).size.height * 0.02)),

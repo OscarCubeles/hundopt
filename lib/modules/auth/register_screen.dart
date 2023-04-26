@@ -28,43 +28,43 @@ class RegisterScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineLarge,
                     textAlign: TextAlign.left,
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.05)),
-                  //CustomTextField(labelText: StringConstants.nombreUsuario, errorText: "", onChanged: null,),
-                SizedBox(
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                      height: 50,
-                      color: Colors.red,
-                      child: Text("a"),// TODO: Change onerror text for the form
-                    )
-                ),
-                  //CustomTextField(labelText: StringConstants.email, errorText: "", onChanged: null,),
-                  SizedBox(
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        height: 50,
-                        color: Colors.red,
-                        child: Text("a"), // TODO: Change onerror for the form
-                      )
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          0, 0, 0, MediaQuery.of(context).size.height * 0.05)),
+                  Obx(() => CustomTextField(
+                    isPassword: false,
+                        labelText: StringConstants.nombreUsuario,
+                        errorText: controller.rUsernameErrText.value ?? "",
+                        onChanged: controller.rUsernameChanged,
+                      )),
+                  Obx(
+                    () => CustomTextField(
+                      isPassword: false,
+                        labelText: StringConstants.email,
+                        errorText: controller.rEmailErrText.value ?? "",
+                        onChanged: controller.rEmailChanged),
                   ),
-                  //CustomTextField(labelText: StringConstants.password, errorText: '', onChanged: null,),
-                  SizedBox(
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        height: 50,
-                        color: Colors.red,
-                        child: Text("a"), // TODO: Change onerror for the form
-                      )
-                  ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.175)),
+                  Obx(() => CustomTextField(
+                    isPassword: true,
+                      labelText: StringConstants.password,
+                      errorText: controller.rPwdErrText.value ?? "",
+                      onChanged: controller.rPwdChanged)),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          0, 0, 0, MediaQuery.of(context).size.height * 0.215)),
                   AppPrimaryButton(
                       text: StringConstants.crearCuenta,
                       onPressed: () => controller.register()),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(context).size.height*0.02)),
-                  ClickableText(uText: StringConstants.iniciarSession, text: StringConstants.yesAccount, onPressed: () => {
-                    Get.toNamed(Routes.AUTH + Routes.LOGIN,
-                        arguments: controller)
-                  }),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          0, 0, 0, MediaQuery.of(context).size.height * 0.02)),
+                  ClickableText(
+                      uText: StringConstants.iniciarSession,
+                      text: StringConstants.yesAccount,
+                      onPressed: () => {
+                            Get.toNamed(Routes.AUTH + Routes.LOGIN,
+                                arguments: controller)
+                          }),
                 ],
               ),
             )
@@ -76,12 +76,10 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _buildForms(BuildContext context) {
     return Form(
-
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-          ],
+          children: [],
         ),
       ),
     );

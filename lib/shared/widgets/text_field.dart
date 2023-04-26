@@ -6,12 +6,14 @@ import 'package:hundopt/shared/shared.dart';
 class CustomTextField extends StatelessWidget{
   final String labelText;
   final String errorText;
+  final bool isPassword;
   final ValueChanged<String>? onChanged;
-  const CustomTextField({super.key, required this.labelText,  required this.errorText, required this.onChanged});
+  const CustomTextField({super.key, required this.labelText,  required this.errorText, required this.onChanged, required this.isPassword});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: isPassword,
       cursorColor: ColorConstants.appColor,
       onChanged: onChanged,
       decoration: InputDecoration(
@@ -21,6 +23,7 @@ class CustomTextField extends StatelessWidget{
           borderSide: BorderSide(width: 3, color: Colors.black),
         ),
         filled: true,
+        errorStyle: TextStyle(fontSize: 14),
         labelStyle: Theme.of(context).textTheme.bodySmall,
         fillColor: ColorConstants.textFieldBg,
         enabledBorder: const UnderlineInputBorder(
