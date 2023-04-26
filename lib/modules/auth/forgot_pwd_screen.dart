@@ -14,6 +14,7 @@ class ForgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthController fx = Get.put(AuthController()); // controller
     return Scaffold(
       appBar: const MainAppBar(),
       body: SingleChildScrollView(
@@ -39,7 +40,23 @@ class ForgotPassword extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                   ),
-                  const CustomTextField(labelText: StringConstants.email),
+                  CustomTextField(labelText: StringConstants.email, controller: controller.emailController, errorText: "", onChanged: '',),
+                  Obx(
+                        () {
+                      print('rebuild TextFormField ${fx.errorText.value}');
+                      return Column(
+                        children: [
+                          TextFormField(
+                          onChanged: fx.usernameChanged, // controller func
+                          decoration: InputDecoration(
+                              labelText: 'Username',
+                              errorText: fx.errorText.value! // obs
+                          )
+                      ),Text(fx.errorText.value!)
+                        ],
+                      );
+                    },
+                  ),
                   SizedBox(
                       child: Container(
                     margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
@@ -53,7 +70,10 @@ class ForgotPassword extends StatelessWidget {
                           0, 0, 0, MediaQuery.of(context).size.height * 0.24)),
                   AppPrimaryButton(
                       text: StringConstants.enviarEmail,
-                      onPressed: () => controller.showResetPwdDialog()),
+                      onPressed: () => controller.resetPwd(),
+                  ),
+
+
                   Padding(
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.02)),

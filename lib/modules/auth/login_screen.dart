@@ -32,8 +32,8 @@ class LoginScreen extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
                             MediaQuery.of(context).size.height * 0.05)),
-                    const CustomTextField(
-                        labelText: StringConstants.emailOrUser),
+                    CustomTextField(
+                        labelText: StringConstants.emailOrUser,controller: controller.emailController,errorText: "", onChanged: '',),
                     SizedBox(
 
                         child: Container(
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                       color: Colors.red,
                       child: Text("a"),// TODO: Change onerror text for the form
                     )),
-                    const CustomTextField(labelText: StringConstants.password),
+                    CustomTextField(labelText: StringConstants.password, controller: controller.passwordController, errorText: "", onChanged: '',),
                     SizedBox(
 
                         child: Container(
