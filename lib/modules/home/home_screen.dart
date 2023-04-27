@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,7 +8,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/modules/home/tabs/tabs.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-import '../../shared/constants/colors.dart';
+import '../../shared/constants/constants.dart';
 import 'home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -25,8 +27,9 @@ class HomeScreen extends GetView<HomeController> {
   Widget _buildWidget(BuildContext context) {
     return Scaffold(
         body: Center(
-          child: _buildContent(controller.currentTab.value),
+          child: controller.buildContent(),
         ),
+        // TODO: Addnavigationbar in widgets
         bottomNavigationBar: PersistentTabView(context,
             screens: _buildScreens(),
             confineInSafeArea: true,
@@ -55,36 +58,46 @@ class HomeScreen extends GetView<HomeController> {
               duration: Duration(milliseconds: 200),
             ),
             navBarStyle: NavBarStyle.style12,
+            onItemSelected: (index) => controller.switchTab(index),
             items: [
-              _buildNavigationBarItem("explore", CupertinoIcons.search,"icon_home.svg"),
-              _buildNavigationBarItem("explore2", CupertinoIcons.chat_bubble_2,"icon_home.svg"),
-              _buildNavigationBarItem("explore", CupertinoIcons.heart,"icon_home.svg"),
-              _buildNavigationBarItem("explore", CupertinoIcons.person,"icon_home.svg")
+              _buildNavigationBarItem(
+                  "explore", const Icon(CupertinoIcons.home), true,
+                  svgPath: AssetsPath.svgAppLogo, currentColor: currentColor()),
+              _buildNavigationBarItem(
+                  "explore2", const Icon(CupertinoIcons.chat_bubble_2), false),
+              _buildNavigationBarItem(
+                  "explore", const Icon(CupertinoIcons.heart), false),
+              _buildNavigationBarItem(
+                  "explore", const Icon(CupertinoIcons.person), false)
             ]));
+  }
+
+  Color currentColor() {
+    return controller.currentTab.value == MainTabs.explore
+        ? ColorConstants.appColor
+        : ColorConstants.appGrey;
   }
 
   List<Widget> _buildScreens() {
     return const [ExploreTab(), ChatTab(), FavouriteTab(), ProfileTab()];
   }
 
-  Widget _buildContent(MainTabs tab) {
-    switch (tab) {
-      case MainTabs.explore:
-        return controller.exploreTab;
-      case MainTabs.chat:
-        return controller.chatTab;
-      case MainTabs.favourite:
-        return controller.favouriteTab;
-      case MainTabs.profile:
-        return controller.profileTab;
-      default:
-        return controller.exploreTab;
-    }
-  }
+  // TODO: Add this in widgets
+  PersistentBottomNavBarItem _buildNavigationBarItem(
+      String label, Icon iconData, bool isSVG,
+      {String? svgPath = AssetsPath.svgAppLogo, Color? currentColor}) {
+    svgPath = AssetsPath.svgAppLogo;
 
-  PersistentBottomNavBarItem _buildNavigationBarItem(String label, IconData iconData, String svg) {
     return PersistentBottomNavBarItem(
-      icon: Icon(iconData),
+      icon: isSVG
+          ? ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                currentColor!, // The color you want to apply
+                BlendMode.srcIn,
+              ),
+              child: SvgPicture.asset(svgPath),
+            )
+          : iconData,
       title: label,
       activeColorPrimary: ColorConstants.appColor,
       inactiveColorPrimary: ColorConstants.appGrey,
