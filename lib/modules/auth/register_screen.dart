@@ -32,20 +32,20 @@ class RegisterScreen extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.05)),
                   Obx(() => CustomTextField(
-                    isPassword: false,
+                        isPassword: false,
                         labelText: StringConstants.nombreUsuario,
                         errorText: controller.rUsernameErrText.value ?? "",
                         onChanged: controller.rUsernameChanged,
                       )),
                   Obx(
                     () => CustomTextField(
-                      isPassword: false,
+                        isPassword: false,
                         labelText: StringConstants.email,
                         errorText: controller.rEmailErrText.value ?? "",
                         onChanged: controller.rEmailChanged),
                   ),
                   Obx(() => CustomTextField(
-                    isPassword: true,
+                      isPassword: true,
                       labelText: StringConstants.password,
                       errorText: controller.rPwdErrText.value ?? "",
                       onChanged: controller.rPwdChanged)),
@@ -61,10 +61,7 @@ class RegisterScreen extends StatelessWidget {
                   ClickableText(
                       uText: StringConstants.iniciarSession,
                       text: StringConstants.yesAccount,
-                      onPressed: () => {
-                            Get.toNamed(Routes.AUTH + Routes.LOGIN,
-                                arguments: controller)
-                          }),
+                      onPressed: () => controller.navigateToLogin()),
                 ],
               ),
             )

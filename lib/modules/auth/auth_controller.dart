@@ -237,5 +237,7 @@ class AuthController extends GetxController {
 
   void register() {
     print("Register");
+    // TODO: Make API Checks
+    Get.toNamed(Routes.HOME);
   }
 }
