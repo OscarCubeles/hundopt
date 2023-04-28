@@ -41,6 +41,11 @@ class AppPages {
       name: Routes.SETTINGS,
       page: () => SettingsScreen(),
       transition: Transition.fadeIn
+    ),
+    GetPage(
+        name: Routes.PERSONALITY_FORM,
+        page: () => PersonalityFormScreen(),
+        transition: Transition.fadeIn
     )
   ];
 }
