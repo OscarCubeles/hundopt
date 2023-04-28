@@ -203,9 +203,9 @@ class AuthController extends GetxController {
         context: Get.context!,
         builder: (BuildContext context) {
           return NotificationDialog(
-            title: StringConstants.correoEnviado,
-            text: StringConstants.resetPwdMsg,
-            buttonText: StringConstants.continuar,
+            title: StringConstants.sentEmailLabel,
+            text: StringConstants.resetPwdText,
+            buttonText: StringConstants.continueLabel,
             underlinedText: "",
             buttonColor: ColorConstants.appColor,
             onPressed: () => navigateToLogin(),

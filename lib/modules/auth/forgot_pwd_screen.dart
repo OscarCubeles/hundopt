@@ -27,7 +27,7 @@ class ForgotPassword extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    StringConstants.recuperarPwd,
+                    StringConstants.recuperatePwdText,
                     style: Theme.of(context).textTheme.headlineLarge,
                     textAlign: TextAlign.left,
                   ),
@@ -35,7 +35,7 @@ class ForgotPassword extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         vertical: MediaQuery.of(context).size.height * 0.05),
                     child: Text(
-                      StringConstants.infoRecuperarPwd,
+                      StringConstants.infoRecuperatePwdText,
                       style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.start,
                     ),
@@ -43,7 +43,7 @@ class ForgotPassword extends StatelessWidget {
                   Obx(() {
                     return CustomTextField(
                       isPassword: false,
-                        labelText: StringConstants.email,
+                        labelText: StringConstants.emailLabel,
                         errorText: fx.fEmailErrText.value ?? "",
                         onChanged: fx.fEmailChanged);
                   }),
@@ -52,7 +52,7 @@ class ForgotPassword extends StatelessWidget {
                           0, 0, 0, MediaQuery.of(context).size.height * 0.24)),
                   Obx(() =>
                     AppPrimaryButton(
-                      text: StringConstants.enviarEmail,
+                      text: StringConstants.sendEmailLabel,
                       onPressed: fx.submitFunc.value!,
                     )
                   ),
@@ -60,8 +60,8 @@ class ForgotPassword extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.02)),
                   ClickableText(
-                      uText: StringConstants.atras,
-                      text: StringConstants.noRecuperarPwd,
+                      uText: StringConstants.backLabel,
+                      text: StringConstants.noRecuperatePwdText,
                       onPressed: () => controller.navigateToLogin()),
                 ],
               ),

@@ -35,20 +35,20 @@ class AuthScreen extends GetView<AuthController> {
                   padding: EdgeInsets.symmetric(
                       vertical: MediaQuery.of(context).size.height * 0.05),
                   child: Text(
-                    StringConstants.authMsg,
+                    StringConstants.authText,
                     style: Theme.of(context).textTheme.bodyMedium,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 AppPrimaryButton(
-                    text: StringConstants.crearCuenta,
+                    text: StringConstants.createAccountLabel,
                     onPressed: () => {
                           Get.toNamed(Routes.AUTH + Routes.REGISTER,
                               arguments: controller)
                         }),
                 const ButtonPadding(),
                 AppSecondaryButton(
-                    text: StringConstants.iniciarSession,
+                    text: StringConstants.loginLabel,
                     onPressed: () => {
                           Get.toNamed(Routes.AUTH + Routes.LOGIN,
                               arguments: controller)

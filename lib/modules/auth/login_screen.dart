@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      StringConstants.iniciarSession,
+                      StringConstants.loginLabel,
                       style: Theme.of(context).textTheme.headlineLarge,
                       textAlign: TextAlign.left,
                     ),
@@ -35,36 +35,36 @@ class LoginScreen extends StatelessWidget {
                     Obx(() {
                       return CustomTextField(
                         isPassword: false,
-                          labelText: StringConstants.email,
+                          labelText: StringConstants.emailLabel,
                           errorText: controller.lEmailErrText.value ?? "",
                           onChanged: controller.lEmailChanged);
                     }),
                     Obx(() {
                       return CustomTextField(
                         isPassword: true,
-                          labelText: StringConstants.password,
+                          labelText: StringConstants.passwordLabel,
                           errorText: controller.lPwdErrText.value ?? "",
                           onChanged: controller.lPwdChanged);
                     }),
                     Padding(padding: EdgeInsets.all(5)),
                     ClickableText(
-                        uText: StringConstants.recuperar,
-                        text: StringConstants.forgotPwd,
+                        uText: StringConstants.recuperateLabel,
+                        text: StringConstants.forgotPwdText,
                         onPressed: () => controller.navigateToForgotPwd()),
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
                             MediaQuery.of(context).size.height * 0.215)),
 
                     AppPrimaryButton(
-                        text: StringConstants.iniciarSession,
+                        text: StringConstants.loginLabel,
                         onPressed: () => controller.login()),
 
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0,
                             MediaQuery.of(context).size.height * 0.02)),
                     ClickableText(
-                        uText: StringConstants.crearCuenta,
-                        text: StringConstants.noAccount,
+                        uText: StringConstants.createAccountLabel,
+                        text: StringConstants.noAccountText,
                         onPressed: () => controller.navigateToRegister())
                   ],
                 ),
