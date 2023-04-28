@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/modules/home/tabs/tabs.dart';
+import 'package:hundopt/modules/tabs/tabs.dart';
 
 class HomeController extends GetxController {
   final count = 0.obs;

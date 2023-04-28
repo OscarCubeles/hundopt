@@ -1,7 +1,7 @@
-// TODO: Dividir entre label, name i text
 class StringConstants {
   static const String appName = "Hündopt";
   static const String createAccountLabel = "Crear Cuenta";
+  static const String createAccountText = "Crear    Cuenta";
   static const String loginLabel = "Iniciar Sessión";
   static const String usernameLabel = "Nombre Usuario";
   static const String emailLabel = "Email";

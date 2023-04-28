@@ -231,13 +231,13 @@ class AuthController extends GetxController {
     Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD, arguments: this);
   }
 
+  // TODO: Make API Call Checks
   void login() {
-    print("Login");
+    Get.toNamed(Routes.HOME);
   }
 
+  // TODO: Make API Checks
   void register() {
     print("Register");
-    // TODO: Make API Checks
-    Get.toNamed(Routes.HOME);
   }
 }

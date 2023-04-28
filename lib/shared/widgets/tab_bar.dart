@@ -18,36 +18,37 @@ class AppTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(context,
-        screens: screens,
-        confineInSafeArea: true,
-        backgroundColor: ColorConstants.background,
-        // Default is Colors.white.
-        handleAndroidBackButtonPress: true,
-        // Default is true.
-        resizeToAvoidBottomInset: true,
-        // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-        stateManagement: true,
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.white,
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties(
-          // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        navBarStyle: NavBarStyle.style12,
-        onItemSelected: onItemSelected,
-        items: [
+    return SafeArea(
+        child: PersistentTabView(context,
+            screens: screens,
+            confineInSafeArea: true,
+            backgroundColor: ColorConstants.background,
+            // Default is Colors.white.
+            handleAndroidBackButtonPress: true,
+            // Default is true.
+            resizeToAvoidBottomInset: true,
+            // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+            stateManagement: true,
+            decoration: NavBarDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              colorBehindNavBar: Colors.white,
+            ),
+            popAllScreensOnTapOfSelectedTab: true,
+            popActionScreens: PopActionScreensType.all,
+            itemAnimationProperties: const ItemAnimationProperties(
+              // Navigation Bar's items animation properties.
+              duration: Duration(milliseconds: 200),
+              curve: Curves.ease,
+            ),
+            screenTransitionAnimation: const ScreenTransitionAnimation(
+              // Screen transition animation on change of selected tab.
+              animateTabTransition: true,
+              curve: Curves.ease,
+              duration: Duration(milliseconds: 200),
+            ),
+            navBarStyle: NavBarStyle.style12,
+            onItemSelected: onItemSelected,
+            items: [
           _buildNavigationBarItem(
               StringConstants.appName, const Icon(CupertinoIcons.home), true,
               svgPath: AssetsPath.svgAppLogo, currentColor: currentItemColor),
@@ -55,9 +56,9 @@ class AppTabBar extends StatelessWidget {
               const Icon(CupertinoIcons.chat_bubble_2), false),
           _buildNavigationBarItem(StringConstants.favouriteLabel,
               const Icon(CupertinoIcons.heart), false),
-          _buildNavigationBarItem(
-              StringConstants.profileLabel, const Icon(CupertinoIcons.person), false)
-        ]);
+          _buildNavigationBarItem(StringConstants.profileLabel,
+              const Icon(CupertinoIcons.person), false)
+        ]));
   }
 
   PersistentBottomNavBarItem _buildNavigationBarItem(

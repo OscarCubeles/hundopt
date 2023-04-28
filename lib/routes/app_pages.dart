@@ -2,6 +2,7 @@ import 'package:hundopt/modules/auth/auth.dart';
 import 'package:hundopt/modules/home/home.dart';
 import 'package:hundopt/modules/modules.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/modules/settings/settings.dart';
 
 part 'app_routes.dart';
 
@@ -36,5 +37,10 @@ class AppPages {
         children: [
           //GetPage(name: Routes.CARDS, page: () => CardsScreen()),
         ]),
+    GetPage(
+      name: Routes.SETTINGS,
+      page: () => SettingsScreen(),
+      transition: Transition.fadeIn
+    )
   ];
 }

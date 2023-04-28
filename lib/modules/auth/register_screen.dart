@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hundopt/modules/auth/auth.dart';
 import 'package:get/get.dart';
 
-import '../../routes/app_pages.dart';
 import '../../shared/shared.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -12,63 +11,52 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const MainAppBar(),
-      body: SingleChildScrollView(
+    return AppScaffold(
+        showAppBar: true,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              color: ColorConstants.background,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    StringConstants.createAccountLabel,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                    textAlign: TextAlign.left,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.05)),
-                  Obx(() => CustomTextField(
-                        isPassword: false,
-                        labelText: StringConstants.usernameLabel,
-                        errorText: controller.rUsernameErrText.value ?? "",
-                        onChanged: controller.rUsernameChanged,
-                      )),
-                  Obx(
-                    () => CustomTextField(
-                        isPassword: false,
-                        labelText: StringConstants.emailLabel,
-                        errorText: controller.rEmailErrText.value ?? "",
-                        onChanged: controller.rEmailChanged),
-                  ),
-                  Obx(() => CustomTextField(
-                      isPassword: true,
-                      labelText: StringConstants.passwordLabel,
-                      errorText: controller.rPwdErrText.value ?? "",
-                      onChanged: controller.rPwdChanged)),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.215)),
-                  AppPrimaryButton(
-                      text: StringConstants.createAccountLabel,
-                      onPressed: () => controller.register()),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, MediaQuery.of(context).size.height * 0.02)),
-                  ClickableText(
-                      uText: StringConstants.loginLabel,
-                      text: StringConstants.yesAccountText,
-                      onPressed: () => controller.navigateToLogin()),
-                ],
-              ),
-            )
+            Text(
+              StringConstants.createAccountText,
+              style: Theme.of(context).textTheme.headlineLarge,
+              textAlign: TextAlign.start,
+            ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(
+                    0, 0, 0, MediaQuery.of(context).size.height * 0.05)),
+            Obx(() => CustomTextField(
+                  isPassword: false,
+                  labelText: StringConstants.usernameLabel,
+                  errorText: controller.rUsernameErrText.value ?? "",
+                  onChanged: controller.rUsernameChanged,
+                )),
+            Obx(
+              () => CustomTextField(
+                  isPassword: false,
+                  labelText: StringConstants.emailLabel,
+                  errorText: controller.rEmailErrText.value ?? "",
+                  onChanged: controller.rEmailChanged),
+            ),
+            Obx(() => CustomTextField(
+                isPassword: true,
+                labelText: StringConstants.passwordLabel,
+                errorText: controller.rPwdErrText.value ?? "",
+                onChanged: controller.rPwdChanged)),
+            Padding(
+                padding: EdgeInsets.fromLTRB(
+                    0, 0, 0, MediaQuery.of(context).size.height * 0.155)),
+            AppPrimaryButton(
+                text: StringConstants.createAccountLabel,
+                onPressed: () => controller.register()),
+            Padding(
+                padding: EdgeInsets.fromLTRB(
+                    0, 0, 0, MediaQuery.of(context).size.height * 0.02)),
+            ClickableText(
+                uText: StringConstants.loginLabel,
+                text: StringConstants.yesAccountText,
+                onPressed: () => controller.navigateToLogin()),
           ],
-        ),
-      ),
-    );
+        ));
   }
 
   Widget _buildForms(BuildContext context) {

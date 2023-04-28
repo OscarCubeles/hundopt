@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:hundopt/modules/home/tabs/tabs.dart';
+import 'package:hundopt/modules/tabs/tabs.dart';
 
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/tab_bar.dart';
@@ -20,11 +20,10 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Widget _buildWidget2(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: controller.buildContent(),
-      ),
-      bottomNavigationBar:  AppTabBar(screens: _buildScreens(), onItemSelected: (index) => controller.switchTab(index), currentItemColor: currentColor()),
+    return Container(
+      color: ColorConstants.background,
+      child:
+      AppTabBar(screens: _buildScreens(), onItemSelected: (index) => controller.switchTab(index), currentItemColor: currentColor()),
     );
   }
 
