@@ -16,6 +16,7 @@ class ColorConstants {
   static Color secondaryButtonOnPressed = Color(0x1F2C6A4A);
   static Color primaryButtonOnPressed = Color(0x1FEEEEE0);
   static Color appGrey = Color(0xFF7A7073);
+  static Color formBarBackground = Color(0xFFD9D9D9);
   static const MaterialColor appMaterialColor = MaterialColor(
     0xFFE57373,
     <int, Color>{

@@ -18,7 +18,9 @@ class AppScaffold extends StatelessWidget {
           Container(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               color: ColorConstants.background,
-              child: child)
+              child: child
+
+          )
         ])));
   }
 }
