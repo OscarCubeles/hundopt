@@ -11,7 +11,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12.5),
+        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
         child: Stack(
           children: [
             Row(

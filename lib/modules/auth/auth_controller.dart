@@ -239,6 +239,6 @@ class AuthController extends GetxController {
   // TODO: Make API Checks
   void register() {
     print("Register");
-    Get.toNamed(Routes.PERSONALITY_FORM);
+    Get.toNamed(Routes.ONBOARDING);
   }
 }

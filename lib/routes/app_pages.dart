@@ -2,6 +2,7 @@ import 'package:hundopt/modules/auth/auth.dart';
 import 'package:hundopt/modules/home/home.dart';
 import 'package:hundopt/modules/modules.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/modules/onboarding/onboarding.dart';
 import 'package:hundopt/modules/settings/settings.dart';
 
 part 'app_routes.dart';
@@ -16,17 +17,24 @@ class AppPages {
       binding: SplashBinding(),
       transition: Transition.fadeIn,
     ),
-
     GetPage(
       name: Routes.AUTH,
       page: () => AuthScreen(),
       binding: AuthBinding(),
       transition: Transition.fadeIn,
       children: [
-        GetPage(name: Routes.REGISTER, page: () => RegisterScreen(), transition: Transition.fadeIn),
-        GetPage(name: Routes.LOGIN, page: () => LoginScreen(), transition: Transition.fadeIn),
-        GetPage(name: Routes.FORGOT_PASSWORD, page: () => ForgotPassword(), transition: Transition.fadeIn)
-
+        GetPage(
+            name: Routes.REGISTER,
+            page: () => RegisterScreen(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: Routes.LOGIN,
+            page: () => LoginScreen(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: Routes.FORGOT_PASSWORD,
+            page: () => ForgotPassword(),
+            transition: Transition.fadeIn)
       ],
     ),
     GetPage(
@@ -34,19 +42,20 @@ class AppPages {
         page: () => HomeScreen(),
         binding: HomeBinding(),
         transition: Transition.fadeIn,
-        children: [
-          //GetPage(name: Routes.CARDS, page: () => CardsScreen()),
-        ]),
+        children: []),
     GetPage(
-      name: Routes.SETTINGS,
-      page: () => SettingsScreen(),
-      transition: Transition.fadeIn
-    ),
+        name: Routes.SETTINGS,
+        page: () => SettingsScreen(),
+        transition: Transition.fadeIn),
     GetPage(
         name: Routes.PERSONALITY_FORM,
         binding: FormBinding(),
         page: () => PersonalityFormScreen(),
-        transition: Transition.fadeIn
-    )
+        transition: Transition.fadeIn),
+    GetPage(
+        name: Routes.ONBOARDING,
+        binding: OnboardingBinding(),
+        transition: Transition.fadeIn,
+        page: () => OnboardingScreen())
   ];
 }

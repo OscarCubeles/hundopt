@@ -63,7 +63,10 @@ class LightTheme {
           fontFamily: "DM Sans",
           fontWeight: FontWeight.bold,
           color: ColorConstants.black),
-      titleMedium: TextStyle(),
+      titleMedium: TextStyle(fontSize: 28,
+          fontFamily: "DM Sans",
+          fontWeight: FontWeight.bold,
+          color: ColorConstants.black),
       titleSmall: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.normal,

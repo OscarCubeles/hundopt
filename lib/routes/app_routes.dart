@@ -10,4 +10,5 @@ abstract class Routes {
   static const FORGOT_PASSWORD = '/forgot_password';
   static const SETTINGS = '/settings';
   static const PERSONALITY_FORM = '/personality_from';
+  static const ONBOARDING = '/onboarding';
 }
