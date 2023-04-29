@@ -18,7 +18,21 @@ class PersonalityFormScreen extends GetView<FormController> {
               showAppBar: false,
               child: Column(
                 children: [
-                  ProgressBar(onBackPressed: controller.increment, onClosePressed: ()=>{}, progress: controller.progress)
+                  ProgressBar(
+                      onBackPressed: controller.previousQuestion,
+                      onClosePressed: () => {},
+                      progress: controller.progress),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.75,
+                    child: Obx(() {
+                      return controller
+                          .questions[controller.currentIndex.value];
+                    }),
+                  ),
+                  AppPrimaryButton(
+                      text: StringConstants.continueLabel,
+                      onPressed: controller.nextQuestion)
                 ],
               )),
         ));

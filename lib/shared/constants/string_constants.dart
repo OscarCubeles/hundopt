@@ -2,7 +2,11 @@ class StringConstants {
   static const String appName = "Hündopt";
   static const String createAccountLabel = "Crear Cuenta";
   static const String createAccountText = "Crear    Cuenta";
+  static const String helloText = "¡Hola!";
+  static const String helloFormText =
+      "Así que te ya te has decidido adoptar. ¡Haces bien! Escribenos tu nombre y tu apellido tal y como salen en tu documento de identidad para estar un paso mas cerca de tu compañero.";
   static const String loginLabel = "Iniciar Sessión";
+  static const String nameAndSurnameLabel = "Nombre y apellido";
   static const String usernameLabel = "Nombre Usuario";
   static const String emailLabel = "Email";
   static const String continueLabel = "Continuar";
@@ -17,11 +21,15 @@ class StringConstants {
   static const String backLabel = "Atrás";
   static const String sendEmailLabel = "Enviar Email";
   static const String forgotPwdText = "¿Olvidaste la contrasea?";
-  static const String authText = "¿Buscas adoptar a un perro? ¡Únete a Hündopt y dale el hogar que se merece!";
+  static const String authText =
+      "¿Buscas adoptar a un perro? ¡Únete a Hündopt y dale el hogar que se merece!";
   static const String noAccountText = "¿No tienes cuenta?";
   static const String yesAccountText = "¿Ya tienes una cuenta?";
   static const String recuperatePwdText = "Recuperar contraseña";
-  static const String infoRecuperatePwdText = "Escribe el email asociado a la cuenta y le llegará un email con los pasos a seguir para cambiar la contraseña.";
-  static const String noRecuperatePwdText = "¿No quieres cambiar la contraseña?";
-  static const String resetPwdText = "Si el correo electrónico que ha proporcionado está asociado a una cuenta en Hündopt, recibirá un correo electrónico con instrucciones sobre cómo cambiar su contraseña. Si no recibe un correo electrónico en los próximos minutos, es posible que el correo electrónico que ingresó no esté asociado con una cuenta de Hündopt.";
+  static const String infoRecuperatePwdText =
+      "Escribe el email asociado a la cuenta y le llegará un email con los pasos a seguir para cambiar la contraseña.";
+  static const String noRecuperatePwdText =
+      "¿No quieres cambiar la contraseña?";
+  static const String resetPwdText =
+      "Si el correo electrónico que ha proporcionado está asociado a una cuenta en Hündopt, recibirá un correo electrónico con instrucciones sobre cómo cambiar su contraseña. Si no recibe un correo electrónico en los próximos minutos, es posible que el correo electrónico que ingresó no esté asociado con una cuenta de Hündopt.";
 }

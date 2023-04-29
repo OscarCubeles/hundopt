@@ -37,12 +37,12 @@ class LightTheme {
           fontWeight: FontWeight.bold,
           color: Colors.black,
           fontFamily: "DM Sans"),
-        headlineLarge: const TextStyle(
-            fontSize: 50,
-            fontFamily: "DM Sans",
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-        ),
+      headlineLarge: const TextStyle(
+        fontSize: 50,
+        fontFamily: "DM Sans",
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
       headlineSmall: const TextStyle(
           fontSize: 25,
           fontFamily: "DM Sans",
@@ -58,21 +58,23 @@ class LightTheme {
           fontFamily: "DM Sans",
           fontWeight: FontWeight.bold,
           color: ColorConstants.background),
-      titleLarge: TextStyle(),
+      titleLarge: TextStyle(
+          fontSize: 30,
+          fontFamily: "DM Sans",
+          fontWeight: FontWeight.bold,
+          color: ColorConstants.black),
       titleMedium: TextStyle(),
       titleSmall: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.normal,
           color: ColorConstants.appColor,
           fontFamily: "DM Sans",
-        decoration: TextDecoration.underline
-      ),
+          decoration: TextDecoration.underline),
       bodyLarge: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.normal,
           color: Colors.black,
-          fontFamily: "DM Sans"
-      ),
+          fontFamily: "DM Sans"),
       bodyMedium: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.normal,
