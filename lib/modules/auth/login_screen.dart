@@ -46,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () => controller.navigateToForgotPwd()),
               Padding(
                   padding: EdgeInsets.fromLTRB(
-                      0, 0, 0, MediaQuery.of(context).size.height * 0.215)),
+                      0, 0, 0, MediaQuery.of(context).size.height * 0.23)),
               AppPrimaryButton(
                   text: StringConstants.loginLabel,
                   onPressed: () => controller.login()),

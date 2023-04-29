@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget{
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: isPassword,
+      style: Theme.of(context).textTheme.bodySmall,
       cursorColor: ColorConstants.appColor,
       onChanged: onChanged,
       decoration: InputDecoration(

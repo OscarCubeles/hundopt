@@ -39,18 +39,19 @@ class AppPages {
     ),
     GetPage(
         name: Routes.HOME,
-        page: () => HomeScreen(),
+        page: () => const HomeScreen(),
         binding: HomeBinding(),
         transition: Transition.fadeIn,
         children: []),
     GetPage(
         name: Routes.SETTINGS,
         page: () => SettingsScreen(),
+
         transition: Transition.fadeIn),
     GetPage(
         name: Routes.PERSONALITY_FORM,
         binding: FormBinding(),
-        page: () => PersonalityFormScreen(),
+        page: () => const PersonalityFormScreen(),
         transition: Transition.fadeIn),
     GetPage(
         name: Routes.ONBOARDING,

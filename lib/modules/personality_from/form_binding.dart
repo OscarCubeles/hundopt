@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'form_controller.dart';
 
 class FormBinding extends Bindings {
