@@ -1,18 +1,22 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/personality_form_question.dart';
+import '../../routes/app_pages.dart';
+import '../../shared/constants/constants.dart';
+import '../../shared/widgets/dialogs.dart';
 import '../../shared/widgets/widgets.dart';
 
 class FormController extends GetxController {
-  RxnString nameErrorText = RxnString(null);
-  RxString nameText = RxString('');
+  RxnString nameErrorText = RxnString("");
+  RxString nameText = RxString("");
+  List<int> selectedOptionList = [0,0,0,0,0,0,0].obs;
 
+  var selectedOption = 0.obs;
   RxDouble progress = 0.0.obs;
-  var currentIndex = 0.obs;
-
-  late List<StatelessWidget> questions;
-  // Define a list of functions to be called at each index
-  late List<Function> functions;
+  var currentQuestion = 0.obs;
+  late List<StatelessWidget> questionWidgets;
+  late List<Function> widgetFunctions;
   late bool isNameOk;
 
   @override
@@ -20,17 +24,13 @@ class FormController extends GetxController {
     super.onInit();
     debounce<String>(nameText, nameTextValidations,
         time: const Duration(milliseconds: 500));
-    questions = [
+    questionWidgets = [
       FormWrittenQuestion(controller: this),
-      FormSelectorQuestion(text: 'Question 2'),
-      FormSelectorQuestion(text: 'Question 3'),
-      FormSelectorQuestion(text: 'Question 4'),
-      FormSelectorQuestion(text: 'Question 5'),
-      FormSelectorQuestion(text: 'Question 6'),
-      FormSelectorQuestion(text: 'Question 7')
+      ...buildFormSelectorQuestions(),
     ];
-    functions = [
+    widgetFunctions = [
       processFullName,
+      nextQuestion,
       nextQuestion,
       nextQuestion,
       nextQuestion,
@@ -41,11 +41,25 @@ class FormController extends GetxController {
     isNameOk = false;
   }
 
+  List<FormSelectorQuestion> buildFormSelectorQuestions() {
+    return StringConstants().formQuestions.map((question) {
+      return FormSelectorQuestion(
+        controller: this,
+        formQuestion: question,
+      );
+    }).toList();
+  }
+
+  void onOptionSelected(int index, int currQuestion) {
+    selectedOptionList[currQuestion] = index;
+    print(selectedOptionList);
+  }
+
   void nameTextValidations(String val) async {
     nameErrorText.value = null;
-    print("hola"); // reset validation errors to nothing
     if (val.isNotEmpty) {
       if (isValidName(val, nameErrorText)) {
+        // reset validation errors to nothing
         nameErrorText.value = "";
         isNameOk = true;
       }
@@ -53,8 +67,9 @@ class FormController extends GetxController {
   }
 
   bool isValidName(String val, RxnString errText) {
-    if (!RegExp(r'^[a-zA-ZÀ-ÖØ-öø-ÿÇçÑñ]+(\s[a-zA-ZÀ-ÖØ-öø-ÿÇçÑñ]+)+$').hasMatch(val)) {
-      errText.value = 'Error. Entra un nombre y apellido válido';
+    if (!RegExp(r'^[a-zA-ZÀ-ÖØ-öø-ÿÇçÑñ]+(\s[a-zA-ZÀ-ÖØ-öø-ÿÇçÑñ]+)+$')
+        .hasMatch(val)) {
+      errText.value = 'Error. Escribe un nombre y apellido válido';
       isNameOk = false;
       return false;
     }
@@ -71,31 +86,58 @@ class FormController extends GetxController {
 
   void nameChanged(String val) {
     nameText.value = val;
-    print(nameText);
   }
 
-  void nextQuestion(){
-    if (currentIndex.value < questions.length - 1) {
-      currentIndex.value++;
+  void nextQuestion() {
+    if (currentQuestion.value < questionWidgets.length - 1) {
+      currentQuestion.value++;
+      //selectedOption[currentQuestion.value] = selectedOption2.value;
+
     }
-    progress.value = (currentIndex.value + 1) / questions.length;
+    progress.value = (currentQuestion.value) / (questionWidgets.length);
   }
 
-  void processFullName(){
-    if(isNameOk){
+  void showExitDialog() {
+    showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return NotificationDialog(
+            title: StringConstants.titleFormExitText,
+            text: StringConstants.bodyFormExitText,
+            buttonText: StringConstants.exitFormLabel,
+            underlinedText: "",
+            buttonColor: ColorConstants.appColor,
+            onPressed: () => navigateToHome(),
+            onClose: () => Get.back(),
+          );
+        });
+  }
+
+  void navigateToHome() {
+    Get.toNamed(Routes.HOME, arguments: this);
+  }
+
+  void processFullName() {
+    if (isNameOk) {
       // TODO: Store the contents someohw
       nextQuestion();
+      return;
     }
+    nameErrorText.value = "Error. Escribe un nombre y apellido válido";
   }
 
   void continuePressed() {
-    functions[currentIndex.value]();
+    widgetFunctions[currentQuestion.value]();
   }
 
   void previousQuestion() {
-    if (currentIndex.value > 0) {
-      currentIndex.value--;
+    if (currentQuestion.value == 0) {
+      showExitDialog();
+      return;
     }
-    progress.value = (currentIndex.value + 1) / questions.length;
+    if (currentQuestion.value > 0) {
+      currentQuestion.value--;
+    }
+    progress.value = (currentQuestion.value) / (questionWidgets.length - 1);
   }
 }
