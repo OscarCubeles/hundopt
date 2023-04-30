@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../models/personality_form_question.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/dialogs.dart';
 import '../../shared/widgets/widgets.dart';
 
 class FormController extends GetxController {
+  late List<StatelessWidget> questionWidgets;
+  late List<Function> widgetFunctions = [];
+  var selectedOption = 0.obs;
+  var currentQuestion = 0.obs;
+  late bool isNameOk;
   RxnString nameErrorText = RxnString("");
   RxString nameText = RxString("");
-  List<int> selectedOptionList = [0,0,0,0,0,0,0].obs;
-
-  var selectedOption = 0.obs;
+  List<int> selectedOptionList = [0, 0, 0, 0, 0, 0, 0].obs;
   RxDouble progress = 0.0.obs;
-  var currentQuestion = 0.obs;
-  late List<StatelessWidget> questionWidgets;
-  late List<Function> widgetFunctions;
-  late bool isNameOk;
 
   @override
   void onInit() {
@@ -26,7 +24,7 @@ class FormController extends GetxController {
         time: const Duration(milliseconds: 500));
     questionWidgets = [
       FormWrittenQuestion(controller: this),
-      ...buildFormSelectorQuestions(),
+      ...buildFormSelectorQuestions()
     ];
     widgetFunctions = [
       processFullName,
@@ -36,8 +34,9 @@ class FormController extends GetxController {
       nextQuestion,
       nextQuestion,
       nextQuestion,
-      nextQuestion,
+      submitPersonalityForm
     ];
+
     isNameOk = false;
   }
 
@@ -52,7 +51,6 @@ class FormController extends GetxController {
 
   void onOptionSelected(int index, int currQuestion) {
     selectedOptionList[currQuestion] = index;
-    print(selectedOptionList);
   }
 
   void nameTextValidations(String val) async {
@@ -76,14 +74,6 @@ class FormController extends GetxController {
     return true;
   }
 
-  bool lengthOK(String val, RxnString err, {int minLen = 8}) {
-    if (val.length < minLen) {
-      err.value = 'La longitud mínima es de 8 caracteres';
-      return false;
-    }
-    return true;
-  }
-
   void nameChanged(String val) {
     nameText.value = val;
   }
@@ -91,8 +81,6 @@ class FormController extends GetxController {
   void nextQuestion() {
     if (currentQuestion.value < questionWidgets.length - 1) {
       currentQuestion.value++;
-      //selectedOption[currentQuestion.value] = selectedOption2.value;
-
     }
     progress.value = (currentQuestion.value) / (questionWidgets.length);
   }
@@ -113,13 +101,28 @@ class FormController extends GetxController {
         });
   }
 
+  void showFinishedDialog() {
+    showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return NotificationDialog(
+            title: StringConstants.titleFormEndText,
+            text: StringConstants.bodyFormEndText,
+            buttonText: StringConstants.exploreLabel,
+            underlinedText: "",
+            buttonColor: ColorConstants.appColor,
+            onPressed: () => navigateToHome(),
+            onClose: () => Get.back(),
+          );
+        });
+  }
+
   void navigateToHome() {
     Get.toNamed(Routes.HOME, arguments: this);
   }
 
   void processFullName() {
     if (isNameOk) {
-      // TODO: Store the contents someohw
       nextQuestion();
       return;
     }
@@ -128,6 +131,12 @@ class FormController extends GetxController {
 
   void continuePressed() {
     widgetFunctions[currentQuestion.value]();
+  }
+
+  void submitPersonalityForm() {
+    // TODO: Store all the values in the API :)
+    progress.value = 1.0;
+    showFinishedDialog();
   }
 
   void previousQuestion() {

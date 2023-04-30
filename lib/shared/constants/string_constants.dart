@@ -23,6 +23,7 @@ class StringConstants {
   static const String sendEmailLabel = "Enviar Email";
   static const String exitFormLabel = "Sí, salir";
   static const String forgotPwdText = "¿Olvidaste la contrasea?";
+  static const String exploreLabel = "¡Explorar Hündopt!";
   static const String onlyExploreText = "Sólo explorar Hündopt";
   static const String authText =
       "¿Buscas adoptar a un perro? ¡Únete a Hündopt y dale el hogar que se merece!";
@@ -105,6 +106,9 @@ class StringConstants {
   static const String titleFormExitText = "¿Quieres salir del formulario?";
   static const String bodyFormExitText =
       "Si dejas el formulario ahora se perderá toda la información que has entrado en la app y se te dirigirá a la app. ¿Estas seguro?";
+
+  static const String titleFormEndText = "¡Ya has terminado!";
+  static const String bodyFormEndText = "La información se ha guardado correctamente y sólo se usará para recomendarte perros que se adecuen a tus respuestas.\n\n";
 
   List<PersonalityFormQuestion> formQuestions = [
     const PersonalityFormQuestion(
