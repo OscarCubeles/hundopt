@@ -45,6 +45,7 @@ class ForgotPassword extends StatelessWidget {
                       isPassword: false,
                         labelText: StringConstants.emailLabel,
                         errorText: fx.fEmailErrText.value ?? "",
+                        initialValue: "",
                         onChanged: fx.fEmailChanged);
                   }),
                   Padding(

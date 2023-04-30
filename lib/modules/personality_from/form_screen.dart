@@ -32,7 +32,7 @@ class PersonalityFormScreen extends GetView<FormController> {
                   ),
                   AppPrimaryButton(
                       text: StringConstants.continueLabel,
-                      onPressed: controller.nextQuestion)
+                      onPressed: controller.continuePressed)
                 ],
               )),
         ));

@@ -28,20 +28,20 @@ class RegisterScreen extends StatelessWidget {
                   isPassword: false,
                   labelText: StringConstants.usernameLabel,
                   errorText: controller.rUsernameErrText.value ?? "",
-                  onChanged: controller.rUsernameChanged,
+                  onChanged: controller.rUsernameChanged, initialValue: '',
                 )),
             Obx(
               () => CustomTextField(
                   isPassword: false,
                   labelText: StringConstants.emailLabel,
                   errorText: controller.rEmailErrText.value ?? "",
-                  onChanged: controller.rEmailChanged),
+                  onChanged: controller.rEmailChanged, initialValue: '',),
             ),
             Obx(() => CustomTextField(
                 isPassword: true,
                 labelText: StringConstants.passwordLabel,
                 errorText: controller.rPwdErrText.value ?? "",
-                onChanged: controller.rPwdChanged)),
+                onChanged: controller.rPwdChanged, initialValue: '',)),
             Padding(
                 padding: EdgeInsets.fromLTRB(
                     0, 0, 0, MediaQuery.of(context).size.height * 0.155)),

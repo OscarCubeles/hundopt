@@ -83,6 +83,7 @@ class FormWrittenQuestion extends StatelessWidget {
           errorText: controller.nameErrorText.value  ?? "",
           onChanged: controller.nameChanged,
           isPassword: false,
+          initialValue: controller.isNameOk ? controller.nameText.value : "",
         );})
       ],
     );

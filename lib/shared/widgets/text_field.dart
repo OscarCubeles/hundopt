@@ -7,12 +7,14 @@ class CustomTextField extends StatelessWidget{
   final String labelText;
   final String errorText;
   final bool isPassword;
+  final String initialValue;
   final ValueChanged<String>? onChanged;
-  const CustomTextField({super.key, required this.labelText,  required this.errorText, required this.onChanged, required this.isPassword});
+  const CustomTextField({super.key, required this.labelText,  required this.errorText, required this.onChanged, required this.isPassword, required this.initialValue});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       obscureText: isPassword,
       style: Theme.of(context).textTheme.bodySmall,
       cursorColor: ColorConstants.appColor,

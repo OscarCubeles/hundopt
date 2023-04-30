@@ -11,6 +11,9 @@ class FormController extends GetxController {
   var currentIndex = 0.obs;
 
   late List<StatelessWidget> questions;
+  // Define a list of functions to be called at each index
+  late List<Function> functions;
+  late bool isNameOk;
 
   @override
   void onInit() {
@@ -26,6 +29,16 @@ class FormController extends GetxController {
       FormSelectorQuestion(text: 'Question 6'),
       FormSelectorQuestion(text: 'Question 7')
     ];
+    functions = [
+      processFullName,
+      nextQuestion,
+      nextQuestion,
+      nextQuestion,
+      nextQuestion,
+      nextQuestion,
+      nextQuestion,
+    ];
+    isNameOk = false;
   }
 
   void nameTextValidations(String val) async {
@@ -34,6 +47,7 @@ class FormController extends GetxController {
     if (val.isNotEmpty) {
       if (isValidName(val, nameErrorText)) {
         nameErrorText.value = "";
+        isNameOk = true;
       }
     }
   }
@@ -41,6 +55,7 @@ class FormController extends GetxController {
   bool isValidName(String val, RxnString errText) {
     if (!RegExp(r'^[a-zA-ZÀ-ÖØ-öø-ÿÇçÑñ]+(\s[a-zA-ZÀ-ÖØ-öø-ÿÇçÑñ]+)+$').hasMatch(val)) {
       errText.value = 'Error. Entra un nombre y apellido válido';
+      isNameOk = false;
       return false;
     }
     return true;
@@ -59,11 +74,22 @@ class FormController extends GetxController {
     print(nameText);
   }
 
-  void nextQuestion() {
+  void nextQuestion(){
     if (currentIndex.value < questions.length - 1) {
       currentIndex.value++;
     }
     progress.value = (currentIndex.value + 1) / questions.length;
+  }
+
+  void processFullName(){
+    if(isNameOk){
+      // TODO: Store the contents someohw
+      nextQuestion();
+    }
+  }
+
+  void continuePressed() {
+    functions[currentIndex.value]();
   }
 
   void previousQuestion() {
