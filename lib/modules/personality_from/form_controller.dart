@@ -79,10 +79,16 @@ class FormController extends GetxController {
   }
 
   void nextQuestion() {
+    //Skip question that asks for dog behaviour if the user does not have dogs
+    if (!hasDogs()) currentQuestion.value++;
     if (currentQuestion.value < questionWidgets.length - 1) {
       currentQuestion.value++;
     }
     progress.value = (currentQuestion.value) / (questionWidgets.length);
+  }
+
+  bool hasDogs(){
+    return selectedOptionList[0] == 0;
   }
 
   void showExitDialog() {
@@ -144,6 +150,7 @@ class FormController extends GetxController {
       showExitDialog();
       return;
     }
+    if (!hasDogs()) currentQuestion.value--;
     if (currentQuestion.value > 0) {
       currentQuestion.value--;
     }

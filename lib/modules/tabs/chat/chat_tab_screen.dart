@@ -12,30 +12,28 @@ class ChatTab extends GetView<ChatController> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      showAppBar: true,
-      child: SingleChildScrollView(
-        child: Column(
-            children: [
+        showAppBar: true,
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
             Text("Chat"),
-        Obx(
-              () =>
-              ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: controller.chatList.length,
-                  itemBuilder: (context, index) {
-        final chat = controller.chatList[index];
-        return ListTile(
-        title: Text(chat.lastMessage),
-        subtitle: Text(chat.name),
-        trailing: Text(chat.lastMessageReceivedTime.toString()),
-        );
-        },
-        ),
-      )
-      ],
-    )));
+            Obx(
+              () => ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: controller.chatList.length,
+                itemBuilder: (context, index) {
+                  final chat = controller.chatList[index];
+                  return ListTile(
+                    title: Text(chat.lastMessage),
+                    subtitle: Text(chat.name),
+                    trailing: Text(chat.lastMessageReceivedTime.toString()),
+                  );
+                },
+              ),
+            )
+          ],
+        )));
   }
 }
