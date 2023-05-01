@@ -6,13 +6,14 @@ import 'app_bar.dart';
 class AppScaffold extends StatelessWidget {
   final Widget child;
   final bool showAppBar;
-
-  const AppScaffold({super.key, required this.child, required this.showAppBar});
+  final bool showSettings;
+  final VoidCallback? onSettingsPressed;
+  const AppScaffold({super.key, required this.child, required this.showAppBar, this.showSettings = false, this.onSettingsPressed});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: showAppBar ?  const MainAppBar() : null,
+        appBar: showAppBar ?  MainAppBar(showSettings: showSettings,onSettingsPressed: onSettingsPressed,) : null,
         body: SingleChildScrollView(
             child: Column(children: [
           Container(
