@@ -5,9 +5,6 @@ import 'package:hundopt/modules/tabs/chat/chat_tab_controller.dart';
 import 'package:hundopt/shared/shared.dart';
 import 'package:intl/intl.dart';
 
-import '../../../routes/app_pages.dart';
-import '../../home/home_controller.dart';
-
 class ChatTab extends GetView<ChatController> {
   const ChatTab({super.key});
 

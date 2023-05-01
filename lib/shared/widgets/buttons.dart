@@ -86,6 +86,7 @@ class AppButton extends StatelessWidget{
       width: MediaQuery.of(context).size.width,
       child: TextButton(
         style: ButtonStyle(
+
           backgroundColor:
           MaterialStateProperty.all(buttonColor),
           overlayColor: MaterialStateColor.resolveWith(

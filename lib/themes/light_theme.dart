@@ -11,7 +11,8 @@ class LightTheme {
         cardTheme: cardTheme(),
         fontFamily: "DM Sans",
         unselectedWidgetColor: Colors.black,
-        textButtonTheme: textButtonTheme());
+    //    textButtonTheme: textButtonTheme()
+    );
   }
 
   static TextButtonThemeData? textButtonTheme() {

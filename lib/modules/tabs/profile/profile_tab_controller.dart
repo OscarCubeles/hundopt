@@ -4,6 +4,7 @@ import 'package:hundopt/shared/constants/constants.dart';
 import 'package:intl/intl.dart';
 
 import '../../../models/chat.dart';
+import '../../../routes/app_pages.dart';
 
 class ProfileController extends GetxController {
 
@@ -15,7 +16,7 @@ class ProfileController extends GetxController {
   }
 
   void onSettingsPressed(){
-    print("Pressed");
+    Get.toNamed(Routes.SETTINGS, arguments: this);
   }
 
 }

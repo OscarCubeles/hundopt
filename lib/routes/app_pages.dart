@@ -45,8 +45,8 @@ class AppPages {
         children: []),
     GetPage(
         name: Routes.SETTINGS,
-        page: () => SettingsScreen(),
-
+        page: () => const SettingsScreen(),
+        binding: SettingsBinding(),
         transition: Transition.fadeIn),
     GetPage(
         name: Routes.PERSONALITY_FORM,

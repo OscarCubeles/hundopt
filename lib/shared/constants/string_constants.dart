@@ -9,6 +9,9 @@ class StringConstants {
   static const String nameAndSurnameLabel = "Nombre y apellido";
   static const String fillFormLabel = "Rellenar Formulario";
   static const String usernameLabel = "Nombre Usuario";
+  static const String closeSessionLabel = "Sí, cerrar sessión";
+  static const String deleteAccountLabel = "Sí, elimiar cuenta";
+  static const String changePwdLabel = "Sí, enviar correo";
   static const String emailLabel = "Email";
   static const String continueLabel = "Continuar";
   static const String sentEmailLabel = "Correo Enviado";
@@ -17,6 +20,7 @@ class StringConstants {
   static const String favouriteLabel = "Favourite";
   static const String profileLabel = "Profile";
   static const String passwordLabel = "Contraseña";
+  static const String configurationLabel = "Configuración";
   static const String emailOrUserLabel = "Email o Nombre de Usuario";
   static const String recuperateLabel = "Recuperar";
   static const String yesterdayLabel = "Ayer";
@@ -110,6 +114,13 @@ class StringConstants {
 
   static const String titleFormEndText = "¡Ya has terminado!";
   static const String bodyFormEndText = "La información se ha guardado correctamente y sólo se usará para recomendarte perros que se adecuen a tus respuestas.\n\n";
+  static const String titleCloseSessionText = "¿Estas seguro que quieres cerrar la sessión?";
+  static const String bodyCloseSessionText = "Si cierras la sessión, la próxima vez que entres a Hündopt tendras que entrar con tu email y tu contraseña. Si no quieres cerrar sessión, presione la cruz de arriba a la izquierda.";
+  static const String titleDeleteAccountText = "¿Estas seguro que quieres eliminar la cuenta?";
+  static const String bodyDeleteAccountText = " Si eliminas la cuenta, todos tus datos se borraran. Y en caso de que haya algún proceso de adopción en curso, este se cancelará y se le notificará al centro en cuestión. ¿Estás seguro?";
+  static const String titleChangePwdText = "¿Estas seguro que quieres cambiar la contrseña?";
+  static const String bodyChangePwdText = "Por motivos de seguridad, le enviaremos un email a tu cuenta de correo electronico para que pueda cambiar la contraseña. Si desea cancelar este proceso, pulse el boton de cancelar o la cruz de arriba a la izquierda.";
+
   List<PersonalityFormQuestion> formQuestions = [
     const PersonalityFormQuestion(
       0,

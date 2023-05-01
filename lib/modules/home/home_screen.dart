@@ -15,11 +15,11 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: Obx(() => _buildWidget2(context)),
+      child: Obx(() => _buildWidget(context)),
     );
   }
 
-  Widget _buildWidget2(BuildContext context) {
+  Widget _buildWidget(BuildContext context) {
     return Container(
       color: ColorConstants.background,
       child:
