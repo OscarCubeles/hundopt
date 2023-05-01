@@ -63,7 +63,8 @@ class LightTheme {
           fontFamily: "DM Sans",
           fontWeight: FontWeight.bold,
           color: ColorConstants.black),
-      titleMedium: TextStyle(fontSize: 28,
+      titleMedium: TextStyle(
+          fontSize: 28,
           fontFamily: "DM Sans",
           fontWeight: FontWeight.bold,
           color: ColorConstants.black),
@@ -88,8 +89,18 @@ class LightTheme {
           fontWeight: FontWeight.normal,
           color: Colors.black,
           fontFamily: "DM Sans"),
-      labelLarge: TextStyle(),
-      labelSmall: TextStyle(),
+      labelLarge: const TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontFamily: "DM Sans",
+      ),
+      labelSmall: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.normal,
+        color: ColorConstants.chatTextGray,
+        fontFamily: "DM Sans",
+      ),
     );
   }
 }
