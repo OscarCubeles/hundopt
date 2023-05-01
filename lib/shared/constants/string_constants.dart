@@ -19,6 +19,7 @@ class StringConstants {
   static const String passwordLabel = "Contraseña";
   static const String emailOrUserLabel = "Email o Nombre de Usuario";
   static const String recuperateLabel = "Recuperar";
+  static const String yesterdayLabel = "Ayer";
   static const String backLabel = "Atrás";
   static const String sendEmailLabel = "Enviar Email";
   static const String exitFormLabel = "Sí, salir";
@@ -109,7 +110,6 @@ class StringConstants {
 
   static const String titleFormEndText = "¡Ya has terminado!";
   static const String bodyFormEndText = "La información se ha guardado correctamente y sólo se usará para recomendarte perros que se adecuen a tus respuestas.\n\n";
-
   List<PersonalityFormQuestion> formQuestions = [
     const PersonalityFormQuestion(
       0,
