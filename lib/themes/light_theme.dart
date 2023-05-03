@@ -107,6 +107,13 @@ class LightTheme {
           fontWeight: FontWeight.normal,
           color: ColorConstants.chatTextGray,
           fontFamily: "DM Sans",
-        ));
+        ),
+      headlineMedium: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontFamily: "DM Sans",
+      )
+    );
   }
 }

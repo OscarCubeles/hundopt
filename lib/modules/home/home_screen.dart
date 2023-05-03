@@ -37,4 +37,6 @@ class HomeScreen extends GetView<HomeController> {
     return const [ExploreTab(), ChatTab(), FavouriteTab(), ProfileTab()];
   }
 
+
+
 }

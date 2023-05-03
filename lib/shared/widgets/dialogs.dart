@@ -17,7 +17,7 @@ class NotificationDialog extends StatelessWidget {
       required this.buttonColor,
       required this.title,
       required this.onPressed,
-      required this.onClose});
+      required this.onClose, required this.onTextPressed});
 
   final String title;
   final String text;
@@ -26,6 +26,7 @@ class NotificationDialog extends StatelessWidget {
   final Color buttonColor;
   final VoidCallback onPressed;
   final VoidCallback onClose;
+  final VoidCallback onTextPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class NotificationDialog extends StatelessWidget {
                         child: ClickableText(
                             uText: underlinedText,
                             text: "",
-                            onPressed: onPressed))
+                            onPressed: onTextPressed))
                     // TODO: MAke widget of this dialog, change the alignment of the clickabletext and change this onpressed
                   ]),
 

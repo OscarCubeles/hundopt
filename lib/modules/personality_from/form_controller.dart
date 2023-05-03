@@ -20,8 +20,12 @@ class FormController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    debounce<String>(nameText, nameTextValidations,
-        time: const Duration(milliseconds: 500));
+    initFormFieldValidators();
+    initFormQuestions();
+    isNameOk = false;
+  }
+
+  void initFormQuestions() {
     questionWidgets = [
       FormWrittenQuestion(controller: this),
       ...buildFormSelectorQuestions()
@@ -36,8 +40,11 @@ class FormController extends GetxController {
       nextQuestion,
       submitPersonalityForm
     ];
+  }
 
-    isNameOk = false;
+  void initFormFieldValidators() {
+    debounce<String>(nameText, nameTextValidations,
+        time: const Duration(milliseconds: 500));
   }
 
   List<FormSelectorQuestion> buildFormSelectorQuestions() {
@@ -87,7 +94,7 @@ class FormController extends GetxController {
     progress.value = (currentQuestion.value) / (questionWidgets.length);
   }
 
-  bool hasDogs(){
+  bool hasDogs() {
     return selectedOptionList[0] == 0;
   }
 
@@ -103,6 +110,7 @@ class FormController extends GetxController {
             buttonColor: ColorConstants.appColor,
             onPressed: () => navigateToHome(),
             onClose: () => Get.back(),
+            onTextPressed: () => Get.back(),
           );
         });
   }
@@ -119,6 +127,7 @@ class FormController extends GetxController {
             buttonColor: ColorConstants.appColor,
             onPressed: () => navigateToHome(),
             onClose: () => Get.back(),
+            onTextPressed: () => {},
           );
         });
   }

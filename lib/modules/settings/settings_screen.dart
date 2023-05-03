@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/modules/settings/settings.dart';
 
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/app_page.dart';
+import '../../shared/widgets/settings_bar.dart';
 
 class SettingsScreen extends GetView<SettingsController> {
   const SettingsScreen({super.key});
@@ -17,44 +19,11 @@ class SettingsScreen extends GetView<SettingsController> {
               showAppBar: false,
               child: Column(
                 children: [
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: controller.navigateToHome,
-                                splashColor: Colors.grey,
-                                borderRadius: BorderRadius.circular(30),
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: ColorConstants.appColor,
-                                  size: 24,
-                                ),
-                              ),
-                            ),
-                            Container(
-                                width: MediaQuery.of(context).size.width - 88,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      StringConstants.configurationLabel,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,
-                                    )
-                                  ],
-                                )),
-                            Spacer(),
-                          ],
-                        ),
-                      )),
+                  SettingsBar(
+                    onTap: controller.navigateToHome,
+                    icon: Icons.arrow_back,
+                    titleLabel: StringConstants.configurationLabel,
+                  ),
                   Container(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       width: MediaQuery.of(context).size.width,
@@ -68,7 +37,8 @@ class SettingsScreen extends GetView<SettingsController> {
                             return Container(
                               padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                               child: ListTile(
-                                onTap: controller.settingOptions[index].onPressed,
+                                onTap:
+                                    controller.settingOptions[index].onPressed,
                                 title: Text(
                                   controller.settingOptions[index].text,
                                   style: Theme.of(context).textTheme.bodyMedium,

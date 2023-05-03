@@ -6,7 +6,6 @@ import '../../shared/constants/constants.dart';
 import '../../shared/widgets/dialogs.dart';
 
 // TODO: source of the form code: https://stackoverflow.com/questions/64544571/flutter-getx-forms-validation
-
 class AuthController extends GetxController {
   RxnString fEmailErrText = RxnString(null);
   RxnString rEmailErrText = RxnString(null);
@@ -14,19 +13,29 @@ class AuthController extends GetxController {
   RxnString rPwdErrText = RxnString(null);
   RxnString lEmailErrText = RxnString(null);
   RxnString lPwdErrText = RxnString(null);
-
   RxString fEmail = RxString('');
   RxString rEmail = RxString('');
   RxString rUsername = RxString('');
   RxString rPwd = RxString('');
   RxString lEmail = RxString('');
   RxString lPwd = RxString('');
-
   Rxn<Function()> submitFunc = Rxn<Function()>(() => {});
 
   @override
   void onInit() {
     super.onInit();
+    initFormFieldValidators();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {}
+
+  void initFormFieldValidators(){
     debounce<String>(fEmail, fEmailValidations,
         time: const Duration(milliseconds: 500));
     debounce<String>(lEmail, lEmailValidations,
@@ -41,13 +50,6 @@ class AuthController extends GetxController {
         time: const Duration(milliseconds: 500));
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
 
   void fEmailValidations(String val) async {
     fEmailErrText.value = null; // reset validation errors to nothing
@@ -210,6 +212,7 @@ class AuthController extends GetxController {
             buttonColor: ColorConstants.appColor,
             onPressed: () => navigateToLogin(),
             onClose: () => Get.back(),
+            onTextPressed: ()=>{},
           );
         });
     sendResetPwdEmail();

@@ -3,6 +3,7 @@ import 'package:hundopt/modules/home/home.dart';
 import 'package:hundopt/modules/modules.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/onboarding/onboarding.dart';
+import 'package:hundopt/modules/settings/edit_profile_screen.dart';
 import 'package:hundopt/modules/settings/settings.dart';
 
 part 'app_routes.dart';
@@ -37,6 +38,7 @@ class AppPages {
             transition: Transition.fadeIn)
       ],
     ),
+    // TODO: Posar les pagines de explore, chat, favourite and settings com a children de les de home
     GetPage(
         name: Routes.HOME,
         page: () => const HomeScreen(),
@@ -45,9 +47,15 @@ class AppPages {
         children: []),
     GetPage(
         name: Routes.SETTINGS,
-        page: () => const SettingsScreen(),
+        page: () => SettingsScreen(),
         binding: SettingsBinding(),
-        transition: Transition.fadeIn),
+        transition: Transition.fadeIn,
+        children: [
+          GetPage(
+              name: Routes.EDIT_PROFILE,
+              page: () => const EditProfileScreen(),
+              transition: Transition.fadeIn)
+        ]),
     GetPage(
         name: Routes.PERSONALITY_FORM,
         binding: FormBinding(),

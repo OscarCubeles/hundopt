@@ -19,6 +19,7 @@ class ColorConstants {
   static Color formBarBackground = Color(0xFFD9D9D9);
   static Color chatTextGray = Color(0xFF8A91A8);
   static Color warningRed = Color(0xFFE53434);
+  static Color transparentWhite = Color(0x93FFFFFF);
   static const MaterialColor appMaterialColor = MaterialColor(
     0xFFE57373,
     <int, Color>{

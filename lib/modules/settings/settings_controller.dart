@@ -9,31 +9,49 @@ import '../../shared/widgets/dialogs.dart';
 
 class SettingsController extends GetxController{
 
-  List<SettingOption> settingOptions = [
-  ];
+  RxnString userNameErrText = RxnString(null);
+  RxnString emailErrText = RxnString(null);
+  RxnString phoneErrText = RxnString(null);
+  RxString userName = RxString('');
+  RxString email = RxString('');
+  RxString phone = RxString('');
+  List<SettingOption> settingOptions = [];
 
   @override
   void onInit() {
-  // TODO : Put these as string constants
+    super.onInit();
+    initFormFieldValidations();
+    initSettingOptions();
+  }
+
+  void initSettingOptions(){
     settingOptions = [
-      SettingOption(text: "Editar Perfil", iconSource: CupertinoIcons.chevron_right, onPressed: toEditProfile),
-      SettingOption(text: "Cambiar Contraseña", iconSource: CupertinoIcons.chevron_right, onPressed: showChangePasswordDialog),
-      SettingOption(text: "Rellenar Cuestionario Pre-Adopción", iconSource: CupertinoIcons.doc_plaintext, onPressed: toPersonalityForm),
-      SettingOption(text: "Pasos Para Adoptar", iconSource: CupertinoIcons.info, onPressed: showAdoptSteps),
-      SettingOption(text: "Cerrar Sesión", iconSource: CupertinoIcons.power, onPressed: showCloseSessionDialog),
-      SettingOption(text: "Eliminar Cuenta", iconSource: CupertinoIcons.trash, onPressed: showDeleteAccountDialog)
+      SettingOption(text: StringConstants.editProfileLabel, iconSource: CupertinoIcons.chevron_right, onPressed: toEditProfile),
+      SettingOption(text: StringConstants.confirmChangePwdLabel, iconSource: CupertinoIcons.chevron_right, onPressed: showChangePasswordDialog),
+      SettingOption(text: StringConstants.fillAdoptFormLabel, iconSource: CupertinoIcons.doc_plaintext, onPressed: toPersonalityForm),
+      SettingOption(text: StringConstants.adoptStepsLabel, iconSource: CupertinoIcons.info, onPressed: showAdoptSteps),
+      SettingOption(text: StringConstants.confirmCloseSessionLabel, iconSource: CupertinoIcons.power, onPressed: showCloseSessionDialog),
+      SettingOption(text: StringConstants.confirmDeleteAccountLabel, iconSource: CupertinoIcons.trash, onPressed: showDeleteAccountDialog)
     ];
   }
 
+  void initFormFieldValidations(){
+    debounce<String>(userName, userNameValidations,
+        time: const Duration(milliseconds: 500));
+    debounce<String>(email, phoneValidations,
+        time: const Duration(milliseconds: 500));
+    debounce<String>(phone, phoneValidations,
+        time: const Duration(milliseconds: 500));
+  }
+
   void navigateToHome(){
-    Get.back();
+    Get.toNamed(Routes.HOME, arguments: this);
   }
 
   void toPersonalityForm(){
     Get.toNamed(Routes.PERSONALITY_FORM);
   }
 
-  // TODO: Change ontap methods and color of the button
   void showDeleteAccountDialog(){
     showDialog(
         context: Get.context!,
@@ -41,16 +59,21 @@ class SettingsController extends GetxController{
           return NotificationDialog(
             title: StringConstants.titleDeleteAccountText,
             text: StringConstants.bodyDeleteAccountText,
-            buttonText: StringConstants.deleteAccountLabel,
+            buttonText: StringConstants.confirmDeleteAccountLabel,
             underlinedText: StringConstants.cancelLabel,
             buttonColor: ColorConstants.warningRed,
-            onPressed: () => navigateToHome(),
+            onPressed: () => deleteAccount(),
             onClose: () => Get.back(),
+            onTextPressed: () => Get.back(),
           );
         });
   }
 
-  // TODO: add methods
+  void deleteAccount(){
+    // TODO: Delete the account
+    Get.toNamed(Routes.AUTH, arguments: this);
+  }
+
   void showCloseSessionDialog(){
     showDialog(
         context: Get.context!,
@@ -58,13 +81,19 @@ class SettingsController extends GetxController{
           return NotificationDialog(
             title: StringConstants.titleCloseSessionText,
             text: StringConstants.bodyCloseSessionText,
-            buttonText: StringConstants.closeSessionLabel,
+            buttonText: StringConstants.confirmCloseSessionLabel,
             underlinedText: StringConstants.cancelLabel,
             buttonColor: ColorConstants.appColor,
-            onPressed: () => navigateToHome(),
+            onPressed: () => closeSession(),
             onClose: () => Get.back(),
+            onTextPressed: () => Get.back(),
           );
         });
+  }
+
+  void closeSession(){
+    // TODO: Close Session
+    Get.toNamed(Routes.AUTH);
   }
 
   void showChangePasswordDialog(){
@@ -74,20 +103,40 @@ class SettingsController extends GetxController{
           return NotificationDialog(
             title: StringConstants.titleChangePwdText,
             text: StringConstants.bodyChangePwdText,
-            buttonText: StringConstants.changePwdLabel,
+            buttonText: StringConstants.confirmChangePwdLabel,
             underlinedText: StringConstants.cancelLabel,
             buttonColor: ColorConstants.appColor,
             onPressed: () => navigateToHome(),
             onClose: () => Get.back(),
+            onTextPressed: () => Get.back(),
           );
         });
   }
 
-  void toEditProfile(){
+  void userNameValidations(String value){
 
   }
 
+  void emailValidations(String value){
+
+  }
+
+  void phoneValidations(String value){
+
+  }
+
+
+  void saveChanges(){
+    // TODO: Check that the email, name and phone are valid before saving
+    Get.back();
+  }
+
+  void toEditProfile(){
+    Get.toNamed(Routes.SETTINGS + Routes.EDIT_PROFILE);
+  }
+
   void showAdoptSteps(){
+    // TODO: Show the informative message
 
   }
 
@@ -103,6 +152,7 @@ class SettingsController extends GetxController{
             buttonColor: ColorConstants.appColor,
             onPressed: () => navigateToHome(),
             onClose: () => Get.back(),
+            onTextPressed: () => Get.back(),
           );
         });
   }

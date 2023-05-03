@@ -8,14 +8,13 @@ import '../../../models/chat.dart';
 class ChatController extends GetxController {
   var chatList = <Chat>[].obs;
 
-  void addChat(Chat chat) {
-    chatList.add(chat);
-  }
-
   @override
   void onInit() {
     super.onInit();
+    initChats();
+  }
 
+  void initChats() {
     addChat(Chat(
       name: 'TestDog3',
       lastMessage: 'Esta disponible?',
@@ -50,8 +49,8 @@ class ChatController extends GetxController {
       lastMessage: 'Esta disponible?',
       pictureUrl:
           'https://img.rawpixel.com/private/static/images/website/2022-05/ns8230-image.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=b3961e17298745c0868eeef46211c3d0',
-      lastMessageReceivedTime: DateTime(
-          DateTime.now().year, DateTime.now().month-3, DateTime.now().day - 1),
+      lastMessageReceivedTime: DateTime(DateTime.now().year,
+          DateTime.now().month - 3, DateTime.now().day - 1),
     ));
     addChat(Chat(
       name: 'TestDog2',
@@ -76,34 +75,35 @@ class ChatController extends GetxController {
     ));
   }
 
-  Widget getChatDate(DateTime dateTime, TextStyle style) {
+  void addChat(Chat chat) {
+    chatList.add(chat);
+  }
+
+  bool isToday(DateTime dateTime) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    final yesterday = DateTime(now.year, now.month, now.day - 1);
-
-    String format = '';
-
-    if (dateTime.day == today.day &&
+    return dateTime.day == today.day &&
         dateTime.year == today.year &&
-        dateTime.month == today.month) {
-      format = 'h:mm a';
-      print("same today");
-    } else if (dateTime.day == yesterday.day &&
-        dateTime.year == yesterday.year &&
-        dateTime.month == yesterday.month) {
-      print("Same yesterday");
-      return Text(
-        StringConstants.yesterdayLabel,
-        style: style,
-        overflow: TextOverflow.ellipsis,
-      );
-    } else {
-      dateTime.year - 2000;
-      format = 'd/M/yy';
-      print("full date");
-    }
+        dateTime.month == today.month;
+  }
 
-    final formattedDate = DateFormat(format).format(dateTime);
+  bool isYesterday(DateTime dateTime) {
+    final now = DateTime.now();
+    final yesterday = DateTime(now.year, now.month, now.day - 1);
+    return dateTime.day == yesterday.day &&
+        dateTime.year == yesterday.year &&
+        dateTime.month == yesterday.month;
+  }
+
+  Widget getChatDate(DateTime dateTime, TextStyle style) {
+    String formattedDate;
+    if (isToday(dateTime)) {
+      formattedDate = DateFormat('h:mm a').format(dateTime);
+    } else if (isYesterday(dateTime)) {
+      formattedDate = StringConstants.yesterdayLabel;
+    } else {
+      formattedDate = DateFormat('d/M/yy').format(dateTime);
+    }
     return Text(
       formattedDate,
       style: style,

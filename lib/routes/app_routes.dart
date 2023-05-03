@@ -11,4 +11,5 @@ abstract class Routes {
   static const SETTINGS = '/settings';
   static const PERSONALITY_FORM = '/personality_from';
   static const ONBOARDING = '/onboarding';
+  static const EDIT_PROFILE = '/edit_profile';
 }
