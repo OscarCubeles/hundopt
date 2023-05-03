@@ -65,9 +65,10 @@ class EditProfileTextField extends StatelessWidget{
         filled: true,
         fillColor: ColorConstants.textFieldBg,
         border: UnderlineInputBorder(),
+        labelStyle: Theme.of(context).textTheme.bodySmall,
         labelText: labelText,
         errorText: errorText,
-        errorStyle: Theme.of(context).textTheme.bodySmall,
+        errorStyle: TextStyle(fontSize: 14),
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),

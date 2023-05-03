@@ -60,38 +60,45 @@ class EditProfileScreen extends GetView<SettingsController> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineMedium),
-                              EditProfileTextField(
-                                labelText: StringConstants.userNameLabel,
-                                errorText: '',
-                                initialValue: '',
-                                onChanged: (string)=>{},
-                              ),
+                              Obx(() => EditProfileTextField(
+                                    labelText: StringConstants.userNameLabel,
+                                    errorText:
+                                        controller.userNameErrText.value ?? "",
+                                    initialValue: '',
+                                    onChanged: controller.userNameChanged,
+                                  )),
                               Padding(
                                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
                               Text(StringConstants.emailLabel,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineMedium),
-                              EditProfileTextField(
-                                labelText: StringConstants.emailLabel,
-                                errorText: '',
-                                initialValue: '',
-                                onChanged: (string)=>{},
-                              ),
+                              Obx(() => EditProfileTextField(
+                                    labelText: StringConstants.emailLabel,
+                                    errorText:
+                                        controller.emailErrText.value ?? "",
+                                    initialValue: '',
+                                    onChanged: controller.emailChanged,
+                                  )),
                               Padding(
                                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
                               Text(StringConstants.phoneNumberLabel,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineMedium),
-                              EditProfileTextField(
-                                labelText: StringConstants.phoneNumberLabel,
-                                errorText: '',
-                                initialValue: '',
-                                onChanged: (string)=>{},
-                              ),
+                              Obx(() => EditProfileTextField(
+                                    labelText: StringConstants.phoneNumberLabel,
+                                    errorText:
+                                        controller.phoneErrText.value ?? "",
+                                    initialValue: '',
+                                    onChanged: controller.phoneChange,
+                                  )),
                               Padding(
-                                  padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.2, 0, 0)),
+                                  padding: EdgeInsets.fromLTRB(
+                                      0,
+                                      MediaQuery.of(context).size.height * 0.2,
+                                      0,
+                                      0)),
                               AppPrimaryButton(
                                   text: StringConstants.saveLabel,
                                   onPressed: controller.saveChanges)
