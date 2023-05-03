@@ -10,6 +10,7 @@ import '../../shared/widgets/settings_bar.dart';
 class SettingsScreen extends GetView<SettingsController> {
   const SettingsScreen({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return Container(

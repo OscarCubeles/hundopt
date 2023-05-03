@@ -8,15 +8,20 @@ import '../../../routes/app_pages.dart';
 
 class ProfileController extends GetxController {
 
+  late String username;
+  late String fullName;
 
   @override
   void onInit() {
     super.onInit();
+    // TODO: Fetch the username and fullname from the api
+    username = "@ocubeles";
+    fullName = "Oscar Cubeles";
 
   }
 
   void onSettingsPressed(){
-    Get.toNamed(Routes.SETTINGS, arguments: this);
+    Get.offNamed(Routes.SETTINGS, arguments: this);
   }
 
 }

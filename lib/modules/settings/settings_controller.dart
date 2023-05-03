@@ -15,6 +15,7 @@ class SettingsController extends GetxController {
   RxString email = RxString('');
   RxString phone = RxString('');
   List<SettingOption> settingOptions = [];
+  bool dataIsValid = false;
 
   @override
   void onInit() {
@@ -110,7 +111,7 @@ class SettingsController extends GetxController {
 
   void closeSession() {
     // TODO: Close Session
-    Get.toNamed(Routes.AUTH);
+    Get.offNamed(Routes.AUTH);
   }
 
   void showChangePasswordDialog() {
@@ -206,8 +207,10 @@ class SettingsController extends GetxController {
   }
 
   void saveChanges() {
-    // TODO: Check that the email, name and phone are valid before saving
-    Get.back();
+    // TODO: Check that the email or username are not from users that already exist
+    if(dataIsValid){
+      Get.back();
+    }
   }
 
   void toEditProfile() {

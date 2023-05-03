@@ -21,6 +21,19 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     initTabs();
+    currentTab.value = MainTabs.explore;
+  }
+
+
+  @override
+  void onReady() { // called after the widget is rendered on screen
+    super.onReady();
+    currentTab.value = MainTabs.explore;
+  }
+
+  @override
+  void onClose(){
+    currentTab.value = MainTabs.explore;
   }
 
   void initTabs(){

@@ -6,3 +6,4 @@ export 'tab_bar.dart';
 export 'app_page.dart';
 export 'form_questions.dart';
 export 'settings_bar.dart';
+export 'horizontal_bar.dart';
