@@ -21,7 +21,7 @@ class HorizontalBar extends StatelessWidget{
              )),
          Positioned(
              height: 10,
-             left: 20,
+             left: 25,
              child: Container(
                width: MediaQuery.of(context).size.width*0.4,
                height: 10,

@@ -10,23 +10,6 @@ import '../../../shared/widgets/app_page.dart';
 class ProfileTab extends GetView<ProfileController> {
   const ProfileTab({super.key});
 
-  /*
-   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: showAppBar ?  MainAppBar(showSettings: showSettings,onSettingsPressed: onSettingsPressed,) : null,
-        body: SingleChildScrollView(
-            child: Column(children: [
-          Container(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              color: ColorConstants.background,
-              child: child
-
-          )
-        ])));
-  }
-   */
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +18,7 @@ class ProfileTab extends GetView<ProfileController> {
       body: Container(
         color: ColorConstants.background,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(25, 20, 25, 0),
@@ -53,14 +37,71 @@ class ProfileTab extends GetView<ProfileController> {
                     ],
                   ),
                   CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                          'https://i.pinimg.com/736x/25/78/61/25786134576ce0344893b33a051160b1.jpg')),
+                    radius: 50,
+                    backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/736x/25/78/61/25786134576ce0344893b33a051160b1.jpg'),
+                  ),
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
+            Container(
+              margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
+              width: MediaQuery.of(context).size.width * 0.4,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/images/boy.png", height: 45),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Mis Futuros Perros",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  )
+                ],
+              ),
+            ),
             HorizontalBar(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.8,
+                  children: List.generate(20, (index) {
+                    return GridTile(
+                      child: Container(
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width, // set maximum
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: SizedBox.fromSize(
+                                    child: AspectRatio(
+                                      child: Image.asset('assets/images/example_dog.jpg', fit: BoxFit.fill),
+                                      aspectRatio: 1 / 1,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                child: Text("Kira", style: Theme.of(context).textTheme.headlineMedium,),
+                              )
+                            ],
+                          )),
+                    );
+                  }),
+                ),
+              ),
+            ),
           ],
         ),
       ),
