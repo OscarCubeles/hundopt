@@ -65,63 +65,64 @@ class ExploreTab extends GetView<ExploreController> {
                   image: AssetImage("assets/images/example_dog.jpg"),
                 ),
               ),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                        height: 80,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: [
-                              Colors.black.withOpacity(0.8),
-                              Colors.transparent,
-                            ],
+              child: GestureDetector(
+                onTap: () => print("hola"),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: [
+                                Colors.black.withOpacity(0.0),
+                                Colors.transparent,
+                              ],
+                            ),
                           ),
-                        ),
-                        child: GestureDetector(
-                          onTap: () => print("tapped colunm"),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0,0,0,20.0),
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Kira"),
-
-                                        Text("Carrer Urgell 201"),
-
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    Obx(
-                                      () => LikeButton(
-                                          size: 50,
-                                          isLiked: controller.isLiked.value),
-                                    ),
-                                    SizedBox(width: 8),
-                                  ],
+                          child: GestureDetector(
+                            onTap: () => print("tapped colunm"),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0,0,0,20.0),
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Kira"),
+                                          Text("Carrer Urgell 201"),
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Obx(
+                                            () => LikeButton(
+                                            size: 50,
+                                            isLiked: controller.isLiked.value),
+                                      ),
+                                      SizedBox(width: 8),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ),
-                  Positioned.fill(
-                    child: InkWell(
-                      onTap: () => print("tapped"),
-                      onDoubleTap: controller.likeDog,
+                              ],
+                            ),
+                          )),
                     ),
-                  ),
-                ],
+                    /*Positioned.fill(
+                      child: InkWell(
+                        onTap: () => print("tapped"),
+                        onDoubleTap: controller.likeDog,
+                      ),
+                    ),*/
+                  ],
+                ),
               ),
             );
           },
