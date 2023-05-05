@@ -20,10 +20,11 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Widget _buildWidget(BuildContext context) {
-    return Container(
-      color: ColorConstants.background,
-      child:
-      AppTabBar(screens: _buildScreens(), onItemSelected: (index) => controller.switchTab(index), currentItemColor: currentColor()),
+    return Scaffold(
+      body: Container(
+        child:
+        AppTabBar(screens: _buildScreens(), onItemSelected: (index) => controller.switchTab(index), currentItemColor: currentColor()),
+      ),
     );
   }
 

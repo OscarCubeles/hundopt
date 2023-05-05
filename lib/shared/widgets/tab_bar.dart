@@ -18,7 +18,7 @@ class AppTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Container(
         child: PersistentTabView(context,
             screens: screens,
             confineInSafeArea: true,

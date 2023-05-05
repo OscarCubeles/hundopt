@@ -62,6 +62,7 @@ class ProfileTab extends GetView<ProfileController> {
               ),
             ),
             HorizontalBar(),
+            Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
             Expanded(
               child: SingleChildScrollView(
                 child: GridView.count(
@@ -85,7 +86,8 @@ class ProfileTab extends GetView<ProfileController> {
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: SizedBox.fromSize(
                                     child: AspectRatio(
-                                      child: Image.asset('assets/images/example_dog.jpg', fit: BoxFit.fill),
+                                      child: Image.asset('assets/images/example_dog.jpg', fit: BoxFit.cover,  width: 84.0,
+                                        height: 84.0,),
                                       aspectRatio: 1 / 1,
                                     ),
                                   ),

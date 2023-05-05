@@ -8,6 +8,8 @@ class StringConstants {
   static const String welcomeLabel = "¡Bienvenido a Hündopt!";
   static const String nameAndSurnameLabel = "Nombre y apellido";
   static const String editProfileLabel = "Editar Perfil";
+  static const String dogLabel = "Perros";
+  static const String centreLabel = "Centros";
   static const String changePwdLabel = "Cambiar contraseña";
   static const String fillAdoptFormLabel = "Rellenar Cuestionario Pre-Adopción";
   static const String adoptStepsLabel = "Pasos Para Adoptar";
@@ -23,7 +25,7 @@ class StringConstants {
   static const String sentEmailLabel = "Correo Enviado";
   static const String cancelLabel = "Cancelar";
   static const String chatLabel = "Chat";
-  static const String favouriteLabel = "Favourite";
+  static const String favouriteLabel = "Favoritos";
   static const String profileLabel = "Profile";
   static const String passwordLabel = "Contraseña";
   static const String configurationLabel = "Configuración";
