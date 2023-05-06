@@ -35,12 +35,17 @@ class Styles {
       fontSize: 25,
       fontFamily: "DM Sans",
       fontWeight: FontWeight.bold,
-      color: Colors.black87
-  );
+      color: Colors.black87);
 
   static TextStyle nameLabelWhite = TextStyle(
       fontSize: 25,
       fontFamily: "DM Sans",
       fontWeight: FontWeight.bold,
       color: ColorConstants.background);
+
+  static TextStyle bodyDescription = TextStyle(
+    fontSize: 16.0,
+    fontFamily: "DM Sans",
+    color: Colors.grey,
+  );
 }

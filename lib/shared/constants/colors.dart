@@ -12,6 +12,7 @@ class ColorConstants {
   static Color white = Color(0xFFFFFFFF);
   static Color background = Color(0xFFEEEEE0);
   static Color appColor = Color(0xFF2C6A4A);
+  static Color transparentAppColor = Color(0x9F2C6A4A);
   static Color textFieldBg = Color(0xFFECECEC);
   static Color secondaryButtonOnPressed = Color(0x1F2C6A4A);
   static Color primaryButtonOnPressed = Color(0x1FEEEEE0);
