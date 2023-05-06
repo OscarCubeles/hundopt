@@ -9,6 +9,7 @@ import 'package:video_player/video_player.dart';
 import '../../../../shared/constants/colors.dart';
 import '../../../../shared/widgets/app_bar.dart';
 import '../../../shared/constants/string_constants.dart';
+import '../../../shared/constants/styles.dart';
 import '../../../shared/widgets/app_page.dart';
 import '../../../shared/widgets/video_player_item.dart';
 import '../../home/home_controller.dart';
@@ -53,80 +54,117 @@ class ExploreTab extends GetView<ExploreController> {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        child: PageView.builder(
-          controller: PageController(),
-          scrollDirection: Axis.vertical,
-          itemCount: controller.dogList.length,
-          itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/example_dog.jpg"),
-                ),
-              ),
-              child: GestureDetector(
-                onTap: () => print("hola"),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                                Colors.black.withOpacity(0.0),
-                                Colors.transparent,
-                              ],
-                            ),
-                          ),
-                          child: GestureDetector(
-                            onTap: () => print("tapped colunm"),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0,0,0,20.0),
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+        child: Obx(() => PageView.builder(
+              controller: PageController(),
+              scrollDirection: Axis.vertical,
+              onPageChanged: controller.changeTextColor,
+              itemCount: controller.dogList.length,
+              itemBuilder: (context, index) {
+                TextTheme textTheme = Theme.of(context).textTheme;
+                return Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(controller.dogList[index].videoUrl),
+                    ),
+                  ),
+                  child: GestureDetector(
+                    onTap: () => print("hola"),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Colors.black.withOpacity(0.6),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                              child: GestureDetector(
+                                onTap: () => print("tapped colunm"),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 0, 0, 20.0),
+                                      child: Row(
                                         children: [
-                                          Text("Kira"),
-                                          Text("Carrer Urgell 201"),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                  controller
+                                                      .dogList[index].name,
+                                                  style: controller
+                                                          .isWhite.value
+                                                      ? Styles.nameLabelWhite
+                                                      : Styles.nameLabelBlack),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    CupertinoIcons
+                                                        .location_solid,
+                                                    color:
+                                                        controller.isWhite.value
+                                                            ? ColorConstants
+                                                                .background
+                                                            : Colors.black87,
+                                                  ),
+                                                  Text(
+                                                    controller.dogList[index]
+                                                        .location,
+                                                    style: controller.isWhite.value
+                                                        ? Styles
+                                                            .locationLabelWhite
+                                                        : Styles
+                                                            .locationLabelBlack,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          Spacer(),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 0, 10, 20),
+                                            child: Obx(
+                                              () => LikeButton(
+                                                  size: 50,
+                                                  isLiked:
+                                                      controller.isLiked.value),
+                                            ),
+                                          ),
+                                          SizedBox(width: 8),
                                         ],
                                       ),
-                                      Spacer(),
-                                      Obx(
-                                            () => LikeButton(
-                                            size: 50,
-                                            isLiked: controller.isLiked.value),
-                                      ),
-                                      SizedBox(width: 8),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          )),
-                    ),
-                    /*Positioned.fill(
+                              )),
+                        ),
+                        /*Positioned.fill(
                       child: InkWell(
                         onTap: () => print("tapped"),
                         onDoubleTap: controller.likeDog,
                       ),
                     ),*/
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            )),
       ),
     );
   }
