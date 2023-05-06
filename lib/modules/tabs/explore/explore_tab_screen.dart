@@ -57,7 +57,6 @@ class ExploreTab extends GetView<ExploreController> {
         child: Obx(() => PageView.builder(
               controller: PageController(),
               scrollDirection: Axis.vertical,
-              onPageChanged: controller.changeTextColor,
               itemCount: controller.dogList.length,
               itemBuilder: (context, index) {
                 TextTheme textTheme = Theme.of(context).textTheme;
@@ -77,12 +76,13 @@ class ExploreTab extends GetView<ExploreController> {
                           child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: Colors.red,
                                 gradient: LinearGradient(
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter,
                                   colors: [
-                                    Colors.black.withOpacity(0.6),
+                                    Colors.black.withOpacity(1),
+                                    Colors.transparent,
+                                    Colors.transparent,
                                     Colors.transparent,
                                   ],
                                 ),
@@ -106,29 +106,20 @@ class ExploreTab extends GetView<ExploreController> {
                                               Text(
                                                   controller
                                                       .dogList[index].name,
-                                                  style: controller
-                                                          .isWhite.value
-                                                      ? Styles.nameLabelWhite
-                                                      : Styles.nameLabelBlack),
+                                                  style: Styles.nameLabelWhite),
                                               Row(
                                                 children: [
                                                   Icon(
                                                     CupertinoIcons
                                                         .location_solid,
-                                                    color:
-                                                        controller.isWhite.value
-                                                            ? ColorConstants
-                                                                .background
-                                                            : Colors.black87,
+                                                    color: ColorConstants
+                                                        .background,
                                                   ),
                                                   Text(
                                                     controller.dogList[index]
                                                         .location,
-                                                    style: controller.isWhite.value
-                                                        ? Styles
-                                                            .locationLabelWhite
-                                                        : Styles
-                                                            .locationLabelBlack,
+                                                    style: Styles
+                                                        .locationLabelWhite,
                                                   ),
                                                 ],
                                               ),

@@ -18,8 +18,6 @@ class ExploreController extends GetxController {
   List<Dog> get dogList => _dogList.value;
   late VideoPlayerController videoController;
   RxBool isLiked = false.obs;
-  Rx<Color> _textColor = ColorConstants.background.obs;
-  RxBool isWhite = false.obs;
   GlobalKey _globalKey = GlobalKey();
   VideoPlayerController get videoPlayerController1 => videoController;
 
@@ -51,27 +49,7 @@ class ExploreController extends GetxController {
   }
 
 
-  void changeTextColor (int index) async {
-    print(index);
-    PaletteGenerator paletteGenerator =
-        await PaletteGenerator.fromImageProvider(
-            AssetImage(dogList[index].videoUrl));
-    final dominantColor = paletteGenerator.dominantColor?.color;
-    if (dominantColor != null) {
-      // Use a relative luminance threshold to decide the text color
-      final luminance = dominantColor.computeLuminance();
-      if (luminance > 0.5) {
-        _textColor.value = Colors.black;
-        isWhite.value = false;
-      } else {
-        _textColor.value = ColorConstants.background;
-        isWhite.value = true;
-      }
-    } else {
-      _textColor.value = ColorConstants.background;
-      isWhite.value = true;
-    }
-  }
+
 
 
   void likeDog() {
