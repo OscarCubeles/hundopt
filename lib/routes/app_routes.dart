@@ -12,4 +12,5 @@ abstract class Routes {
   static const PERSONALITY_FORM = '/personality_from';
   static const ONBOARDING = '/onboarding';
   static const EDIT_PROFILE = '/edit_profile';
+  static const DOG_INFO = '/dog_info';
 }

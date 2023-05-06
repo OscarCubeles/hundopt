@@ -11,6 +11,7 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../models/dog.dart';
+import '../../../routes/app_pages.dart';
 
 class ExploreController extends GetxController {
   final Rx<List<Dog>> _dogList = Rx<List<Dog>>([]);
@@ -18,7 +19,6 @@ class ExploreController extends GetxController {
   List<Dog> get dogList => _dogList.value;
   late VideoPlayerController videoController;
   RxBool isLiked = false.obs;
-  GlobalKey _globalKey = GlobalKey();
   VideoPlayerController get videoPlayerController1 => videoController;
 
   @override
@@ -36,7 +36,7 @@ class ExploreController extends GetxController {
         videoUrl: "assets/images/kira-dog3.JPG",
         location: "Barcelona"));
     addDog(Dog(
-        name: "Kira",
+        name: "Andresitoooo",
         videoUrl: "assets/images/kira-dog4.JPG",
         location: "Barcelona"));
     addDog(Dog(
@@ -50,6 +50,9 @@ class ExploreController extends GetxController {
 
 
 
+  void navigateToDogInfo(int index){
+    Get.toNamed(Routes.DOG_INFO, arguments: dogList[index]);
+  }
 
 
   void likeDog() {

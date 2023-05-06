@@ -59,7 +59,6 @@ class ExploreTab extends GetView<ExploreController> {
               scrollDirection: Axis.vertical,
               itemCount: controller.dogList.length,
               itemBuilder: (context, index) {
-                TextTheme textTheme = Theme.of(context).textTheme;
                 return Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -68,7 +67,7 @@ class ExploreTab extends GetView<ExploreController> {
                     ),
                   ),
                   child: GestureDetector(
-                    onTap: () => print("hola"),
+                    onTap: () => controller.navigateToDogInfo(index),
                     child: Stack(
                       children: [
                         Align(
