@@ -1,13 +1,11 @@
 import 'package:hundopt/modules/auth/auth.dart';
-import 'package:hundopt/modules/dog_info/dog_info_screen.dart';
+import 'package:hundopt/modules/dog_info/dog_info.dart';
 import 'package:hundopt/modules/home/home.dart';
+import 'package:hundopt/modules/individual_chat/individual_chat.dart';
 import 'package:hundopt/modules/modules.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/onboarding/onboarding.dart';
-import 'package:hundopt/modules/settings/edit_profile_screen.dart';
 import 'package:hundopt/modules/settings/settings.dart';
-
-import '../modules/dog_info/dog_info_binding.dart';
 
 part 'app_routes.dart';
 
@@ -73,6 +71,18 @@ class AppPages {
         name: Routes.DOG_INFO,
         binding: DogInfoBinding(),
         transition: Transition.fadeIn,
-        page: () => DogInfoScreen())
+        page: () => DogInfoScreen(),
+      children: [
+        GetPage(
+            name: Routes.RESERVED_DOG,
+            page: () => DogReservedScreen(),
+            transition: Transition.fadeIn),
+      ]
+    ),
+    GetPage(
+        name: Routes.INDIVIDUAL_CHAT,
+        binding: IndividualChatBinding(),
+        transition: Transition.fadeIn,
+        page: () => IndividualChatScreen()),
   ];
 }

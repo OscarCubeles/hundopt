@@ -247,10 +247,10 @@ class DogInfoScreen extends GetView<DogInfoController> {
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(0,30,0,30),
+                      padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                       child: AppPrimaryButton(
                           text: "¡Empezar Adopción!",
-                          onPressed: () => print("start adopt")))
+                          onPressed: controller.showConfirmAdoptDialog))
                 ],
               ),
             ),

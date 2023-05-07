@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
+import '../constants/styles.dart';
 
 class AppPrimaryButton extends StatelessWidget {
   const AppPrimaryButton({
@@ -86,14 +87,13 @@ class AppButton extends StatelessWidget{
       width: MediaQuery.of(context).size.width,
       child: TextButton(
         style: ButtonStyle(
-
           backgroundColor:
           MaterialStateProperty.all(buttonColor),
           overlayColor: MaterialStateColor.resolveWith(
                 (states) => buttonColor.withOpacity(0.5),
           ),),
         onPressed: onPressed,
-        child: Text(text, style: Theme.of(context).textTheme.displaySmall),
+        child: Text(text, style: Styles.displaySmall),
       ),
     );
   }

@@ -48,4 +48,19 @@ class Styles {
     fontFamily: "DM Sans",
     color: Colors.grey,
   );
+
+  static TextStyle bodySmall = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    color: Colors.black,
+    fontFamily: "DM Sans",
+  );
+
+  static TextStyle displaySmall = TextStyle(
+    fontSize: 22,
+    fontFamily: "DM Sans",
+    fontWeight: FontWeight.bold,
+    color: ColorConstants.background,
+    overflow: TextOverflow.ellipsis,
+  );
 }

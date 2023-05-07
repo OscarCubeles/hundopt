@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../constants/colors.dart';
 import '../constants/string_constants.dart';
+import '../constants/styles.dart';
 import 'buttons.dart';
 import 'clickable_text.dart';
 
@@ -59,7 +60,7 @@ class NotificationDialog extends StatelessWidget {
                       text,
                       //StringConstants.resetPwdMsg,
                       textAlign: TextAlign.justify,
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Styles.bodySmall,
                     ),
                     Padding(padding: EdgeInsets.all(10)),
                     AppButton(
@@ -76,7 +77,6 @@ class NotificationDialog extends StatelessWidget {
                             uText: underlinedText,
                             text: "",
                             onPressed: onTextPressed))
-                    // TODO: MAke widget of this dialog, change the alignment of the clickabletext and change this onpressed
                   ]),
 
               //margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
