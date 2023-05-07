@@ -14,5 +14,6 @@ abstract class Routes {
   static const EDIT_PROFILE = '/edit_profile';
   static const DOG_INFO = '/dog_info';
   static const RESERVED_DOG = "/reserved";
-  static const INDIVIDUAL_CHAT = '/individual_cat';
+  static const INDIVIDUAL_CHAT = '/individual_chat';
+  static const SHELTER_PROFILE = '/shelter_profile';
 }

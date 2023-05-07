@@ -8,9 +8,12 @@ import '../constants/string_constants.dart';
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSettings;
   final VoidCallback? onSettingsPressed;
+  final bool? showLike;
+  final VoidCallback? onLikePressed; // TODO: add like button here
+
 
   const MainAppBar(
-      {super.key, this.showSettings = false, this.onSettingsPressed});
+      {super.key, this.showSettings = false, this.onSettingsPressed, this.showLike, this.onLikePressed});
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           )),
     );
   }
+
 
   Widget settingsIcon() {
     return showSettings

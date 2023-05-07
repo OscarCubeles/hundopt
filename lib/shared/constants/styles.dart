@@ -63,4 +63,11 @@ class Styles {
     color: ColorConstants.background,
     overflow: TextOverflow.ellipsis,
   );
+
+  static TextStyle timestampGray = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.normal,
+    color: ColorConstants.chatTextGray,
+    fontFamily: "DM Sans",
+  );
 }

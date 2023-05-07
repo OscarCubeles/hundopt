@@ -7,6 +7,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/modules/individual_chat/individual_chat_controller.dart';
 
 import '../../shared/constants/colors.dart';
+import '../../shared/widgets/chat_body.dart';
 
 class IndividualChatScreen extends GetView<IndividualChatController> {
   const IndividualChatScreen({super.key});
@@ -57,89 +58,29 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                   Spacer(),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://www.countryflags.io/us/flat/64.png'),
-                      radius: 20,
-                    ),
+                    child: GestureDetector(
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://www.countryflags.io/us/flat/64.png'),
+                        radius: 20,
+                      ),
+                        onTap: controller.navigateToShelter,
+                    )
                   )
                 ],
               ),
             ),
             Expanded(
                 child: ListView.builder(
-                  controller: controller.scrollController,
+              controller: controller.scrollController,
               itemCount: 20,
               itemBuilder: (context, index) {
-                if (index % 2 == 0) {
-                  // received message
-                  return Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            padding: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Colors.lightGreen,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(16),
-                              ),
-                              border: Border.all(color: Colors.red),
-                            ),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel velit convallis, viverra arcu ac, ultricies odio.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            '11:30 AM',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                } else {
-                  // sent message
-                  return Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            padding: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Colors.lightGreen,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(16),
-                              ),
-                              border: Border.all(color: Colors.red),
-                            ),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel velit convallis, viverra arcu ac, ultricies odio.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            '11:30 AM',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }
+                // received message
+                return ChatBody(
+                  isOwnMessage: index % 2 == 0,
+                  hour: '10:00 AM',
+                  text: 'Lorem ipsum lorem ipsum',
+                );
               },
             )),
             Container(

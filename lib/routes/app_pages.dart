@@ -6,6 +6,7 @@ import 'package:hundopt/modules/modules.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/onboarding/onboarding.dart';
 import 'package:hundopt/modules/settings/settings.dart';
+import 'package:hundopt/modules/shelter_profile/shelter_profile.dart';
 
 part 'app_routes.dart';
 
@@ -84,5 +85,10 @@ class AppPages {
         binding: IndividualChatBinding(),
         transition: Transition.fadeIn,
         page: () => IndividualChatScreen()),
+    GetPage(
+        name: Routes.SHELTER_PROFILE,
+        binding: ShelterProfileBinding(),
+        transition: Transition.fadeIn,
+        page: () => ShelterProfileScreen()),
   ];
 }
