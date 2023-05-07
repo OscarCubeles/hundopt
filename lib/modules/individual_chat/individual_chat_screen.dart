@@ -32,41 +32,46 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                     color: ColorConstants.appColor,
                   ),
                   SizedBox(width: 8),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      'https://picsum.photos/id/237/200/200',
-                      width: 48,
-                      height: 48,
+                  GestureDetector(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.network(
+                        'https://picsum.photos/id/237/200/200',
+                        width: 48,
+                        height: 48,
+                      ),
                     ),
+                    onTap: controller.getToDogInfo,
                   ),
                   SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'John Doe',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'United States',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
+                  GestureDetector(
+                    onTap: controller.getToDogInfo,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'John Doe',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'United States',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
                   Spacer(),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                    child: GestureDetector(
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://www.countryflags.io/us/flat/64.png'),
-                        radius: 20,
-                      ),
+                      padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                      child: GestureDetector(
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              'https://www.countryflags.io/us/flat/64.png'),
+                          radius: 20,
+                        ),
                         onTap: controller.navigateToShelter,
-                    )
-                  )
+                      ))
                 ],
               ),
             ),
