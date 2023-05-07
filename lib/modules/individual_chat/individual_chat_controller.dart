@@ -21,6 +21,10 @@ class IndividualChatController extends GetxController{
       curve: Curves.easeOut,
     );
   }
+
+  void navigateToChats(){ // TODO: Change this
+    Get.offNamed(Routes.HOME, arguments: 1);
+  }
   
   void navigateToShelter(){
     Get.toNamed(Routes.SHELTER_PROFILE);

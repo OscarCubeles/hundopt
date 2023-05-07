@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
@@ -22,8 +21,11 @@ class HomeScreen extends GetView<HomeController> {
   Widget _buildWidget(BuildContext context) {
     return Scaffold(
       body: Container(
-        child:
-        AppTabBar(screens: _buildScreens(), onItemSelected: (index) => controller.switchTab(index), currentItemColor: currentColor()),
+        child: AppTabBar(
+            controller: controller.persistentTabController,
+            screens: _buildScreens(),
+            onItemSelected: (index) => controller.switchTab(index),
+            currentItemColor: currentColor()),
       ),
     );
   }
@@ -37,7 +39,4 @@ class HomeScreen extends GetView<HomeController> {
   List<Widget> _buildScreens() {
     return const [ExploreTab(), ChatTab(), FavouriteTab(), ProfileTab()];
   }
-
-
-
 }

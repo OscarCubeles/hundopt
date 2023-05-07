@@ -9,17 +9,19 @@ class AppTabBar extends StatelessWidget {
   final List<Widget> screens;
   final Function(int)? onItemSelected;
   final Color currentItemColor;
+  final PersistentTabController controller;
 
   const AppTabBar(
       {super.key,
       required this.screens,
       required this.onItemSelected,
-      required this.currentItemColor});
+      required this.currentItemColor, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: PersistentTabView(context,
+            controller: controller,
             screens: screens,
             confineInSafeArea: true,
             backgroundColor: ColorConstants.background,

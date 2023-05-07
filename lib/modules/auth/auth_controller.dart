@@ -236,7 +236,7 @@ class AuthController extends GetxController {
 
   // TODO: Make API Call Checks
   void login() {
-    Get.toNamed(Routes.HOME);
+    Get.toNamed(Routes.HOME, arguments: 0);
   }
 
   // TODO: Make API Checks

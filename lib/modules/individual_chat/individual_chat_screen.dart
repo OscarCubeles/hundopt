@@ -28,17 +28,18 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: () => Get.back(),
+                    onPressed: controller.navigateToChats,
                     color: ColorConstants.appColor,
                   ),
                   SizedBox(width: 8),
                   GestureDetector(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        'https://picsum.photos/id/237/200/200',
+                      child: Image.asset(
+                        'assets/images/kira-dog.JPG',
                         width: 48,
                         height: 48,
+                          fit: BoxFit.cover
                       ),
                     ),
                     onTap: controller.getToDogInfo,
@@ -50,13 +51,13 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'John Doe',
-                          style: TextStyle(fontSize: 16),
+                          controller.dog.name,
+                          style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         SizedBox(height: 4),
                         Text(
-                          'United States',
-                          style: TextStyle(color: Colors.grey),
+                          'Perrera Test', // TODO: Change the text for the shelter name
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -66,8 +67,8 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                       padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
                       child: GestureDetector(
                         child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              'https://www.countryflags.io/us/flat/64.png'),
+                          backgroundImage: AssetImage(
+                              'assets/images/perrera-test.png'),
                           radius: 20,
                         ),
                         onTap: controller.navigateToShelter,

@@ -71,9 +71,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                 child: IconButton(
                   icon: Icon(Icons.arrow_back),
                   color: ColorConstants.background,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: controller.navigateToExplore,
                 ),
               ),
               Positioned(

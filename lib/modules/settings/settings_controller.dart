@@ -63,7 +63,7 @@ class SettingsController extends GetxController {
   }
 
   void navigateToHome() {
-    Get.toNamed(Routes.HOME, arguments: this);
+    Get.offNamed(Routes.HOME, arguments: 3);
   }
 
   void toPersonalityForm() {

@@ -17,38 +17,6 @@ import '../../home/home_controller.dart';
 class ExploreTab extends GetView<ExploreController> {
   const ExploreTab({super.key});
 
-/*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: PageView.builder(
-          controller: PageController(),
-          itemCount: 3,
-          onPageChanged: (index) => controller.onPageChanged(index),
-          itemBuilder: (context, index) {
-
-
-            return GestureDetector(
-              onTap: () {
-                if (controller.videoController.value.isPlaying) {
-                  controller.videoController.pause();
-                  print("object");
-                } else {
-                  controller.videoController.play();
-                  print("s");
-                }
-              },
-              child: VideoPlayer(controller.videoController),
-
-            );
-          },
-        ),
-      ),
-    );
-  }*/
-
-  // Aquest funciona correctament l'unic que li falla es que es per imatges i no per videos
   @override
   Widget build(BuildContext context) {
     return Scaffold(

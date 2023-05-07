@@ -29,6 +29,10 @@ class DogInfoController extends GetxController {
     imageIndex.value = index;
   }
 
+  void navigateToExplore(){
+    Get.toNamed(Routes.HOME, arguments: 0);
+  }
+
   void addFeature(DogFeature dogFeature) {
     positiveDogFeatures.add(dogFeature);
     negativeDogFeatures.add(dogFeature);

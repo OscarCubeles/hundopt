@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/tabs/tabs.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeController extends GetxController {
+  int newTab = Get.arguments;
+  late PersistentTabController persistentTabController;
+
   final count = 0.obs;
   var currentTab = MainTabs.explore.obs;
   late ExploreTab exploreTab;
@@ -21,14 +25,16 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     initTabs();
-    currentTab.value = MainTabs.explore;
+    persistentTabController = PersistentTabController(initialIndex: Get.arguments);
+    currentTab.value = tabMap[newTab]!;
   }
 
 
   @override
   void onReady() { // called after the widget is rendered on screen
     super.onReady();
-    currentTab.value = MainTabs.explore;
+    currentTab.value = tabMap[newTab]!;
+    print(currentTab.value);
   }
 
   @override

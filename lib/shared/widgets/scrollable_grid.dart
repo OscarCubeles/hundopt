@@ -16,39 +16,42 @@ class ScrollableGrid extends StatelessWidget{
           crossAxisCount: 2,
           childAspectRatio: 0.8,
           children: List.generate(20, (index) {
-            return GridTile(
-              child: Container(
-                  margin: EdgeInsets.fromLTRB(5,20,5,0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width, // set maximum
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: SizedBox.fromSize(
-                            child: AspectRatio(
-                              child: Image.asset('assets/images/example_dog.jpg', fit: BoxFit.fill),
-                              aspectRatio: 1 / 1,
+            return GestureDetector(
+              onTap: () => print("Tile pressed $index"), // Add a function to move to the dog or shelter
+              child: GridTile(
+                child: Container(
+                    margin: EdgeInsets.fromLTRB(5,20,5,0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width, // set maximum
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SizedBox.fromSize(
+                              child: AspectRatio(
+                                child: Image.asset('assets/images/example_dog.jpg', fit: BoxFit.fill),
+                                aspectRatio: 1 / 1,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Kira", style: Theme.of(context).textTheme.headlineMedium,),
-                            LikeButton()
-                          ],
-                        ),
-                      )
-                    ],
-                  )),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Kira", style: Theme.of(context).textTheme.headlineMedium,),
+                              LikeButton()
+                            ],
+                          ),
+                        )
+                      ],
+                    )),
+              )
             );
           }),
         ),

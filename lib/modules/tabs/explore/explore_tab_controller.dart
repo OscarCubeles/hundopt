@@ -51,7 +51,7 @@ class ExploreController extends GetxController {
 
 
   void navigateToDogInfo(int index){
-    Get.toNamed(Routes.DOG_INFO, arguments: dogList[index]);
+    Get.offNamed(Routes.DOG_INFO, arguments: dogList[index]);
   }
 
 
