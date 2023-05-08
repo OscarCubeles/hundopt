@@ -61,7 +61,7 @@ class ProfileTab extends GetView<ProfileController> {
                 ],
               ),
             ),
-            HorizontalBar(),
+            HorizontalBar(isLeft: true),
             Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
             Expanded(
               child: SingleChildScrollView(

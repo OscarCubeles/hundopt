@@ -1,6 +1,12 @@
-class Shelter{
+class Shelter {
   String name;
   String email;
   String phone;
-  Shelter({required this.name, required this.email, required this.phone});
+  String location;
+
+  Shelter(
+      {required this.name,
+      required this.email,
+      required this.phone,
+      required this.location});
 }

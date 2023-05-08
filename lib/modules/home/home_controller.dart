@@ -71,4 +71,6 @@ class HomeController extends GetxController {
   Widget buildContent() {
     return contentMap[currentTab.value] ?? exploreTab;
   }
+
+
 }

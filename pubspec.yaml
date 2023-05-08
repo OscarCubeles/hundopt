@@ -49,6 +49,7 @@ dependencies:
   chewie: ^1.4.0
   palette_generator: ^0.3.3+2
   image: ^4.0.16
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   flutter_test:

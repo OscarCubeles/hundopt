@@ -70,4 +70,11 @@ class Styles {
     color: ColorConstants.chatTextGray,
     fontFamily: "DM Sans",
   );
+
+  static TextStyle headlineMedium = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+    fontFamily: "DM Sans",
+  );
 }
