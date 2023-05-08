@@ -7,7 +7,14 @@ import '../../models/shelter.dart';
 import '../../shared/constants/styles.dart';
 
 class ShelterProfileController extends GetxController {
-  // TODO: Add the shelter to the tab screens
+  List<String> socialMediaList = [];
+  RxBool isBarLeft = true.obs;
+  Shelter shelter = Shelter(
+      name: 'Perrera feliz',
+      email: 'info@perrera.com',
+      phone: '+34 665787221',
+      location: "Barcelona Carrer Cases 21",
+      hasSocialNetworks: true);
 
   Map<String, IconData> socialMediaMap = {
     'Twitter': FontAwesomeIcons.twitter,
@@ -16,19 +23,17 @@ class ShelterProfileController extends GetxController {
     'TikTok': FontAwesomeIcons.tiktok,
   };
 
-  List<String> socialMediaList = [];
-
-  RxBool isBarLeft = true.obs;
-  Shelter shelter = Shelter(
-      name: 'Perrera feliz',
-      email: 'info@perrera.com',
-      phone: '+34 665787221',
-      location: "Barcelona Carrer Cases 21");
+  final socialMediaColorMap = {
+    'Twitter': Colors.blue,
+    'Facebook': Colors.blue[900],
+    'Instagram': Colors.pink,
+    'TikTok': Colors.black,
+  };
 
   @override
   void onInit() {
     isBarLeft.value = true;
-    socialMediaList = socialMediaMap.keys.toList();
+    //socialMediaList = socialMediaMap.keys.toList();
   }
 
   void navigateBack() {
@@ -122,32 +127,34 @@ class ShelterProfileController extends GetxController {
         // TODO: Add an if statement to check if it has RRSS
         Padding(padding: EdgeInsets.all(5)),
 
-        //getSocialNetworks(), // TODO: Change this to make RRSS better in UI
+        //getSocialNetworks() // TODO : Change this if it does not have social media
       ],
     ));
   }
 
-  Widget getSocialNetworks(){
+  Widget getSocialNetworks() {
     return Container(
       height: 500,
-      color: Colors.red,
       child: ListView.builder(
-        itemCount: 4,
+        itemCount: socialMediaList.length,
         itemBuilder: (context, index) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(
-                socialMediaMap[socialMediaList[index]],
-                color: Colors.lightBlue,
-              ),
-              Padding(padding: EdgeInsets.all(10)),
-              Text(
-                "@perreraFelix",
-                style: Styles.bodySmall,
-              ),
-            ],
-          );
+          String socialMediaName = socialMediaMap.keys.elementAt(index);
+          return Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    socialMediaMap[socialMediaList[index]],
+                    color: socialMediaColorMap[socialMediaName],
+                  ),
+                  Padding(padding: EdgeInsets.all(10)),
+                  Text(
+                    "@perreraFelix",
+                    style: Styles.bodySmall,
+                  ),
+                ],
+              ));
         },
       ),
     );
