@@ -31,7 +31,7 @@ class ExploreTab extends GetView<ExploreController> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage(controller.dogList[index].videoUrl),
+                      image: NetworkImage(controller.dogList[index].videoUrl),
                     ),
                   ),
                   child: GestureDetector(

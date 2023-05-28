@@ -50,6 +50,10 @@ dependencies:
   palette_generator: ^0.3.3+2
   image: ^4.0.16
   font_awesome_flutter: ^10.4.0
+  http: ^0.13.6
+  firebase_auth: ^4.6.1
+
+  cloud_firestore: ^4.7.1
 
 dev_dependencies:
   flutter_test:

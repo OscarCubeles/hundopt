@@ -1,13 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'routes/routes.dart';
 import 'app_binding.dart';
 import 'lang/lang.dart';
 import 'themes/themes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'dependency_injection.dart';
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(App());
   await DenpendencyInjection.init();
 }

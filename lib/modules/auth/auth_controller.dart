@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
+import '../../api/api_repository.dart';
+import '../../api/firebase_core/auth.dart';
+import '../../models/request/login_request.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/dialogs.dart';
@@ -19,11 +25,14 @@ class AuthController extends GetxController {
   RxString rPwd = RxString('');
   RxString lEmail = RxString('');
   RxString lPwd = RxString('');
+  late final ApiRepository apiRepository;
+
   Rxn<Function()> submitFunc = Rxn<Function()>(() => {});
 
   @override
   void onInit() {
     super.onInit();
+    apiRepository = Get.find();
     initFormFieldValidators();
   }
 
@@ -79,7 +88,7 @@ class AuthController extends GetxController {
     lPwdErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
     if (val.isNotEmpty) {
-      if (lengthOK(val, lPwdErrText)) {
+      if (lengthOK(val, lPwdErrText, minLen: 3)) {
         submitFunc.value = () {};
         lPwdErrText.value = "";
       }
@@ -235,13 +244,47 @@ class AuthController extends GetxController {
   }
 
   // TODO: Make API Call Checks
-  void login() {
-    Get.toNamed(Routes.HOME, arguments: 0);
+  Future<void> login() async {
+    try {
+      EasyLoading.show(status: 'Loading...'); // Show the loading widget
+
+      await signInWithEmailAndPassword();
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        Get.toNamed(Routes.HOME, arguments: 0);
+        print("object");
+      }
+    } finally {
+      EasyLoading.dismiss(); // Hide the loading widget
+    }
+  }
+
+  Future<void> loginApi(String email, String password) async {
+
+    final res = await apiRepository.login(
+      LoginRequest(
+        email: lEmail.value,
+        password: lPwd.value,
+      ),
+    );
+    print("Response: $res");
   }
 
   // TODO: Make API Checks
   void register() {
     print("Register");
     Get.toNamed(Routes.ONBOARDING);
+  }
+
+  Future<void> signInWithEmailAndPassword() async {
+    try {
+      await Auth().signInWithEmailAndPassword(
+        email: lEmail.value,
+        password: lPwd.value,
+      );
+    } on FirebaseAuthException catch (e) {
+      EasyLoading.dismiss(); // Hide the loading widget if an error occurs
+      lPwdErrText.value = e.message;
+    }
   }
 }

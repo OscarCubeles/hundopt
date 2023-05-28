@@ -25,7 +25,7 @@ class ExploreController extends GetxController {
   void onInit() {
     addDog(Dog(
         name: "Kira",
-        videoUrl: "assets/images/kira-dog.JPG",
+        videoUrl: "https://firebasestorage.googleapis.com/v0/b/hundopt-db.appspot.com/o/kira-dog.JPG?alt=media&token=5b5afaca-cff8-40e9-9e78-8939aa2891b6",
         location: "Barcelona"));
     addDog(Dog(
         name: "Kira",

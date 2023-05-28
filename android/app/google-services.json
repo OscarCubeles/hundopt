@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "448094776331",
+    "project_id": "hundopt-db",
+    "storage_bucket": "hundopt-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448094776331:android:acdf1603be37ee30a1ab0e",
+        "android_client_info": {
+          "package_name": "com.salle.hundopt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP1lC0P5qJjE7QyTQv3XsJ-qgNtgWY25M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
