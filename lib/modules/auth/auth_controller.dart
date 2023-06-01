@@ -1,14 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 import '../../api/api_repository.dart';
 import '../../api/firebase_core/auth.dart';
-import '../../models/request/login_request.dart';
+import '../../api/firebase_core/user_repository.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/utils/validations.dart';
 import '../../shared/widgets/dialogs.dart';
 
 // TODO: source of the form code: https://stackoverflow.com/questions/64544571/flutter-getx-forms-validation
@@ -44,7 +45,7 @@ class AuthController extends GetxController {
   @override
   void onClose() {}
 
-  void initFormFieldValidators(){
+  void initFormFieldValidators() {
     debounce<String>(fEmail, fEmailValidations,
         time: const Duration(milliseconds: 500));
     debounce<String>(lEmail, lEmailValidations,
@@ -59,14 +60,13 @@ class AuthController extends GetxController {
         time: const Duration(milliseconds: 500));
   }
 
-
   void fEmailValidations(String val) async {
     fEmailErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
     if (val.isNotEmpty) {
-      if (isValidEmail(val, fEmailErrText)) {
+      if (Validations.isValidEmail(val, fEmailErrText)) {
         submitFunc.value = () {
-          showResetPwdDialog();
+          sendResetPwdEmail();
         };
         fEmailErrText.value = "";
       }
@@ -76,8 +76,10 @@ class AuthController extends GetxController {
   void lEmailValidations(String val) async {
     lEmailErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
-    if (val.isNotEmpty ) {
-      if (isValidEmail(val, lEmailErrText)/*&& await available(val)*/) { //FUTURE TODO: Change available function to check if the email exists
+    if (val.isNotEmpty) {
+      if (Validations.isValidEmail(
+          val, lEmailErrText) /*&& await available(val)*/) {
+        //FUTURE TODO: Change available function to check if the email exists
         submitFunc.value = () {};
         lEmailErrText.value = "";
       }
@@ -88,7 +90,7 @@ class AuthController extends GetxController {
     lPwdErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
     if (val.isNotEmpty) {
-      if (lengthOK(val, lPwdErrText, minLen: 3)) {
+      if (Validations.lengthOK(val, lPwdErrText, minLen: 3)) {
         submitFunc.value = () {};
         lPwdErrText.value = "";
       }
@@ -99,7 +101,9 @@ class AuthController extends GetxController {
     rEmailErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
     if (val.isNotEmpty) {
-      if (isValidEmail(val, rEmailErrText/*&& await available(val)*/)) { //FUTURE TODO: Change available function to check if the email exists)) {
+      if (Validations.isValidEmail(
+          val, rEmailErrText /*&& await available(val)*/)) {
+        //FUTURE TODO: Change available function to check if the email exists)) {
         submitFunc.value = () {};
         rEmailErrText.value = "";
       }
@@ -110,7 +114,9 @@ class AuthController extends GetxController {
     rUsernameErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
     if (val.isNotEmpty) {
-      if (lengthOK(val, rUsernameErrText/*&& await available(val)*/)) { //FUTURE TODO: Change available function to check if the username exists)) {
+      if (Validations.lengthOK(
+          val, rUsernameErrText /*&& await available(val)*/)) {
+        //FUTURE TODO: Change available function to check if the username exists)) {
         submitFunc.value = () {};
         rUsernameErrText.value = "";
       }
@@ -121,39 +127,12 @@ class AuthController extends GetxController {
     rPwdErrText.value = ""; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
     if (val.isNotEmpty) {
-      if (isValidPassword(val, rPwdErrText) && lengthOK(val, rPwdErrText)) {
+      if (Validations.isValidPassword(val, rPwdErrText) &&
+          Validations.lengthOK(val, rPwdErrText)) {
         submitFunc.value = () {};
         rPwdErrText.value = "";
       }
     }
-  }
-
-  bool isValidEmail(String val, RxnString errText) {
-    if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(val)) {
-      errText.value = 'Formato de email no válido.';
-      return false;
-    }
-    return true;
-  }
-
-  bool isValidPassword(String val, RxnString errText){
-    if (!RegExp(
-        r"^(?=.*?[0-9])(?=.*?[^\w\s]).{1,}$")
-        .hasMatch(val)) {
-      errText.value = 'Al menos un número y un carácter especial.';
-      return false;
-    }
-    return true;
-  }
-
-  bool lengthOK(String val, RxnString err, {int minLen = 8}) {
-    if (val.length < minLen) {
-      err.value = 'La longitud mínima es de 8 caracteres';
-      return false;
-    }
-    return true;
   }
 
   Future<bool> available(String val) async {
@@ -204,76 +183,78 @@ class AuthController extends GetxController {
     };
   }
 
-  void sendResetPwdEmail() {
-    // TODO: Make API Call to reset password
-    print("Email sent");
-  }
-
-  void showResetPwdDialog() {
-    showDialog(
-        context: Get.context!,
-        builder: (BuildContext context) {
-          return NotificationDialog(
-            title: StringConstants.sentEmailLabel,
-            text: StringConstants.resetPwdText,
-            buttonText: StringConstants.continueLabel,
-            underlinedText: "",
-            buttonColor: ColorConstants.appColor,
-            onPressed: () => navigateToLogin(),
-            onClose: () => Get.back(),
-            onTextPressed: ()=>{},
-          );
-        });
-    sendResetPwdEmail();
-  }
-
-  void resetPwd() {
-    showResetPwdDialog();
-  }
-
-  void navigateToLogin() {
-    Get.toNamed(Routes.AUTH + Routes.LOGIN, arguments: this);
-  }
-
-  void navigateToRegister() {
-    Get.toNamed(Routes.AUTH + Routes.REGISTER, arguments: this);
-  }
-
-  void navigateToForgotPwd() {
-    Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD, arguments: this);
-  }
-
-  // TODO: Make API Call Checks
-  Future<void> login() async {
+  void sendResetPwdEmail() async {
     try {
-      EasyLoading.show(status: 'Loading...'); // Show the loading widget
-
-      await signInWithEmailAndPassword();
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        Get.toNamed(Routes.HOME, arguments: 0);
-        print("object");
-      }
+      EasyLoading.show(status: 'Loading...');
+      await sendPasswordResetEmail();
     } finally {
-      EasyLoading.dismiss(); // Hide the loading widget
+      EasyLoading.dismiss();
+    }
+
+  }
+
+  Future<void> sendPasswordResetEmail() async {
+    try {
+      await Auth().sendPasswordResetEmail(
+        email: fEmail.value,
+      );
+      showDialog(
+          context: Get.context!,
+          builder: (BuildContext context) {
+            return NotificationDialog(
+              title: StringConstants.sentEmailLabel,
+              text: StringConstants.resetPwdText,
+              buttonText: StringConstants.continueLabel,
+              underlinedText: "",
+              buttonColor: ColorConstants.appColor,
+              onPressed: () => navigateToLogin(),
+              onClose: () => Get.back(),
+              onTextPressed: () => {},
+            );
+          });
+    } on FirebaseAuthException catch (e) {
+      fEmailErrText.value = e.message; //TODO: Error messages are in english, should be translated
     }
   }
 
-  Future<void> loginApi(String email, String password) async {
-
-    final res = await apiRepository.login(
-      LoginRequest(
-        email: lEmail.value,
-        password: lPwd.value,
-      ),
-    );
-    print("Response: $res");
+  Future<void> login() async {
+    try {
+      EasyLoading.show(status: 'Loading...');
+      await signInWithEmailAndPassword();
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        // TODO: Create app user
+        Get.toNamed(Routes.HOME, arguments: 0);
+      }
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
 
-  // TODO: Make API Checks
-  void register() {
-    print("Register");
-    Get.toNamed(Routes.ONBOARDING);
+  void register() async {
+    try {
+      EasyLoading.show(status: 'Loading...');
+      await createUserWithEmailAndPassword(); //TODO: Create user profile with this user in firebase storage
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await UserRepository().createUser(rUsername.value, user.email!, user.uid);
+        Get.toNamed(Routes.ONBOARDING);
+      }
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+        email: rEmail.value,
+        password: rEmail.value,
+      );
+    } on FirebaseAuthException catch (e) {
+      lPwdErrText.value = e.message;
+    }
   }
 
   Future<void> signInWithEmailAndPassword() async {
@@ -283,8 +264,20 @@ class AuthController extends GetxController {
         password: lPwd.value,
       );
     } on FirebaseAuthException catch (e) {
-      EasyLoading.dismiss(); // Hide the loading widget if an error occurs
+      EasyLoading.dismiss();
       lPwdErrText.value = e.message;
     }
+  }
+
+  void navigateToLogin() {
+    Get.offAndToNamed(Routes.AUTH + Routes.LOGIN, arguments: this);
+  }
+
+  void navigateToRegister() {
+    Get.offAndToNamed(Routes.AUTH + Routes.REGISTER, arguments: this);
+  }
+
+  void navigateToForgotPwd() {
+    Get.offAndToNamed(Routes.AUTH + Routes.FORGOT_PASSWORD, arguments: this);
   }
 }

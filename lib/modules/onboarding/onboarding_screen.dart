@@ -29,7 +29,7 @@ class OnboardingScreen extends GetView<OnboardingController> {
                   ),
                   Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.01)),
                   Text(StringConstants.welcomeText,
-                      style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.justify,),
+                      style: Styles.bodySmall, textAlign: TextAlign.justify,),
                   Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.091)),
                   AppPrimaryButton(text: StringConstants.fillFormLabel, onPressed: controller.navigateToForm),
                   Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.01)),

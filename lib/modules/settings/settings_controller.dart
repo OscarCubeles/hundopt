@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../api/firebase_core/auth.dart';
 import '../../models/setting_option.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
@@ -109,8 +110,8 @@ class SettingsController extends GetxController {
         });
   }
 
-  void closeSession() {
-    // TODO: Close Session
+  void closeSession() async {
+    await Auth().signOut();
     Get.offNamed(Routes.AUTH);
   }
 

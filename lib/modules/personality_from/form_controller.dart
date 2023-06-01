@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/api/firebase_core/form_repository.dart';
 
+import '../../api/firebase_core/auth.dart';
+import '../../models/personality_form.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/utils/identifiers.dart';
 import '../../shared/widgets/dialogs.dart';
 import '../../shared/widgets/widgets.dart';
 
@@ -92,6 +97,7 @@ class FormController extends GetxController {
       currentQuestion.value++;
     }
     progress.value = (currentQuestion.value) / (questionWidgets.length);
+    print(selectedOptionList);
   }
 
   bool hasDogs() {
@@ -133,7 +139,7 @@ class FormController extends GetxController {
   }
 
   void navigateToHome() {
-    Get.toNamed(Routes.HOME, arguments: this);
+    Get.toNamed(Routes.HOME, arguments: 0);
   }
 
   void processFullName() {
@@ -148,11 +154,22 @@ class FormController extends GetxController {
     widgetFunctions[currentQuestion.value]();
   }
 
-  void submitPersonalityForm() {
+  void submitPersonalityForm() async {
     // TODO: Store all the values in the API :)
     progress.value = 1.0;
+    final PersonalityForm personalityForm = PersonalityForm.fromList(
+        selectedOptionList, nameText.value, Identifiers.generateUUID());
+    await PersonalityFormRepository().uploadForm(personalityForm);
+    // TODO: Add the ID of the user here
+    final user = FirebaseAuth.instance.currentUser;
+    print(user?.uid);
+    print(user?.email);
     showFinishedDialog();
   }
+
+
+
+
 
   void previousQuestion() {
     if (currentQuestion.value == 0) {

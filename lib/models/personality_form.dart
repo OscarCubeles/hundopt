@@ -1,4 +1,4 @@
-enum MoneyRange { lessThan50, between50And150, moreThan150, notDefined }
+enum Budget { lessThan50, between50And150, moreThan150, notDefined }
 
 enum Personalities {
   sociable,
@@ -13,25 +13,30 @@ enum HouseType { smallFlat, bigFlat, smallHouse, bigHouse, notDefined }
 
 enum HouseChangeFrequency { lessThanTwoYears, fiveYears, never, notDefined }
 
-enum TimeAvailability { lessThanTwo, betweenTwoAndFour, moreThanFour, notDefined }
+enum TimeAvailability {
+  lessThanTwo,
+  betweenTwoAndFour,
+  moreThanFour,
+  notDefined
+}
 
-enum ActivityLevel { notActive, active, veryActive,notDefined }
+enum ActivityLevel { notActive, active, veryActive, notDefined }
 
 class PersonalityForm {
+  String id;
   String name;
   bool hasPets;
-  bool coexistsWithDog;
-  Personalities coexistingPersonality;
-  MoneyRange budget;
-  HouseType houseType;
-  HouseChangeFrequency changeFrequency;
-  TimeAvailability timeAvailability;
-  ActivityLevel activityLevel;
+  String coexistingPersonality;
+  String budget;
+  String houseType;
+  String changeFrequency;
+  String timeAvailability;
+  String activityLevel;
 
   PersonalityForm(
-      { required this.name,
+      {required this.id,
+      required this.name,
       required this.hasPets,
-      required this.coexistsWithDog,
       required this.coexistingPersonality,
       required this.budget,
       required this.houseType,
@@ -39,29 +44,35 @@ class PersonalityForm {
       required this.timeAvailability,
       required this.activityLevel});
 
+  PersonalityForm.fromList(List<int> values, this.name, this.id)
+      : hasPets = values[0] == 0,
+        coexistingPersonality = Personalities.values[values[1]].toString(),
+        budget = Budget.values[values[2]].toString(),
+        houseType = HouseType.values[values[3]].toString(),
+        changeFrequency = HouseChangeFrequency.values[values[4]].toString(),
+        timeAvailability = TimeAvailability.values[values[5]].toString(),
+        activityLevel = ActivityLevel.values[values[6]].toString();
 
   factory PersonalityForm.fromMap(Map<String, dynamic> json) => PersonalityForm(
       name: json['backdrop_path'],
       hasPets: json['hasPets'],
-      coexistsWithDog: json['original_title'],
       coexistingPersonality: json['overview'],
       budget: json['budget'],
       houseType: json['house_type'],
       changeFrequency: json['change_frequency'],
       timeAvailability: json['time_availablity'],
-      activityLevel: json['activity_level']);
-
+      activityLevel: json['activity_level'], id: '');
 
   PersonalityForm.empty()
       : name = '',
+        id = '',
         hasPets = false,
-        coexistsWithDog = false,
-        coexistingPersonality = Personalities.other,
-        budget = MoneyRange.notDefined,
-        houseType = HouseType.notDefined,
-        changeFrequency = HouseChangeFrequency.notDefined,
-        timeAvailability = TimeAvailability.notDefined,
-        activityLevel = ActivityLevel.notDefined;
+        coexistingPersonality = Personalities.other.toString(),
+        budget = Budget.notDefined.toString(),
+        houseType = HouseType.notDefined.toString(),
+        changeFrequency = HouseChangeFrequency.notDefined.toString(),
+        timeAvailability = TimeAvailability.notDefined.toString(),
+        activityLevel = ActivityLevel.notDefined.toString();
 
   set setName(String name) {
     this.name = name;
@@ -71,32 +82,27 @@ class PersonalityForm {
     this.hasPets = hasPets;
   }
 
-  set setCoexistsWithDog(bool coexistsWithDog) {
-    this.coexistsWithDog = coexistsWithDog;
-  }
-
   set setCoexistingPersonality(Personalities coexistingPersonality) {
-    this.coexistingPersonality = coexistingPersonality;
+    this.coexistingPersonality = coexistingPersonality.toString();
   }
 
-  set setBudget(MoneyRange budget) {
-    this.budget = budget;
+  set setBudget(Budget budget) {
+    this.budget = budget.toString();
   }
 
   set setHouseType(HouseType houseType) {
-    this.houseType = houseType;
+    this.houseType = houseType.toString();
   }
 
   set setChangeFrequency(HouseChangeFrequency changeFrequency) {
-    this.changeFrequency = changeFrequency;
+    this.changeFrequency = changeFrequency.toString();
   }
 
   set setTimeAvailability(TimeAvailability timeAvailability) {
-    this.timeAvailability = timeAvailability;
+    this.timeAvailability = timeAvailability.toString();
   }
 
   set setActivityLevel(ActivityLevel activityLevel) {
-    this.activityLevel = activityLevel;
+    this.activityLevel = activityLevel.toString();
   }
-
 }

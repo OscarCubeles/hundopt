@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/shared/constants/constants.dart';
@@ -14,8 +15,9 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // TODO: Fetch the username and fullname from the api
-    username = "@ocubeles";
+    final user = FirebaseAuth.instance.currentUser;
+
+    username = "@";
     fullName = "Oscar Cubeles";
 
   }

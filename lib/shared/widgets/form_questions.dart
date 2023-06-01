@@ -8,6 +8,7 @@ import 'package:hundopt/shared/widgets/text_field.dart';
 import '../../models/personality_form_question.dart';
 import '../../modules/personality_from/form_controller.dart';
 import '../constants/string_constants.dart';
+import '../constants/styles.dart';
 
 class FormSelectorQuestion extends StatelessWidget {
   final FormController controller;
@@ -32,7 +33,7 @@ class FormSelectorQuestion extends StatelessWidget {
             ),
           ),
           Padding(padding: EdgeInsets.all(10)),
-          Text(formQuestion.text, style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.justify),
+          Text(formQuestion.text, style: Styles.bodySmall, textAlign: TextAlign.justify),
           Padding(padding: EdgeInsets.all(10)),
           Column(
             children: List.generate(
@@ -76,7 +77,7 @@ class FormWrittenQuestion extends StatelessWidget {
         Padding(padding: EdgeInsets.all(10)),
         Text(
           StringConstants.helloFormText,
-          style: Theme.of(context).textTheme.bodySmall,
+          style: Styles.bodySmall,
           textAlign: TextAlign.justify,
         ),
         Padding(

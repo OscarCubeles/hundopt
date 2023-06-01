@@ -7,6 +7,6 @@ class OnboardingController extends GetxController{
     Get.toNamed(Routes.PERSONALITY_FORM, arguments: this);
   }
   void navigateToExplore(){
-    Get.toNamed(Routes.HOME, arguments: this);
+    Get.toNamed(Routes.HOME, arguments: 0);
   }
 }

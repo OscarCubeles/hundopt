@@ -27,17 +27,21 @@ class LoginScreen extends StatelessWidget {
                       0, 0, 0, MediaQuery.of(context).size.height * 0.05)),
               Obx(() {
                 return CustomTextField(
-                    isPassword: false,
-                    labelText: StringConstants.emailLabel,
-                    errorText: controller.lEmailErrText.value ?? "",
-                    onChanged: controller.lEmailChanged, initialValue: '',);
+                  isPassword: false,
+                  labelText: StringConstants.emailLabel,
+                  errorText: controller.lEmailErrText.value ?? "",
+                  onChanged: controller.lEmailChanged,
+                  initialValue: controller.lEmail.value,
+                );
               }),
               Obx(() {
                 return CustomTextField(
-                    isPassword: true,
-                    labelText: StringConstants.passwordLabel,
-                    errorText: controller.lPwdErrText.value ?? "",
-                    onChanged: controller.lPwdChanged, initialValue: '',);
+                  isPassword: true,
+                  labelText: StringConstants.passwordLabel,
+                  errorText: controller.lPwdErrText.value ?? "",
+                  onChanged: controller.lPwdChanged,
+                  initialValue: controller.lPwd.value,
+                );
               }),
               Padding(padding: EdgeInsets.all(5)),
               ClickableText(

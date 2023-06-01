@@ -54,7 +54,7 @@ class StringConstants {
   static const String noRecuperatePwdText =
       "¿No quieres cambiar la contraseña?";
   static const String resetPwdText =
-      "Si el correo electrónico que ha proporcionado está asociado a una cuenta en Hündopt, recibirá un correo electrónico con instrucciones sobre cómo cambiar su contraseña. Si no recibe un correo electrónico en los próximos minutos, es posible que el correo electrónico que ingresó no esté asociado con una cuenta de Hündopt.";
+      "Recibirá un correo electrónico con instrucciones sobre cómo cambiar su contraseña. Si no recibe un correo electrónico en los próximos minutos, intente cambiar la contraseña de nuevo.";
   static const String welcomeText =
       "¡Gracias por usar nuestra aplicación y por ayudarnos a encontrar hogares para nuestros amigos peludos!\n\nSe le enviará un correo electronico para verificar su cuenta.Para brindarte la mejor experiencia de adopción posible, necesitamos conocerte un poco mejor.\n\nTe proponemos que rellenes un formulario que nos ayudará a recomendarte los perros más adecuados para ti y te facilitará el proceso de adopción.\n\nTambién puedes decidir explorar la app sin rellenarlo. Tendrás la opción de rellenarlo en la configuración de tu perfil.\n\n ¡Tú decides!";
   static const String helloText = "¡Hola!";
