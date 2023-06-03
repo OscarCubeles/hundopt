@@ -14,6 +14,7 @@ import '../../models/user.dart';
 
 // TODO: source of the form code: https://stackoverflow.com/questions/64544571/flutter-getx-forms-validation
 class AuthController extends GetxController {
+  final userManager = UserSingleton();
   RxnString fEmailErrText = RxnString(null);
   RxnString rEmailErrText = RxnString(null);
   RxnString rUsernameErrText = RxnString("");
@@ -188,26 +189,14 @@ class AuthController extends GetxController {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         // TODO: get the user that logged in in the singleton
+        HundoptUser hundoptUser = await UserRepository().getUser(user.uid);
+        // Set the userData property of the UserManager singleton
+        userManager.userData = hundoptUser;
         Get.toNamed(Routes.HOME, arguments: 0);
       }
     } finally {
       EasyLoading.dismiss();
     }
-  }
-
-  Future<void> createUser(User firebaseUser) async {
-    HundoptUser user = HundoptUser.withEmailAndUsername(
-      email: firebaseUser.email!,
-      username: rUsername.value,
-    );
-    await UserRepository()
-        .createUser(rUsername.value, firebaseUser.email!, firebaseUser.uid);
-    // TODO create the user singleton to be able to use it in the app
-    // Create or retrieve the UserSingleton instance
-    UserSingleton userSingleton = UserSingleton(user);
-
-    // Access the user object through the singleton instance
-    HundoptUser currentUser = userSingleton.user;
   }
 
   void register() async {
@@ -216,7 +205,12 @@ class AuthController extends GetxController {
       await createUserWithEmailAndPassword();
       final firebaseUser = FirebaseAuth.instance.currentUser;
       if (firebaseUser != null) {
-        await createUser(firebaseUser);
+        await UserRepository()
+            .createUser(rUsername.value, firebaseUser.email!, firebaseUser.uid, rPwd.value); // TODO : REMOVE THE PWD AFTER TESTING
+        // Set the userData property of the UserManager singleton
+        userManager.userData = HundoptUser.withEmailAndUsername(
+            email: firebaseUser.email!, username: rUsername.value);
+
         Get.toNamed(Routes.ONBOARDING);
       }
     } finally {
@@ -228,7 +222,7 @@ class AuthController extends GetxController {
     try {
       await Auth().createUserWithEmailAndPassword(
         email: rEmail.value,
-        password: rEmail.value,
+        password: rPwd.value,
       );
     } on FirebaseAuthException catch (e) {
       lPwdErrText.value = e.message;

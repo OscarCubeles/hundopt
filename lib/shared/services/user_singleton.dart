@@ -1,14 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../models/user.dart';
 
 class UserSingleton {
-  static UserSingleton? _instance;
-  HundoptUser user;
+  static final UserSingleton _instance = UserSingleton._internal();
+  factory UserSingleton() => _instance;
 
-  factory UserSingleton(HundoptUser user) {
-    _instance ??= UserSingleton._internal(user);
-    return _instance!;
-  }
+  HundoptUser? userData;
 
-  UserSingleton._internal(this.user);
+  UserSingleton._internal();
 
 }

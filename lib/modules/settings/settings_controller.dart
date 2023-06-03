@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/models/user.dart';
 
 import '../../api/firebase_core/auth.dart';
 import '../../models/setting_option.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/utils/validations.dart';
 import '../../shared/widgets/dialogs.dart';
 
 class SettingsController extends GetxController {
@@ -17,12 +19,14 @@ class SettingsController extends GetxController {
   RxString phone = RxString('');
   List<SettingOption> settingOptions = [];
   bool dataIsValid = false;
+  late HundoptUser user = HundoptUser.empty();
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     initFormFieldValidations();
     initSettingOptions();
+    user = await Auth().retrieveUser() as HundoptUser;
   }
 
   void initSettingOptions() {
@@ -157,7 +161,8 @@ class SettingsController extends GetxController {
   void phoneValidations(String val) {
     phoneErrText.value = null; // reset validation errors to nothing
     if (val.isNotEmpty) {
-      if (hasCountryCode(val, phoneErrText) && isValidNumber(val, phoneErrText)) {
+      if (hasCountryCode(val, phoneErrText) &&
+          isValidNumber(val, phoneErrText)) {
         emailErrText.value = "";
       }
     }
@@ -190,26 +195,18 @@ class SettingsController extends GetxController {
   }
 
   void usernameValidations(String value) {
-    userNameErrText.value = null; // reset validation errors to nothing
+    userNameErrText.value = null;
     if (value.isNotEmpty) {
-      if (lengthOK(value, userNameErrText /*&& await available(val)*/)) {
-        //FUTURE TODO: Change available function to check if the username exists)) {
+      if (Validations.isValidUsername(value, userNameErrText) &&
+          Validations.lengthOK(value, userNameErrText)) {
         userNameErrText.value = "";
       }
     }
   }
 
-  bool lengthOK(String val, RxnString err, {int minLen = 8}) {
-    if (val.length < minLen) {
-      err.value = 'La longitud mínima es de 8 caracteres';
-      return false;
-    }
-    return true;
-  }
-
   void saveChanges() {
     // TODO: Check that the email or username are not from users that already exist
-    if(dataIsValid){
+    if (dataIsValid) {
       Get.back();
     }
   }

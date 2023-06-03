@@ -40,8 +40,15 @@ class EditProfileScreen extends GetView<SettingsController> {
                                   },
                                   child: CircleAvatar(
                                     radius: 50,
-                                    backgroundImage: NetworkImage(
-                                        'https://i.pinimg.com/736x/25/78/61/25786134576ce0344893b33a051160b1.jpg'),
+                                    // TODO: Add actual user image
+                                    backgroundImage:
+                                        controller.user.pictureURL != ""
+                                            ? NetworkImage(
+                                                controller.user.pictureURL)
+                                            : Image.asset(
+                                                fit: BoxFit.fill,
+                                                AssetsPath.defaultProfilePic,
+                                              ).image,
                                     child: Icon(CupertinoIcons.switch_camera,
                                         size: 50,
                                         color: ColorConstants.transparentWhite),
@@ -64,7 +71,8 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     labelText: StringConstants.userNameLabel,
                                     errorText:
                                         controller.userNameErrText.value ?? "",
-                                    initialValue: '',
+                                    initialValue: controller.user.username ??
+                                        "", // TODO: Add initial value
                                     onChanged: controller.userNameChanged,
                                   )),
                               Padding(
@@ -77,7 +85,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     labelText: StringConstants.emailLabel,
                                     errorText:
                                         controller.emailErrText.value ?? "",
-                                    initialValue: '',
+                                    initialValue: controller.user.email ?? "",
                                     onChanged: controller.emailChanged,
                                   )),
                               Padding(
@@ -90,7 +98,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     labelText: StringConstants.phoneNumberLabel,
                                     errorText:
                                         controller.phoneErrText.value ?? "",
-                                    initialValue: '',
+                                    initialValue: controller.user.phone,
                                     onChanged: controller.phoneChange,
                                   )),
                               Padding(

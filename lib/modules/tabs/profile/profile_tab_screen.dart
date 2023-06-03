@@ -11,6 +11,14 @@ import '../../../shared/widgets/app_page.dart';
 class ProfileTab extends GetView<ProfileController> {
   const ProfileTab({super.key});
 
+  Object profileImage() {
+    return controller.user.pictureURL == ""
+        ? const AssetImage(AssetsPath.defaultProfilePic)
+        : const NetworkImage(
+            // TODO: Change this for the actual profile picture URL
+            'https://i.pinimg.com/736x/25/78/61/25786134576ce0344893b33a051160b1.jpg');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +47,13 @@ class ProfileTab extends GetView<ProfileController> {
                   ),
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: NetworkImage(
-                        'https://i.pinimg.com/736x/25/78/61/25786134576ce0344893b33a051160b1.jpg'),
-                  ),
+                    backgroundImage: controller.user.pictureURL != ""
+                        ? NetworkImage(controller.user.pictureURL)
+                        : Image.asset(
+                            fit: BoxFit.fill,
+                            AssetsPath.defaultProfilePic,
+                          ).image,
+                  )
                 ],
               ),
             ),

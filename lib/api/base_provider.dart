@@ -4,7 +4,6 @@ import 'api.dart';
 import 'api_constants.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/request_interceptor.dart';
-import 'interceptors/response_interceptor.dart';
 
 class BaseProvider extends GetConnect {
   @override
@@ -13,6 +12,5 @@ class BaseProvider extends GetConnect {
     httpClient.baseUrl = ApiConstants.baseUrl;
     httpClient.addAuthenticator(authInterceptor);
     httpClient.addRequestModifier(requestInterceptor);
-    httpClient.addResponseModifier(responseInterceptor);
   }
 }

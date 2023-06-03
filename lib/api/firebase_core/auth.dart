@@ -1,4 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hundopt/api/firebase_core/user_repository.dart';
+import 'package:hundopt/models/user.dart';
+
+import '../../shared/services/user_singleton.dart';
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -17,6 +21,8 @@ class Auth {
     required String email,
     required String password,
   }) async {
+    print(email);
+    print(password);
     await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
@@ -27,6 +33,8 @@ class Auth {
     required String email,
     required String password,
   }) async {
+    print(email);
+    print(password);
     await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
@@ -35,6 +43,17 @@ class Auth {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  Future<HundoptUser?> retrieveUser() async {
+    final userManager = UserSingleton();
+    if (userManager.userData != null) {
+      return userManager.userData;
+    }
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    HundoptUser user = await UserRepository().getUser(firebaseUser?.uid);
+    userManager.userData = user;
+    return userManager.userData;
   }
 
 
