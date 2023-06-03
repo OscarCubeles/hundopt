@@ -10,8 +10,7 @@ class PersonalityFormRepository {
     try {
       final formCollection =
           FirebaseFirestore.instance.collection('personalityForm');
-      final newPersonalityFormDocRef = formCollection.doc();
-      //  final newPersonalityFormDocRef = personalityFormCollection.doc();
+      final newPersonalityFormDocRef = formCollection.doc(form.id);
       await newPersonalityFormDocRef.set({
         'id': form.id,
         'name': form.name,

@@ -7,6 +7,7 @@ FutureOr<Request> authInterceptor(request) async {
 
   // request.headers['X-Requested-With'] = 'XMLHttpRequest';
   // request.headers['Authorization'] = 'Bearer $token';
+  // TODO: Remove this if not used
 
   return request;
 }

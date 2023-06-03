@@ -2,9 +2,9 @@ import '../../models/user.dart';
 
 class UserSingleton {
   static UserSingleton? _instance;
-  User user;
+  HundoptUser user;
 
-  factory UserSingleton(User user) {
+  factory UserSingleton(HundoptUser user) {
     _instance ??= UserSingleton._internal(user);
     return _instance!;
   }

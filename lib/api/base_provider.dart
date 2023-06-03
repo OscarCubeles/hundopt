@@ -9,6 +9,7 @@ import 'interceptors/response_interceptor.dart';
 class BaseProvider extends GetConnect {
   @override
   void onInit() {
+    // TODO: Remove this if not used
     httpClient.baseUrl = ApiConstants.baseUrl;
     httpClient.addAuthenticator(authInterceptor);
     httpClient.addRequestModifier(requestInterceptor);

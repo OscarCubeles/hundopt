@@ -1,16 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
-import '../../api/api_repository.dart';
 import '../../api/firebase_core/auth.dart';
 import '../../api/firebase_core/user_repository.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/services/user_singleton.dart';
 import '../../shared/utils/validations.dart';
 import '../../shared/widgets/dialogs.dart';
+import '../../models/user.dart';
 
 // TODO: source of the form code: https://stackoverflow.com/questions/64544571/flutter-getx-forms-validation
 class AuthController extends GetxController {
@@ -26,20 +26,13 @@ class AuthController extends GetxController {
   RxString rPwd = RxString('');
   RxString lEmail = RxString('');
   RxString lPwd = RxString('');
-  late final ApiRepository apiRepository;
 
   Rxn<Function()> submitFunc = Rxn<Function()>(() => {});
 
   @override
   void onInit() {
     super.onInit();
-    apiRepository = Get.find();
     initFormFieldValidators();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override
@@ -77,9 +70,7 @@ class AuthController extends GetxController {
     lEmailErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
     if (val.isNotEmpty) {
-      if (Validations.isValidEmail(
-          val, lEmailErrText) /*&& await available(val)*/) {
-        //FUTURE TODO: Change available function to check if the email exists
+      if (Validations.isValidEmail(val, lEmailErrText)) {
         submitFunc.value = () {};
         lEmailErrText.value = "";
       }
@@ -87,8 +78,8 @@ class AuthController extends GetxController {
   }
 
   void lPwdValidations(String val) async {
-    lPwdErrText.value = null; // reset validation errors to nothing
-    submitFunc.value = () => {}; // disable submit while validating
+    lPwdErrText.value = null;
+    submitFunc.value = () => {};
     if (val.isNotEmpty) {
       if (Validations.lengthOK(val, lPwdErrText, minLen: 3)) {
         submitFunc.value = () {};
@@ -98,12 +89,10 @@ class AuthController extends GetxController {
   }
 
   void rEmailValidations(String val) async {
-    rEmailErrText.value = null; // reset validation errors to nothing
-    submitFunc.value = () => {}; // disable submit while validating
+    rEmailErrText.value = null;
+    submitFunc.value = () => {};
     if (val.isNotEmpty) {
-      if (Validations.isValidEmail(
-          val, rEmailErrText /*&& await available(val)*/)) {
-        //FUTURE TODO: Change available function to check if the email exists)) {
+      if (Validations.isValidEmail(val, rEmailErrText)) {
         submitFunc.value = () {};
         rEmailErrText.value = "";
       }
@@ -111,12 +100,11 @@ class AuthController extends GetxController {
   }
 
   void rUsernameValidations(String val) async {
-    rUsernameErrText.value = null; // reset validation errors to nothing
-    submitFunc.value = () => {}; // disable submit while validating
+    rUsernameErrText.value = null;
+    submitFunc.value = () => {};
     if (val.isNotEmpty) {
-      if (Validations.lengthOK(
-          val, rUsernameErrText /*&& await available(val)*/)) {
-        //FUTURE TODO: Change available function to check if the username exists)) {
+      if (Validations.isValidUsername(val, rUsernameErrText) &&
+          Validations.lengthOK(val, rUsernameErrText)) {
         submitFunc.value = () {};
         rUsernameErrText.value = "";
       }
@@ -124,8 +112,8 @@ class AuthController extends GetxController {
   }
 
   void rPwdValidations(String val) async {
-    rPwdErrText.value = ""; // reset validation errors to nothing
-    submitFunc.value = () => {}; // disable submit while validating
+    rPwdErrText.value = "";
+    submitFunc.value = () => {};
     if (val.isNotEmpty) {
       if (Validations.isValidPassword(val, rPwdErrText) &&
           Validations.lengthOK(val, rPwdErrText)) {
@@ -133,17 +121,6 @@ class AuthController extends GetxController {
         rPwdErrText.value = "";
       }
     }
-  }
-
-  Future<bool> available(String val) async {
-    print('Query availability of: $val');
-    await Future.delayed(
-        const Duration(seconds: 1), () => print('Available query returned'));
-    if (val == "Sylvester") {
-      fEmailErrText.value = 'Name Taken';
-      return false;
-    }
-    return true;
   }
 
   void fEmailChanged(String val) {
@@ -170,19 +147,6 @@ class AuthController extends GetxController {
     rPwd.value = val;
   }
 
-  Function() sendForgotPwdEmail() {
-    return () {};
-  }
-
-  Future<bool> Function() submitFunction() {
-    return () async {
-      print('Make database call to create ${fEmail.value} account');
-      await Future.delayed(
-          const Duration(seconds: 1), () => print('User account created'));
-      return true;
-    };
-  }
-
   void sendResetPwdEmail() async {
     try {
       EasyLoading.show(status: 'Loading...');
@@ -190,7 +154,6 @@ class AuthController extends GetxController {
     } finally {
       EasyLoading.dismiss();
     }
-
   }
 
   Future<void> sendPasswordResetEmail() async {
@@ -213,7 +176,8 @@ class AuthController extends GetxController {
             );
           });
     } on FirebaseAuthException catch (e) {
-      fEmailErrText.value = e.message; //TODO: Error messages are in english, should be translated
+      fEmailErrText.value =
+          e.message; //TODO: Error messages are in english, should be translated
     }
   }
 
@@ -223,7 +187,7 @@ class AuthController extends GetxController {
       await signInWithEmailAndPassword();
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        // TODO: Create app user
+        // TODO: get the user that logged in in the singleton
         Get.toNamed(Routes.HOME, arguments: 0);
       }
     } finally {
@@ -231,20 +195,34 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> createUser(User firebaseUser) async {
+    HundoptUser user = HundoptUser.withEmailAndUsername(
+      email: firebaseUser.email!,
+      username: rUsername.value,
+    );
+    await UserRepository()
+        .createUser(rUsername.value, firebaseUser.email!, firebaseUser.uid);
+    // TODO create the user singleton to be able to use it in the app
+    // Create or retrieve the UserSingleton instance
+    UserSingleton userSingleton = UserSingleton(user);
+
+    // Access the user object through the singleton instance
+    HundoptUser currentUser = userSingleton.user;
+  }
+
   void register() async {
     try {
       EasyLoading.show(status: 'Loading...');
-      await createUserWithEmailAndPassword(); //TODO: Create user profile with this user in firebase storage
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        await UserRepository().createUser(rUsername.value, user.email!, user.uid);
+      await createUserWithEmailAndPassword();
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+      if (firebaseUser != null) {
+        await createUser(firebaseUser);
         Get.toNamed(Routes.ONBOARDING);
       }
     } finally {
       EasyLoading.dismiss();
     }
   }
-
 
   Future<void> createUserWithEmailAndPassword() async {
     try {
@@ -274,10 +252,10 @@ class AuthController extends GetxController {
   }
 
   void navigateToRegister() {
-    Get.offAndToNamed(Routes.AUTH + Routes.REGISTER, arguments: this);
+    Get.toNamed(Routes.AUTH + Routes.REGISTER, arguments: this);
   }
 
   void navigateToForgotPwd() {
-    Get.offAndToNamed(Routes.AUTH + Routes.FORGOT_PASSWORD, arguments: this);
+    Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD, arguments: this);
   }
 }

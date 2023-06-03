@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 
 import '../../models/response/error_response.dart';
+// TODO: Remove this if not used
 
 FutureOr<dynamic> responseInterceptor(
     Request request, Response response) async {

@@ -23,7 +23,7 @@ enum TimeAvailability {
 enum ActivityLevel { notActive, active, veryActive, notDefined }
 
 class PersonalityForm {
-  String id;
+  String? id;
   String name;
   bool hasPets;
   String coexistingPersonality;

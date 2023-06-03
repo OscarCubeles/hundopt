@@ -156,20 +156,13 @@ class FormController extends GetxController {
 
   void submitPersonalityForm() async {
     // TODO: Store all the values in the API :)
-    progress.value = 1.0;
-    final PersonalityForm personalityForm = PersonalityForm.fromList(
-        selectedOptionList, nameText.value, Identifiers.generateUUID());
-    await PersonalityFormRepository().uploadForm(personalityForm);
-    // TODO: Add the ID of the user here
     final user = FirebaseAuth.instance.currentUser;
-    print(user?.uid);
-    print(user?.email);
+    progress.value = 1.0;
+    final PersonalityForm personalityForm =
+        PersonalityForm.fromList(selectedOptionList, nameText.value, user?.uid);
+    await PersonalityFormRepository().uploadForm(personalityForm);
     showFinishedDialog();
   }
-
-
-
-
 
   void previousQuestion() {
     if (currentQuestion.value == 0) {

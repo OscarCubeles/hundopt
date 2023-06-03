@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/modules/tabs/profile/profile_tab_controller.dart';
 import 'package:hundopt/shared/constants/colors.dart';
@@ -28,12 +29,12 @@ class ProfileTab extends GetView<ProfileController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(controller.username,
-                          style: Theme.of(context).textTheme.headlineSmall),
-                      Text(
-                        controller.fullName,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      )
+                      Obx(() => Text(controller.username.value,
+                          style: Theme.of(context).textTheme.headlineSmall)),
+                      Obx(() => Text(
+                            controller.fullName.value,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ))
                     ],
                   ),
                   CircleAvatar(
@@ -81,13 +82,19 @@ class ProfileTab extends GetView<ProfileController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: MediaQuery.of(context).size.width, // set maximum
+                                width: MediaQuery.of(context)
+                                    .size
+                                    .width, // set maximum
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: SizedBox.fromSize(
                                     child: AspectRatio(
-                                      child: Image.asset('assets/images/example_dog.jpg', fit: BoxFit.cover,  width: 84.0,
-                                        height: 84.0,),
+                                      child: Image.asset(
+                                        'assets/images/example_dog.jpg',
+                                        fit: BoxFit.cover,
+                                        width: 84.0,
+                                        height: 84.0,
+                                      ),
                                       aspectRatio: 1 / 1,
                                     ),
                                   ),
@@ -95,7 +102,12 @@ class ProfileTab extends GetView<ProfileController> {
                               ),
                               Padding(
                                 padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                child: Text("Kira", style: Theme.of(context).textTheme.headlineMedium,),
+                                child: Text(
+                                  "Kira",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium,
+                                ),
                               )
                             ],
                           )),

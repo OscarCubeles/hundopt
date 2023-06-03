@@ -15,6 +15,7 @@ class SplashController extends GetxController {
     FirebaseAuth.instance.idTokenChanges().listen((User? user) {
       if (user != null) {
         // User is authenticated with Firebase
+
         Get.toNamed(Routes.HOME, arguments: 0);
       } else {
         // User is not authenticated with Firebase
