@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../models/user.dart';
 
@@ -7,7 +8,8 @@ class UserRepository {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
-  Future<void> createUser(String username, String email, String userID, String pwd) async {
+  Future<void> createUser(
+      String username, String email, String userID, String pwd) async {
     try {
       final usersCollection = FirebaseFirestore.instance.collection('users');
       // Create a new document with a generated ID
@@ -45,18 +47,21 @@ class UserRepository {
     }
   }
 
-  // TODO: Change the email with this call
-  void changeUserEmail(String newEmail) async {
+  Future<bool> updateUser(
+      String email, String phone, String username, RxnString errText) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        await user.updateEmail(newEmail);
-        print('Email updated successfully.');
-      } else {
-        print('No user is currently signed in.');
-      }
+      final usersCollection = FirebaseFirestore.instance.collection('users');
+      final userDocRef = usersCollection.doc(user?.uid);
+      await userDocRef.update({
+        'email': email,
+        'phone': phone,
+        'username': username,
+      });
+      return true;
     } catch (e) {
-      print('Error changing email: $e');
+      errText.value = e.toString();
+      return false;
     }
   }
 }

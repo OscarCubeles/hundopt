@@ -77,6 +77,7 @@ class EditProfileTextField extends StatelessWidget {
         labelStyle: Theme.of(context).textTheme.bodySmall,
         labelText: labelText,
         errorText: errorText,
+        errorMaxLines: 3,
         errorStyle: TextStyle(fontSize: 14),
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black),

@@ -71,7 +71,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     labelText: StringConstants.userNameLabel,
                                     errorText:
                                         controller.userNameErrText.value ?? "",
-                                    initialValue: controller.user.username ??
+                                    initialValue: controller.userName.value ??
                                         "", // TODO: Add initial value
                                     onChanged: controller.userNameChanged,
                                   )),
@@ -85,7 +85,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     labelText: StringConstants.emailLabel,
                                     errorText:
                                         controller.emailErrText.value ?? "",
-                                    initialValue: controller.user.email ?? "",
+                                    initialValue: controller.email.value ?? "",
                                     onChanged: controller.emailChanged,
                                   )),
                               Padding(
@@ -98,7 +98,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     labelText: StringConstants.phoneNumberLabel,
                                     errorText:
                                         controller.phoneErrText.value ?? "",
-                                    initialValue: controller.user.phone,
+                                    initialValue: controller.phone.value,
                                     onChanged: controller.phoneChange,
                                   )),
                               Padding(

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:hundopt/api/firebase_core/user_repository.dart';
 import 'package:hundopt/models/user.dart';
 
@@ -54,6 +55,21 @@ class Auth {
     HundoptUser user = await UserRepository().getUser(firebaseUser?.uid);
     userManager.userData = user;
     return userManager.userData;
+  }
+
+  Future<bool> changeUserEmail(String newEmail, RxnString errText) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.updateEmail(newEmail);
+        return true;
+      } else {
+        return false;
+      }
+    } on FirebaseAuthException catch (e) {
+      errText.value = e.message!;
+      return false;
+    }
   }
 
 

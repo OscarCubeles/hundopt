@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/models/user.dart';
 
 import '../../api/firebase_core/auth.dart';
+import '../../api/firebase_core/user_repository.dart';
 import '../../models/setting_option.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
@@ -27,6 +30,9 @@ class SettingsController extends GetxController {
     initFormFieldValidations();
     initSettingOptions();
     user = await Auth().retrieveUser() as HundoptUser;
+    userName.value = user.username;
+    email.value = user.email;
+    phone.value = user.phone;
   }
 
   void initSettingOptions() {
@@ -151,8 +157,7 @@ class SettingsController extends GetxController {
   void emailValidations(String val) {
     emailErrText.value = null; // reset validation errors to nothing
     if (val.isNotEmpty) {
-      if (isValidEmail(val, emailErrText /*&& await available(val)*/)) {
-        //FUTURE TODO: Change available function to check if the email exists)) {
+      if (Validations.isValidEmail(val, emailErrText)) {
         emailErrText.value = "";
       }
     }
@@ -161,37 +166,11 @@ class SettingsController extends GetxController {
   void phoneValidations(String val) {
     phoneErrText.value = null; // reset validation errors to nothing
     if (val.isNotEmpty) {
-      if (hasCountryCode(val, phoneErrText) &&
-          isValidNumber(val, phoneErrText)) {
-        emailErrText.value = "";
+      if (Validations().hasCountryCode(val, phoneErrText) &&
+          Validations().isValidNumber(val, phoneErrText)) {
+        phoneErrText.value = "";
       }
     }
-  }
-
-  bool isValidEmail(String val, RxnString errText) {
-    if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(val)) {
-      errText.value = 'Formato de email no válido.';
-      return false;
-    }
-    return true;
-  }
-
-  bool hasCountryCode(String val, RxnString errText) {
-    if (!RegExp(r'^\+\d{1,3}(?:\(\d{1,4}\))?(?:\s|)?').hasMatch(val)) {
-      errText.value = 'Añade el código de país.';
-      return false;
-    }
-    return true;
-  }
-
-  bool isValidNumber(String val, RxnString errText) {
-    if (!RegExp(r'^\+(?:[0-9]●?){6,14}[0-9]$').hasMatch(val)) {
-      errText.value = 'Número de digitos incorrecto. No añada espacios.';
-      return false;
-    }
-    return true;
   }
 
   void usernameValidations(String value) {
@@ -204,10 +183,31 @@ class SettingsController extends GetxController {
     }
   }
 
-  void saveChanges() {
-    // TODO: Check that the email or username are not from users that already exist
-    if (dataIsValid) {
-      Get.back();
+  bool isDataValid() {
+    return (userNameErrText.value == "" || userNameErrText.value == null) &&
+        (emailErrText.value == "" || emailErrText.value == null) &&
+        (phoneErrText.value == "" || phoneErrText.value == null);
+  }
+
+  void saveChanges() async { // TODO: Change profile picture
+    bool updateOk = false;
+    try {
+      EasyLoading.show(status: 'Loading...');
+      if (isDataValid()) {
+        updateOk = await Auth().changeUserEmail(
+            email.value, phoneErrText); // Changing the email in auth
+        updateOk = updateOk &&
+            await UserRepository().updateUser(
+                email.value,
+                phone.value,
+                userName.value,
+                phoneErrText); // Changing the values in firestoreDB
+      }
+    } finally {
+      EasyLoading.dismiss();
+      if (updateOk) {
+        Get.back();
+      }
     }
   }
 

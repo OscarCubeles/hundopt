@@ -43,4 +43,20 @@ class Validations {
     }
     return true;
   }
+
+  bool hasCountryCode(String val, RxnString errText) {
+    if (!RegExp(r'^\+\d{1,3}(?:\(\d{1,4}\))?(?:\s|)?').hasMatch(val)) {
+      errText.value = 'Añade el código de país.';
+      return false;
+    }
+    return true;
+  }
+
+  bool isValidNumber(String val, RxnString errText) {
+    if (!RegExp(r'^\+(?:[0-9]●?){6,14}[0-9]$').hasMatch(val)) {
+      errText.value = 'Número de digitos incorrecto. No añada espacios.';
+      return false;
+    }
+    return true;
+  }
 }
