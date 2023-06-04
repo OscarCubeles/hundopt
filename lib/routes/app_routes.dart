@@ -16,4 +16,5 @@ abstract class Routes {
   static const RESERVED_DOG = "/reserved";
   static const INDIVIDUAL_CHAT = '/individual_chat';
   static const SHELTER_PROFILE = '/shelter_profile';
+  static const ADOPT_STEPS = '/adopt_steps';
 }

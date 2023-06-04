@@ -42,7 +42,7 @@ class SettingsController extends GetxController {
           iconSource: CupertinoIcons.chevron_right,
           onPressed: toEditProfile),
       SettingOption(
-          text: StringConstants.confirmChangePwdLabel,
+          text: StringConstants.changePwdLabel,
           iconSource: CupertinoIcons.chevron_right,
           onPressed: showChangePasswordDialog),
       SettingOption(
@@ -125,6 +125,14 @@ class SettingsController extends GetxController {
     Get.offNamed(Routes.AUTH);
   }
 
+  Future<void> sendPwdChangeEmail() async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if(firebaseUser != null){
+      await Auth().sendPasswordResetEmail(email: firebaseUser.email!);
+    }
+    Get.back();
+  }
+
   void showChangePasswordDialog() {
     showDialog(
         context: Get.context!,
@@ -135,7 +143,7 @@ class SettingsController extends GetxController {
             buttonText: StringConstants.confirmChangePwdLabel,
             underlinedText: StringConstants.cancelLabel,
             buttonColor: ColorConstants.appColor,
-            onPressed: () => navigateToHome(),
+            onPressed: () => sendPwdChangeEmail(),
             onClose: () => Get.back(),
             onTextPressed: () => Get.back(),
           );
@@ -216,7 +224,11 @@ class SettingsController extends GetxController {
   }
 
   void showAdoptSteps() {
-    // TODO: Show the informative message
+    Get.toNamed(Routes.SETTINGS + Routes.ADOPT_STEPS);
+  }
+
+  void navigateBack(){
+    Get.back();
   }
 
   void showExitDialog() {

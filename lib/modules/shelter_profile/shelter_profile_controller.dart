@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,10 @@ class ShelterProfileController extends GetxController {
       email: 'info@perrera.com',
       phone: '+34 665787221',
       location: "Barcelona Carrer Cases 21",
-      hasSocialNetworks: true);
+      id: '',
+      pictureURL: '',
+      dogsId: [],
+      socialNetworks: []);
 
   Map<String, IconData> socialMediaMap = {
     'Twitter': FontAwesomeIcons.twitter,
@@ -44,6 +46,7 @@ class ShelterProfileController extends GetxController {
     isBarLeft.value = !isBarLeft.value;
   }
 
+  // TODO: Put this widget as widget constant
   Widget getDogGrid(double screenWidth) {
     return Expanded(
       child: SingleChildScrollView(
@@ -68,13 +71,13 @@ class ShelterProfileController extends GetxController {
                           borderRadius: BorderRadius.circular(8.0),
                           child: SizedBox.fromSize(
                             child: AspectRatio(
+                              aspectRatio: 1 / 1,
                               child: Image.asset(
                                 'assets/images/kira-dog.JPG',
                                 fit: BoxFit.cover,
                                 width: 84.0,
                                 height: 84.0,
                               ),
-                              aspectRatio: 1 / 1,
                             ),
                           ),
                         ),
@@ -99,7 +102,7 @@ class ShelterProfileController extends GetxController {
     return isBarLeft.value ? getDogGrid(screenWidth) : getShelterBody();
   }
 
-  // TODO CHange this strings to constants
+  // TODO CHange this strings to constants and put this widget as a widget constant
   Widget getShelterBody() {
     return Expanded(
         child: ListView(

@@ -1,13 +1,19 @@
 class Shelter {
+  String id;
   String name;
   String email;
   String phone;
   String location;
-  bool hasSocialNetworks;
+  String pictureURL;
+  List<String>? dogsId;
+  List<String>? socialNetworks;
 
   Shelter(
       {required this.name,
-      required this.hasSocialNetworks,
+      required this.id,
+      required this.pictureURL,
+      required this.dogsId,
+      required this.socialNetworks,
       required this.email,
       required this.phone,
       required this.location});

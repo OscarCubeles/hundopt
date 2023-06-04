@@ -12,6 +12,5 @@ class DogInfoBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => DogInfoController());
-
   }
 }

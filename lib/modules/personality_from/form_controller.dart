@@ -155,7 +155,6 @@ class FormController extends GetxController {
   }
 
   void submitPersonalityForm() async {
-    // TODO: Store all the values in the API :)
     final user = FirebaseAuth.instance.currentUser;
     progress.value = 1.0;
     final PersonalityForm personalityForm =

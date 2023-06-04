@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/api/firebase_core/shelter_repository.dart';
+import 'package:hundopt/models/shelter.dart';
 import 'package:hundopt/modules/tabs/tabs.dart';
+import 'package:hundopt/shared/services/shelter_singleton.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeController extends GetxController {
@@ -22,12 +26,16 @@ class HomeController extends GetxController {
   };
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    initData();
     initTabs();
     persistentTabController = PersistentTabController(initialIndex: Get.arguments);
     currentTab.value = tabMap[newTab]!;
+    await ShelterRepository().retrieveShelters();  // Retrieving all the shelters
   }
+
+
 
 
   @override
@@ -70,6 +78,10 @@ class HomeController extends GetxController {
 
   Widget buildContent() {
     return contentMap[currentTab.value] ?? exploreTab;
+  }
+
+  void initData() {
+
   }
 
 

@@ -1,18 +1,16 @@
-import 'package:hundopt/modules/auth/auth.dart';
 import 'package:hundopt/modules/dog_info/dog_info.dart';
-import 'package:hundopt/modules/home/home.dart';
 import 'package:hundopt/modules/individual_chat/individual_chat.dart';
 import 'package:hundopt/modules/modules.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/onboarding/onboarding.dart';
-import 'package:hundopt/modules/settings/settings.dart';
 import 'package:hundopt/modules/shelter_profile/shelter_profile.dart';
+
+import '../modules/settings/adopt_steps_screen.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   static const INITIAL = Routes.SPLASH;
-
   static final routes = [
     GetPage(
       name: Routes.SPLASH,
@@ -49,13 +47,17 @@ class AppPages {
         children: []),
     GetPage(
         name: Routes.SETTINGS,
-        page: () => SettingsScreen(),
+        page: () => const SettingsScreen(),
         binding: SettingsBinding(),
         transition: Transition.fadeIn,
         children: [
           GetPage(
               name: Routes.EDIT_PROFILE,
               page: () => const EditProfileScreen(),
+              transition: Transition.fadeIn),
+          GetPage(
+              name: Routes.ADOPT_STEPS,
+              page: () => const AdoptStepsScreen(),
               transition: Transition.fadeIn)
         ]),
     GetPage(
@@ -67,28 +69,27 @@ class AppPages {
         name: Routes.ONBOARDING,
         binding: OnboardingBinding(),
         transition: Transition.fadeIn,
-        page: () => OnboardingScreen()),
+        page: () => const OnboardingScreen()),
     GetPage(
         name: Routes.DOG_INFO,
         binding: DogInfoBinding(),
         transition: Transition.fadeIn,
         page: () => DogInfoScreen(),
-      children: [
-        GetPage(
-            name: Routes.RESERVED_DOG,
-            page: () => DogReservedScreen(),
-            transition: Transition.fadeIn),
-      ]
-    ),
+        children: [
+          GetPage(
+              name: Routes.RESERVED_DOG,
+              page: () => const DogReservedScreen(),
+              transition: Transition.fadeIn),
+        ]),
     GetPage(
         name: Routes.INDIVIDUAL_CHAT,
         binding: IndividualChatBinding(),
         transition: Transition.fadeIn,
-        page: () => IndividualChatScreen()),
+        page: () => const IndividualChatScreen()),
     GetPage(
         name: Routes.SHELTER_PROFILE,
         binding: ShelterProfileBinding(),
         transition: Transition.fadeIn,
-        page: () => ShelterProfileScreen()),
+        page: () => const ShelterProfileScreen()),
   ];
 }
