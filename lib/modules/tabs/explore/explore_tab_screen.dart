@@ -23,7 +23,7 @@ class ExploreTab extends GetView<ExploreController> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Obx(() => PageView.builder(
-              controller: PageController(),
+              controller: PageController(), // TODO: Create custom page controller to set the initial one to a custom one
               scrollDirection: Axis.vertical,
               itemCount: controller.dogList.length,
               itemBuilder: (context, index) {
@@ -31,7 +31,7 @@ class ExploreTab extends GetView<ExploreController> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(controller.dogList[index].videoUrl),
+                      image: NetworkImage(controller.dogList[index].mainPictureURL),
                     ),
                   ),
                   child: GestureDetector(

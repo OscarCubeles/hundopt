@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/api/firebase_core/dog_repository.dart';
 
 import '../../api/firebase_core/auth.dart';
 import '../../api/firebase_core/user_repository.dart';
+import '../../models/dog.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/services/user_singleton.dart';
@@ -205,8 +207,11 @@ class AuthController extends GetxController {
       await createUserWithEmailAndPassword();
       final firebaseUser = FirebaseAuth.instance.currentUser;
       if (firebaseUser != null) {
-        await UserRepository()
-            .createUser(rUsername.value, firebaseUser.email!, firebaseUser.uid, rPwd.value); // TODO : REMOVE THE PWD AFTER TESTING
+        await UserRepository().createUser(
+            rUsername.value,
+            firebaseUser.email!,
+            firebaseUser.uid,
+            rPwd.value); // TODO : REMOVE THE PWD AFTER TESTING
         // Set the userData property of the UserManager singleton
         userManager.userData = HundoptUser.withEmailAndUsername(
             email: firebaseUser.email!, username: rUsername.value);
@@ -247,6 +252,41 @@ class AuthController extends GetxController {
 
   void navigateToRegister() {
     Get.toNamed(Routes.AUTH + Routes.REGISTER, arguments: this);
+    createAndUploadDog();
+  }
+
+  //TODO: removee this after creating all dogs n DB
+  Future<void> createAndUploadDog() async {
+    final dog = Dog(
+      id: '10',
+      age: 1,
+      location: 'Manresa',
+      breed: 'Caniche Toy',
+      description:
+          'Perra muy tímida y poco movida que le gusta quedarse en casa y tomar el sol.',
+      friendly: [],
+      notFriendly: ['Gato Hembra', 'Perro Hembra', 'Perro Mahco',"Gato Macho"],
+      gender: 'Hembra',
+      personality: [
+        "Tímido",
+        "Tranquilo",
+        "Leal"
+      ],
+      healthPositive: ['Microchip',  'Esterilizado'],
+      healthNegative: ['No Vacunado'],
+      isReserved: false,
+      mainPictureURL:
+          'https://firebasestorage.googleapis.com/v0/b/hundopt-db.appspot.com/o/dog11.jpg?alt=media&token=9190d2b4-a3b2-4e8b-a987-dfcc39e3bfaa&_gl=1*9gispm*_ga*MTc0OTUwMjE4Ny4xNjg1MjA5MjA1*_ga_CW55HF8NVT*MTY4NTk5MTgxMi4xMy4xLjE2ODU5OTI2NDAuMC4wLjA.',
+      pictureURLs: [
+        'https://firebasestorage.googleapis.com/v0/b/hundopt-db.appspot.com/o/dog11.jpg?alt=media&token=9190d2b4-a3b2-4e8b-a987-dfcc39e3bfaa&_gl=1*9gispm*_ga*MTc0OTUwMjE4Ny4xNjg1MjA5MjA1*_ga_CW55HF8NVT*MTY4NTk5MTgxMi4xMy4xLjE2ODU5OTI2NDAuMC4wLjA.'
+      ],
+      shelterID: 'l0nKmZYIJpsFoBv3mJBq',
+      size: 'XS',
+      name: 'Trufa',
+    );
+
+    // Upload the dog to Firebase Firestore
+    await DogRepository().uploadDog(dog);
   }
 
   void navigateToForgotPwd() {

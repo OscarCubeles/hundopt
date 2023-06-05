@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/api/firebase_core/dog_repository.dart';
 import 'package:hundopt/api/firebase_core/shelter_repository.dart';
 import 'package:hundopt/models/shelter.dart';
 import 'package:hundopt/modules/tabs/tabs.dart';
@@ -33,6 +34,9 @@ class HomeController extends GetxController {
     persistentTabController = PersistentTabController(initialIndex: Get.arguments);
     currentTab.value = tabMap[newTab]!;
     await ShelterRepository().retrieveShelters();  // Retrieving all the shelters
+    await DogRepository().retrieveDogs();
+    print("object");
+
   }
 
 

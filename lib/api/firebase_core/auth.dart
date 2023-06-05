@@ -22,8 +22,6 @@ class Auth {
     required String email,
     required String password,
   }) async {
-    print(email);
-    print(password);
     await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
@@ -34,8 +32,6 @@ class Auth {
     required String email,
     required String password,
   }) async {
-    print(email);
-    print(password);
     await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
