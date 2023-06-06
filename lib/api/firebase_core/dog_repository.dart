@@ -50,6 +50,7 @@ class DogRepository{
         dogs.add(dog);
       }
       DogSingleton().dogs = dogs;
+      DogSingleton().dogIndex = 0;
     }).catchError((error) {
       print('Error retrieving shelters: $error');
     });

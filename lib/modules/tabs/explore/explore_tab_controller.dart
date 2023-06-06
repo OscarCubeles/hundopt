@@ -17,50 +17,35 @@ import '../../../routes/app_pages.dart';
 
 class ExploreController extends GetxController {
   final Rx<List<Dog>> _dogList = Rx<List<Dog>>([]);
+  int dogIndex = 0;
 
   List<Dog> get dogList => _dogList.value;
   late VideoPlayerController videoController;
   RxBool isLiked = false.obs;
+
   VideoPlayerController get videoPlayerController1 => videoController;
 
   @override
-  void onInit() async{
-    addDog(Dog.simplified(
-        name: "Kira",
-        mainPictureURL: "https://firebasestorage.googleapis.com/v0/b/hundopt-db.appspot.com/o/kira-dog.JPG?alt=media&token=5b5afaca-cff8-40e9-9e78-8939aa2891b6",
-        location: "Barcelona"));
-    addDog(Dog.simplified(
-        name: "Kira",
-        mainPictureURL: "assets/images/kira-dog2.JPG",
-        location: "Barcelona"));
-    addDog(Dog.simplified(
-        name: "Kira",
-        mainPictureURL: "assets/images/kira-dog3.JPG",
-        location: "Barcelona"));
-    addDog(Dog.simplified(
-        name: "Andresitoooo",
-        mainPictureURL: "assets/images/kira-dog4.JPG",
-        location: "Barcelona"));
-    addDog(Dog.simplified(
-        name: "Kira",
-        mainPictureURL: "assets/images/kira-dog5.JPG",
-        location: "Barcelona"));
-    videoController = VideoPlayerController.network(
-      'https://lifetime-app.be/wp-content/uploads/2020/08/IMG_5648-1.mp4',
-    );
+  void onInit() async {
+    super.onInit();
     //final shuffledDogs = List<Dog>.from(dogSingleton.dogs!);
-    if(DogSingleton().dogs == null){
+    if (DogSingleton().dogs == null) {
       await DogRepository().retrieveDogs();
     }
     _dogList.value = DogSingleton().dogs!;
   }
 
-
-
-  void navigateToDogInfo(int index){
-    Get.offNamed(Routes.DOG_INFO, arguments: dogList[index]);
+  int initialPage() {
+    return DogSingleton().dogIndex == null
+        ? dogIndex
+        : DogSingleton().dogIndex!;
   }
 
+  void navigateToDogInfo(int index) {
+    print(index);
+    DogSingleton().dogIndex = index;
+    Get.offNamed(Routes.DOG_INFO, arguments: dogList[index]);
+  }
 
   void likeDog() {
     isLiked.value = !isLiked.value;

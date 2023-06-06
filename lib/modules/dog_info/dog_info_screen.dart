@@ -12,11 +12,12 @@ import '../../shared/widgets/feature_list.dart';
 class DogInfoScreen extends GetView<DogInfoController> {
   DogInfoScreen({super.key});
 
+  /*
   final List<String> images = [
     "assets/images/kira-dog.JPG",
     "assets/images/kira-dog2.JPG",
     "assets/images/kira-dog3.JPG",
-  ];
+  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +29,9 @@ class DogInfoScreen extends GetView<DogInfoController> {
           children: [
             Stack(children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.6,
                 child: PageView.builder(
-                  itemCount: images.length,
+                  itemCount: controller.currentDog().pictureURLs.length,
                   onPageChanged: controller.updateIndex,
                   itemBuilder: (BuildContext context, int index) {
                     return Stack(
@@ -40,26 +41,27 @@ class DogInfoScreen extends GetView<DogInfoController> {
                             color: Colors.transparent,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage(
-                                images[index],
+                              image: NetworkImage(
+                                controller.currentDog().pictureURLs[index],
                               ),
                             ),
                           ),
                         ),
-                        /*Container( TODO: Optional container to add color  gradeint on the top of the image
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.white.withOpacity(.5),
-                              Colors.transparent,
-                              Colors.transparent,
-                              Colors.transparent,
-                            ],
+                        Container(
+                          //TODO: Optional container to add color  gradeint on the top of the image
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.white.withOpacity(.05),
+                                Colors.transparent,
+                                Colors.transparent,
+                                Colors.transparent,
+                              ],
+                            ),
                           ),
-                        ),
-                      )*/
+                        )
                       ],
                     );
                   },
@@ -91,7 +93,12 @@ class DogInfoScreen extends GetView<DogInfoController> {
                 bottom: 20,
                 child: Obx(() => Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: images.asMap().entries.map((entry) {
+                      children: controller
+                          .currentDog()
+                          .pictureURLs
+                          .asMap()
+                          .entries
+                          .map((entry) {
                         return Container(
                           width: 8.0,
                           height: 8.0,
@@ -116,18 +123,20 @@ class DogInfoScreen extends GetView<DogInfoController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Kira", style: textTheme.headlineSmall),
+                      Text(controller.currentDog().name,
+                          style: textTheme.headlineSmall),
                       LikeButton(
                         size: 40,
                       ),
                     ],
                   ),
-                  Text("Labrador", style: textTheme.bodyMedium),
+                  Text(controller.currentDog().breed,
+                      style: textTheme.bodyMedium),
                   SizedBox(height: 16.0),
                   Text("Descripción", style: textTheme.headlineMedium),
                   SizedBox(height: 8.0),
                   Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sodales justo ac arcu hendrerit fringilla. Vivamus euismod rhoncus nisi sit amet eleifend. Proin non dapibus purus. Etiam et est sed libero lobortis bibendum. Duis eget felis odio. Mauris pretium elit vitae velit ultricies elementum. Aenean eu est a libero pharetra fringilla. Aliquam tempus iaculis tellus, in sodales neque malesuada sed.",
+                    controller.currentDog().description,
                     style: Styles.bodyDescription,
                     textAlign: TextAlign.justify,
                   ),
@@ -143,19 +152,11 @@ class DogInfoScreen extends GetView<DogInfoController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _buildGridTile('Tile 1', Icons.star, width),
-                          _buildGridTile('Tile 2', Icons.favorite, width),
-                          _buildGridTile('Tile 3', Icons.camera_alt, width),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildGridTile('Tile 4', Icons.music_note, width),
-                          _buildGridTile(
-                              'Tile 5', Icons.directions_bike, width),
-                          _buildGridTile('Tile 6', Icons.shopping_cart, width),
+                          _buildGridTextTile('Edad',
+                              controller.currentDog().age.toString(), width),
+                          _buildGridTextTile(
+                              'Tamaño', controller.currentDog().size, width),
+                          _buildGridTile('Género', width),
                         ],
                       ),
                       SizedBox(height: 20),
@@ -206,7 +207,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                             color: Colors.black,
                           ),*/
                           Text(
-                            "Barcelona",
+                            controller.currentDog().location,
                             style: textTheme.bodyMedium,
                           ),
                         ],
@@ -258,7 +259,8 @@ class DogInfoScreen extends GetView<DogInfoController> {
     );
   }
 
-  Widget _buildGridTile(String text, IconData icon, double width) {
+  // TODO: Put this in widgets
+  Widget _buildGridTile(String text, double width) {
     return Container(
       width: width / 3 - 20,
       height: 80,
@@ -269,15 +271,22 @@ class DogInfoScreen extends GetView<DogInfoController> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            size: 20,
-            color: Colors.white,
-          ),
+          controller.currentDog().gender == "Macho"
+              ? Icon(
+                  Icons.male,
+                  size: 20,
+                  color: Colors.white,
+                )
+              : Icon(
+                  Icons.female,
+                  size: 20,
+                  color: Colors.white,
+                ),
           SizedBox(height: 10),
           Text(
             text,
             style: TextStyle(
+              // TODO: Change this textsyle to a theme one
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -288,13 +297,39 @@ class DogInfoScreen extends GetView<DogInfoController> {
     );
   }
 
-  Widget _buildFeature(
-      IconData icon, String featureName, Color color, TextStyle style) {
-    return Row(
-      children: [
-        Padding(padding: EdgeInsets.all(8.0), child: Icon(icon, color: color)),
-        Text(featureName, style: style),
-      ],
+  // TODO: Put this in widgets
+  Widget _buildGridTextTile(String title, String text, double width) {
+    return Container(
+      width: width / 3 - 20,
+      height: 80,
+      decoration: BoxDecoration(
+        color: ColorConstants.transparentAppColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              // TODO: Change this textsyle to a theme one
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            text,
+            style: TextStyle(
+              // TODO: Change this textsyle to a theme one
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

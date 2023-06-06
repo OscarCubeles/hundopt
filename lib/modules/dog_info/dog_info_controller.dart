@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/shared/services/dog_singleton.dart';
 
+import '../../api/firebase_core/dog_repository.dart';
 import '../../models/dog.dart';
 import '../../models/dog_feature.dart';
 import '../../routes/app_pages.dart';
@@ -16,13 +18,21 @@ class DogInfoController extends GetxController {
   List<DogFeature> negativeDogFeatures = [];
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
+    super.onInit();
     addFeature(DogFeature(
         "Perros macho", CupertinoIcons.checkmark_square_fill, Colors.red));
     addFeature(DogFeature(
         "Perros macho", CupertinoIcons.checkmark_square_fill, Colors.red));
     addFeature(DogFeature(
         "Perros macho", CupertinoIcons.checkmark_square_fill, Colors.red));
+    if(DogSingleton().dogs == null){
+      await DogRepository().retrieveDogs();
+    }
+  }
+
+  Dog currentDog(){
+    return DogSingleton().dogs![DogSingleton().dogIndex!];
   }
 
   void updateIndex(int index) {

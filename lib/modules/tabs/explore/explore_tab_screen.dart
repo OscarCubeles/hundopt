@@ -23,7 +23,9 @@ class ExploreTab extends GetView<ExploreController> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Obx(() => PageView.builder(
-              controller: PageController(), // TODO: Create custom page controller to set the initial one to a custom one
+              controller: PageController(
+                  initialPage: controller.initialPage()
+              ), // TODO: Create custom page controller to set the initial one to a custom one
               scrollDirection: Axis.vertical,
               itemCount: controller.dogList.length,
               itemBuilder: (context, index) {

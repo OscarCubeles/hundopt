@@ -5,6 +5,7 @@ class DogSingleton {
   factory DogSingleton() => _instance;
 
   List<Dog>? dogs;
+  int? dogIndex;
 
   DogSingleton._internal();
 }
