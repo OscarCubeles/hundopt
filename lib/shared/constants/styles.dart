@@ -71,10 +71,25 @@ class Styles {
     fontFamily: "DM Sans",
   );
 
-  static TextStyle headlineMedium = TextStyle(
+  static TextStyle headlineMedium = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
     color: Colors.black,
     fontFamily: "DM Sans",
+  );
+
+  static TextStyle gridTileText = const TextStyle(
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    fontFamily: "DM Sans",
+  );
+
+  static TextStyle featureText = const TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    color: Colors.black,
+    fontFamily: "DM Sans",
+    overflow: TextOverflow.clip,
   );
 }

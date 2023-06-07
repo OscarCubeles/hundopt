@@ -13,25 +13,72 @@ import '../../shared/widgets/dialogs.dart';
 class DogInfoController extends GetxController {
   Dog dog = Get.arguments;
   RxInt imageIndex = 0.obs;
-
-  List<DogFeature> positiveDogFeatures = [];
-  List<DogFeature> negativeDogFeatures = [];
+  List<String> positiveDogFeatures = [];
+  List<String> negativeDogFeatures = [];
+  List<String> personalityTraits = [];
+  List<String> friendly = [];
+  List<String> notFriendly = [];
+  bool featuresRetrieved = false;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    addFeature(DogFeature(
-        "Perros macho", CupertinoIcons.checkmark_square_fill, Colors.red));
-    addFeature(DogFeature(
-        "Perros macho", CupertinoIcons.checkmark_square_fill, Colors.red));
-    addFeature(DogFeature(
-        "Perros macho", CupertinoIcons.checkmark_square_fill, Colors.red));
-    if(DogSingleton().dogs == null){
+    if (DogSingleton().dogs == null) {
       await DogRepository().retrieveDogs();
+    }
+    await retrieveDogFeatures();
+  }
+
+  void initLists() {
+    positiveDogFeatures = [];
+    negativeDogFeatures = [];
+    personalityTraits = [];
+    friendly = [];
+    notFriendly = [];
+  }
+
+  Future<void> retrieveDogFeatures() async {
+    if (!featuresRetrieved) {
+      await DogRepository().retrieveDogs();
+      for (String healthItem in currentDog().healthPositive) {
+        addPositiveFeature(healthItem);
+      }
+      for (String healthItem in currentDog().healthNegative) {
+        addNegativeFeature(healthItem);
+      }
+      for (String trait in currentDog().personality) {
+        addTrait(trait);
+      }
+      for (String friendly in currentDog().friendly) {
+        addFriendlyFeature(friendly);
+      }
+      for (String notFriendly in currentDog().notFriendly) {
+        addNotFriendlyFeature(notFriendly);
+      }
     }
   }
 
-  Dog currentDog(){
+  void addFriendlyFeature(String feature) {
+    friendly.add(feature);
+  }
+
+  void addTrait(String trait) {
+    personalityTraits.add(trait);
+  }
+
+  void addNotFriendlyFeature(String feature) {
+    notFriendly.add(feature);
+  }
+
+  void addPositiveFeature(String feature) {
+    positiveDogFeatures.add(feature);
+  }
+
+  void addNegativeFeature(String feature) {
+    negativeDogFeatures.add(feature);
+  }
+
+  Dog currentDog() {
     return DogSingleton().dogs![DogSingleton().dogIndex!];
   }
 
@@ -39,13 +86,8 @@ class DogInfoController extends GetxController {
     imageIndex.value = index;
   }
 
-  void navigateToExplore(){
+  void navigateToExplore() {
     Get.toNamed(Routes.HOME, arguments: 0);
-  }
-
-  void addFeature(DogFeature dogFeature) {
-    positiveDogFeatures.add(dogFeature);
-    negativeDogFeatures.add(dogFeature);
   }
 
   void showConfirmAdoptDialog() {
@@ -79,7 +121,9 @@ class DogInfoController extends GetxController {
 
   Widget getTimeline(int index, height) {
     return index != 10
-        ? Container(padding: EdgeInsets.all(10),)
+        ? Container(
+            padding: EdgeInsets.all(10),
+          )
         : Padding(
             child: Container(
               padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -93,21 +137,21 @@ class DogInfoController extends GetxController {
 
   Widget getCustomPadding(int index, height) {
     return index == 0
-        ? Container(padding: EdgeInsets.all(10),)
+        ? Container(
+            padding: EdgeInsets.all(10),
+          )
         : Padding(
-      child: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-        width: 4,
-        height: computeHeight(index, height),
-        color: ColorConstants.black,
-      ),
-      padding: EdgeInsets.fromLTRB(17.5, 0, 0, 0),
-    );
+            child: Container(
+              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              width: 4,
+              height: computeHeight(index, height),
+              color: ColorConstants.black,
+            ),
+            padding: EdgeInsets.fromLTRB(17.5, 0, 0, 0),
+          );
   }
 
-  double computeHeight(int index, height){
+  double computeHeight(int index, height) {
     return index != 2 ? height : (height + 40);
   }
-
-
 }

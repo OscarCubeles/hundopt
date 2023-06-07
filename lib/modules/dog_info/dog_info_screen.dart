@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:hundopt/modules/dog_info/dog_info_controller.dart';
 import 'package:hundopt/shared/constants/constants.dart';
 import 'package:hundopt/shared/shared.dart';
+import 'package:hundopt/shared/widgets/grid_gender_tile.dart';
+import 'package:hundopt/shared/widgets/grid_text_tile.dart';
 import 'package:like_button/like_button.dart';
 
 import '../../shared/widgets/feature_list.dart';
@@ -152,11 +154,18 @@ class DogInfoScreen extends GetView<DogInfoController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _buildGridTextTile('Edad',
-                              controller.currentDog().age.toString(), width),
-                          _buildGridTextTile(
-                              'Tamaño', controller.currentDog().size, width),
-                          _buildGridTile('Género', width),
+                          GridTextTile(
+                              title: 'Edad',
+                              text: controller.currentDog().age.toString(),
+                              width: width),
+                          GridTextTile(
+                              title: 'Tamaño',
+                              text: controller.currentDog().size,
+                              width: width),
+                          GridGenderTile(
+                            gender: 'Género',
+                            width: width,
+                          ),
                         ],
                       ),
                       SizedBox(height: 20),
@@ -169,8 +178,8 @@ class DogInfoScreen extends GetView<DogInfoController> {
                   ),
                   FeatureList(
                     width: MediaQuery.of(context).size.width,
-                    positiveFeatures: controller.positiveDogFeatures,
-                    negativeFeatures: controller.positiveDogFeatures,
+                    positiveFeatures: controller.currentDog().friendly,
+                    negativeFeatures: controller.currentDog().notFriendly,
                   ),
                   Text(
                     "Estado de Salud",
@@ -179,8 +188,8 @@ class DogInfoScreen extends GetView<DogInfoController> {
                   ),
                   FeatureList(
                     width: MediaQuery.of(context).size.width,
-                    positiveFeatures: controller.positiveDogFeatures,
-                    negativeFeatures: controller.positiveDogFeatures,
+                    positiveFeatures: controller.currentDog().healthPositive,
+                    negativeFeatures: controller.currentDog().healthNegative,
                   ),
                   Text(
                     "Personalidad",
@@ -189,7 +198,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                   ),
                   FeatureList(
                     width: MediaQuery.of(context).size.width,
-                    positiveFeatures: controller.positiveDogFeatures,
+                    positiveFeatures: controller.currentDog().personality,
                     negativeFeatures: [],
                   ),
                   Column(
@@ -255,80 +264,6 @@ class DogInfoScreen extends GetView<DogInfoController> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // TODO: Put this in widgets
-  Widget _buildGridTile(String text, double width) {
-    return Container(
-      width: width / 3 - 20,
-      height: 80,
-      decoration: BoxDecoration(
-        color: ColorConstants.transparentAppColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          controller.currentDog().gender == "Macho"
-              ? Icon(
-                  Icons.male,
-                  size: 20,
-                  color: Colors.white,
-                )
-              : Icon(
-                  Icons.female,
-                  size: 20,
-                  color: Colors.white,
-                ),
-          SizedBox(height: 10),
-          Text(
-            text,
-            style: TextStyle(
-              // TODO: Change this textsyle to a theme one
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // TODO: Put this in widgets
-  Widget _buildGridTextTile(String title, String text, double width) {
-    return Container(
-      width: width / 3 - 20,
-      height: 80,
-      decoration: BoxDecoration(
-        color: ColorConstants.transparentAppColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              // TODO: Change this textsyle to a theme one
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            text,
-            style: TextStyle(
-              // TODO: Change this textsyle to a theme one
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
       ),
     );
   }
