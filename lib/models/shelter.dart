@@ -17,4 +17,14 @@ class Shelter {
       required this.email,
       required this.phone,
       required this.location});
+
+  Shelter.empty()
+      : id = '',
+        email = '',
+        location = '',
+        phone = '',
+        pictureURL = '',
+        name = '',
+        dogsId = [],
+        socialNetworks = [];
 }

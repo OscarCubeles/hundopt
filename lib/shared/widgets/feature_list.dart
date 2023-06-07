@@ -28,6 +28,7 @@ class FeatureList extends StatelessWidget {
             width: width * 0.4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ListView.builder(
                   padding: const EdgeInsets.fromLTRB(2, 4, 2, 4),
@@ -49,6 +50,7 @@ class FeatureList extends StatelessWidget {
             width: width * 0.4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ListView.builder(
                   padding: const EdgeInsets.fromLTRB(2, 4, 2, 4),

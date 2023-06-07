@@ -223,7 +223,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                       ),
                     ],
                   ),
-                  ListTile(
+                  Obx(() => ListTile(
                     contentPadding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                     onTap: () => print("Perrera pressed"),
                     title: Column(
@@ -235,7 +235,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                             style: textTheme.headlineMedium,
                             textAlign: TextAlign.justify,
                           ),
-                          Text("Perrera la guarda",
+                          Text(controller.dogShelter.value.name,
                               style: textTheme.bodyMedium),
                         ]),
                     subtitle: Row(
@@ -245,15 +245,16 @@ class DogInfoScreen extends GetView<DogInfoController> {
                           color: Colors.black,
                         ),*/
                         Text(
-                          "Barcelona",
+                          controller.dogShelter.value.location,
                           style: textTheme.bodySmall,
                         ),
                       ],
                     ),
                     trailing: CircleAvatar(
-                      backgroundImage: AssetImage("assets/images/kira-dog.JPG"),
+                      backgroundImage:
+                      NetworkImage(controller.dogShelter.value.pictureURL),
                     ),
-                  ),
+                  )),
                   Padding(
                       padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                       child: AppPrimaryButton(

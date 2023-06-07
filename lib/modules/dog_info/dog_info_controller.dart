@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/api/firebase_core/shelter_repository.dart';
 import 'package:hundopt/shared/services/dog_singleton.dart';
+import 'package:hundopt/shared/services/shelter_singleton.dart';
 
 import '../../api/firebase_core/dog_repository.dart';
 import '../../models/dog.dart';
-import '../../models/dog_feature.dart';
+import '../../models/shelter.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/dialogs.dart';
@@ -13,12 +15,7 @@ import '../../shared/widgets/dialogs.dart';
 class DogInfoController extends GetxController {
   Dog dog = Get.arguments;
   RxInt imageIndex = 0.obs;
-  List<String> positiveDogFeatures = [];
-  List<String> negativeDogFeatures = [];
-  List<String> personalityTraits = [];
-  List<String> friendly = [];
-  List<String> notFriendly = [];
-  bool featuresRetrieved = false;
+  Rx<Shelter> dogShelter = Shelter.empty().obs;
 
   @override
   Future<void> onInit() async {
@@ -26,56 +23,25 @@ class DogInfoController extends GetxController {
     if (DogSingleton().dogs == null) {
       await DogRepository().retrieveDogs();
     }
-    await retrieveDogFeatures();
+    if(ShelterSingleton().shelters == null){
+      await ShelterRepository().retrieveShelters();
+    }
+    retrieveShelter();
   }
 
-  void initLists() {
-    positiveDogFeatures = [];
-    negativeDogFeatures = [];
-    personalityTraits = [];
-    friendly = [];
-    notFriendly = [];
-  }
-
-  Future<void> retrieveDogFeatures() async {
-    if (!featuresRetrieved) {
-      await DogRepository().retrieveDogs();
-      for (String healthItem in currentDog().healthPositive) {
-        addPositiveFeature(healthItem);
-      }
-      for (String healthItem in currentDog().healthNegative) {
-        addNegativeFeature(healthItem);
-      }
-      for (String trait in currentDog().personality) {
-        addTrait(trait);
-      }
-      for (String friendly in currentDog().friendly) {
-        addFriendlyFeature(friendly);
-      }
-      for (String notFriendly in currentDog().notFriendly) {
-        addNotFriendlyFeature(notFriendly);
+  void retrieveShelter(){
+    for(Shelter shelter in ShelterSingleton().shelters!){
+      if(shelter.id == currentDog().shelterID){
+        copyShelter(shelter);
+        print(shelter.id);
       }
     }
   }
 
-  void addFriendlyFeature(String feature) {
-    friendly.add(feature);
-  }
-
-  void addTrait(String trait) {
-    personalityTraits.add(trait);
-  }
-
-  void addNotFriendlyFeature(String feature) {
-    notFriendly.add(feature);
-  }
-
-  void addPositiveFeature(String feature) {
-    positiveDogFeatures.add(feature);
-  }
-
-  void addNegativeFeature(String feature) {
-    negativeDogFeatures.add(feature);
+  void copyShelter(Shelter srcShelter){
+    dogShelter.value.location = srcShelter.location;
+    dogShelter.value.name = srcShelter.name;
+    dogShelter.value.pictureURL = srcShelter.pictureURL;
   }
 
   Dog currentDog() {
@@ -84,10 +50,11 @@ class DogInfoController extends GetxController {
 
   void updateIndex(int index) {
     imageIndex.value = index;
+    print("objecthols");
   }
 
   void navigateToExplore() {
-    Get.toNamed(Routes.HOME, arguments: 0);
+    Get.offNamed(Routes.HOME, arguments: 0);
   }
 
   void showConfirmAdoptDialog() {
