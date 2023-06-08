@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:hundopt/models/user.dart';
 import 'package:hundopt/shared/services/dog_singleton.dart';
 
 import '../../models/dog.dart';
@@ -84,8 +85,23 @@ class DogRepository {
 
     final dogs = querySnapshot.docs.map((doc) => Dog.fromMap(doc.data())).toList();
     shelterDogs.assignAll(dogs);
-
     return shelterDogs;
+  }
+
+  Future<RxList<Dog>> fetchUserDogs(HundoptUser user) async {
+    final adoptingDogs = <Dog>[].obs;
+    for (final dogId in user.adoptingDogs) {
+      final dogSnapshot = await FirebaseFirestore.instance
+          .collection('dogs')
+          .doc(dogId)
+          .get();
+      if (dogSnapshot.exists) {
+        final dogData = dogSnapshot.data() as Map<String, dynamic>;
+        final dog = Dog.fromMap(dogData);
+        adoptingDogs.add(dog);
+      }
+    }
+    return adoptingDogs;
   }
 
 

@@ -16,19 +16,6 @@ class ShelterProfileController extends GetxController {
   RxBool isBarLeft = true.obs;
   RxList shelterDogs = [].obs;
 
-  Map<String, IconData> socialMediaMap = {
-    'Twitter': FontAwesomeIcons.twitter,
-    'Facebook': FontAwesomeIcons.facebook,
-    'Linkedin': FontAwesomeIcons.linkedin,
-    'TikTok': FontAwesomeIcons.tiktok,
-  };
-
-  final socialMediaColorMap = {
-    'Twitter': Colors.blue,
-    'Facebook': Colors.blue[900],
-    'Linkedin': Colors.blue[900],
-    'TikTok': Colors.black,
-  };
 
   @override
   void onInit() async {
@@ -269,8 +256,6 @@ class ShelterProfileController extends GetxController {
       ),
     ) : Container();
   }
-
-
 
   void onLikePressed() {
     //TODO: Set the shelter as liked

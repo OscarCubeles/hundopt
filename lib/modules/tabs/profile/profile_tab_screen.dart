@@ -77,56 +77,68 @@ class ProfileTab extends GetView<ProfileController> {
             HorizontalBar(isLeft: true),
             Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
             Expanded(
-              child: SingleChildScrollView(
+              child: Obx(() => SingleChildScrollView(
                 child: GridView.count(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   crossAxisCount: 2,
                   childAspectRatio: 0.8,
-                  children: List.generate(20, (index) {
-                    return GridTile(
-                      child: Container(
-                          margin: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context)
-                                    .size
-                                    .width, // set maximum
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: SizedBox.fromSize(
-                                    child: AspectRatio(
-                                      child: Image.asset(
-                                        'assets/images/example_dog.jpg',
-                                        fit: BoxFit.cover,
-                                        width: 84.0,
-                                        height: 84.0,
+                  children: List.generate(controller.userAdoptingDogs.length, (index) {
+                    return GestureDetector(
+                      onTap: () => {
+                        controller.navigateToDogInfo(controller.userAdoptingDogs[index]),
+                      },
+                      child: GridTile(
+                        child: Container(
+                            margin: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context)
+                                      .size
+                                      .width, // set maximum
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: SizedBox.fromSize(
+                                      child: AspectRatio(
+                                        child: Image.network(
+                                          controller.userAdoptingDogs[index].mainPictureURL,
+                                          fit: BoxFit.cover,
+                                          width: 84.0,
+                                          height: 84.0,
+                                        ),
+                                        aspectRatio: 1 / 1,
                                       ),
-                                      aspectRatio: 1 / 1,
                                     ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                child: Text(
-                                  "Kira",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium,
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                  child: Text(
+                                    controller.userAdoptingDogs[index].name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
+                                  ),
                                 ),
-                              )
-                            ],
-                          )),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                  child: Text(
+                                    controller.userAdoptingDogs[index].breed,
+                                    style: Styles.bodySmall,
+                                  ),
+                                )
+                              ],
+                            )),
+                      ),
                     );
                   }),
                 ),
-              ),
+              )),
             ),
           ],
         ),

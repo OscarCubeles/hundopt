@@ -6,9 +6,9 @@ class HundoptUser {
   String phone;
   String pictureURL;
   String personalityFormID;
-  List<String>? adoptingDogs;
-  List<String>? favDogs;
-  List<String>? favShelters;
+  List<String> adoptingDogs;
+  List<String> favDogs;
+  List<String> favShelters;
 
   HundoptUser(
       {required this.fullName,
