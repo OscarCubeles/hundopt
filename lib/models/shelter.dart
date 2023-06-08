@@ -36,4 +36,8 @@ class Shelter {
         linkedin = '',
         tiktok = '',
         twitter = '';
+
+  bool hasSocialNetworks(){
+    return !(linkedin == "" && tiktok == "" && facebook == "" && twitter == "");
+  }
 }

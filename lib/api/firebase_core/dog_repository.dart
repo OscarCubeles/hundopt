@@ -74,7 +74,7 @@ class DogRepository {
     });
   }
 
-  Future<RxList<Dog>> fetchDogsByShelterID(String targetShelterID) async {
+  Future<RxList<Dog>> fetchShelterDogs(String targetShelterID) async {
     final shelterDogs = <Dog>[].obs;
 
     final querySnapshot = await FirebaseFirestore.instance

@@ -19,14 +19,14 @@ class ShelterProfileController extends GetxController {
   Map<String, IconData> socialMediaMap = {
     'Twitter': FontAwesomeIcons.twitter,
     'Facebook': FontAwesomeIcons.facebook,
-    'Instagram': FontAwesomeIcons.instagram,
+    'Linkedin': FontAwesomeIcons.linkedin,
     'TikTok': FontAwesomeIcons.tiktok,
   };
 
   final socialMediaColorMap = {
     'Twitter': Colors.blue,
     'Facebook': Colors.blue[900],
-    'Instagram': Colors.pink,
+    'Linkedin': Colors.blue[900],
     'TikTok': Colors.black,
   };
 
@@ -42,10 +42,9 @@ class ShelterProfileController extends GetxController {
     if (ShelterSingleton().shelters == []) {
       await ShelterRepository().retrieveShelters();
     }
-    shelterDogs.assignAll(
-        await DogRepository().fetchDogsByShelterID(currentShelter().id));
+    shelterDogs
+        .assignAll(await DogRepository().fetchShelterDogs(currentShelter().id));
 
-    // Trigger view update
     update();
   }
 
@@ -71,8 +70,8 @@ class ShelterProfileController extends GetxController {
     print("${dog.name}");
     // TODO: Add this method in the service that uses the singleton, the service could be called dogmanager
     int i = 0;
-    for(Dog tmpDog in DogSingleton().dogs!){
-      if(dog.id == tmpDog.id){
+    for (Dog tmpDog in DogSingleton().dogs!) {
+      if (dog.id == tmpDog.id) {
         DogSingleton().dogIndex = i;
         Get.offNamed(Routes.DOG_INFO, arguments: tmpDog);
         break;
@@ -80,6 +79,8 @@ class ShelterProfileController extends GetxController {
       i++;
     }
   }
+
+
 
   // TODO: Put this widget as widget constant
   Widget getDogGrid(double screenWidth) {
@@ -178,39 +179,100 @@ class ShelterProfileController extends GetxController {
         // TODO: Add an if statement to check if it has RRSS
         Padding(padding: EdgeInsets.all(5)),
 
-        getSocialNetworks()
+        getSocialNetworks2()
         // TODO : Change this if it does not have social media
       ],
     ));
   }
 
-  Widget getSocialNetworks() {
-    return Container(
+
+
+
+  Widget getSocialNetworks2() {
+    return currentShelter().hasSocialNetworks() ? Container(
       height: 500,
-      child: ListView.builder(
-        itemCount: socialMediaList.length,
-        itemBuilder: (context, index) {
-          String socialMediaName = socialMediaMap.keys.elementAt(index);
-          return Padding(
+      child: ListView(
+        children: [
+          if (currentShelter().facebook.isNotEmpty)
+            Padding(
               padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Icon(
-                    socialMediaMap[socialMediaList[index]],
-                    color: socialMediaColorMap[socialMediaName],
+                    FontAwesomeIcons.facebook,
+                    color: Colors.blue[900],
                   ),
                   Padding(padding: EdgeInsets.all(10)),
                   Text(
-                    "@perreraFelix",
+                    currentShelter().facebook,
                     style: Styles.bodySmall,
                   ),
                 ],
-              ));
-        },
+              ),
+            ),
+          if (currentShelter().twitter.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    FontAwesomeIcons.twitter,
+                    color: Colors.blue,
+                  ),
+                  Padding(padding: EdgeInsets.all(10)),
+                  Text(
+                    currentShelter().twitter,
+                    style: Styles.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+          if (currentShelter().linkedin.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    FontAwesomeIcons.linkedin,
+                    color: Colors.blue[900],
+                  ),
+                  Padding(padding: EdgeInsets.all(10)),
+                  Text(
+                    currentShelter().linkedin,
+                    style: Styles.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+          if (currentShelter().tiktok.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    FontAwesomeIcons.tiktok,
+                    color: Colors.black,
+                  ),
+                  Padding(padding: EdgeInsets.all(10)),
+                  Text(
+                    currentShelter().tiktok,
+                    style: Styles.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+        ],
       ),
-    );
+    ) : Container();
   }
 
-  void onLikePressed() {}
+
+
+  void onLikePressed() {
+    //TODO: Set the shelter as liked
+  }
 }
