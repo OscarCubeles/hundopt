@@ -6,6 +6,7 @@ import '../../api/firebase_core/dog_repository.dart';
 import '../../api/firebase_core/shelter_repository.dart';
 import '../../models/dog.dart';
 import '../../models/shelter.dart';
+import '../../routes/app_pages.dart';
 import '../../shared/constants/styles.dart';
 import '../../shared/services/dog_singleton.dart';
 import '../../shared/services/shelter_singleton.dart';
@@ -14,7 +15,6 @@ class ShelterProfileController extends GetxController {
   List<String> socialMediaList = [];
   RxBool isBarLeft = true.obs;
   RxList shelterDogs = [].obs;
-
 
   Map<String, IconData> socialMediaMap = {
     'Twitter': FontAwesomeIcons.twitter,
@@ -42,18 +42,21 @@ class ShelterProfileController extends GetxController {
     if (ShelterSingleton().shelters == []) {
       await ShelterRepository().retrieveShelters();
     }
-    shelterDogs.assignAll(await DogRepository().fetchDogsByShelterID(currentShelter().id));
+    shelterDogs.assignAll(
+        await DogRepository().fetchDogsByShelterID(currentShelter().id));
 
     // Trigger view update
     update();
   }
 
   Dog currentDog() {
-    return DogSingleton().dogs![DogSingleton().dogIndex!]; // TODO: Put this as a service
+    return DogSingleton()
+        .dogs![DogSingleton().dogIndex!]; // TODO: Put this as a service
   }
 
-  Shelter currentShelter(){
-    return ShelterSingleton().shelters[ShelterSingleton().shelterIndex]; // TODO: Put this as a service
+  Shelter currentShelter() {
+    return ShelterSingleton().shelters[
+        ShelterSingleton().shelterIndex]; // TODO: Put this as a service
   }
 
   void navigateBack() {
@@ -62,6 +65,20 @@ class ShelterProfileController extends GetxController {
 
   void switchTab() {
     isBarLeft.value = !isBarLeft.value;
+  }
+
+  void navigateToDogInfo(Dog dog) {
+    print("${dog.name}");
+    // TODO: Add this method in the service that uses the singleton, the service could be called dogmanager
+    int i = 0;
+    for(Dog tmpDog in DogSingleton().dogs!){
+      if(dog.id == tmpDog.id){
+        DogSingleton().dogIndex = i;
+        Get.offNamed(Routes.DOG_INFO, arguments: tmpDog);
+        break;
+      }
+      i++;
+    }
   }
 
   // TODO: Put this widget as widget constant
@@ -74,48 +91,53 @@ class ShelterProfileController extends GetxController {
           crossAxisCount: 2,
           childAspectRatio: 0.8,
           children: List.generate(shelterDogs.length, (index) {
-            return GridTile(
-              child: Container(
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: screenWidth, // set maximum
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: SizedBox.fromSize(
-                            child: AspectRatio(
-                              aspectRatio: 1 / 1,
-                              child: Image.network(
-                                shelterDogs[index].mainPictureURL,
-                                fit: BoxFit.cover,
-                                width: 84.0,
-                                height: 84.0,
+            return GestureDetector(
+              onTap: () => {
+                navigateToDogInfo(shelterDogs[index]),
+              },
+              child: GridTile(
+                child: Container(
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: screenWidth, // set maximum
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SizedBox.fromSize(
+                              child: AspectRatio(
+                                aspectRatio: 1 / 1,
+                                child: Image.network(
+                                  shelterDogs[index].mainPictureURL,
+                                  fit: BoxFit.cover,
+                                  width: 84.0,
+                                  height: 84.0,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                        child: Text(
-                          shelterDogs[index].name,
-                          style: Styles.headlineMedium,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                          child: Text(
+                            shelterDogs[index].name,
+                            style: Styles.headlineMedium,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                        child: Text(
-                          shelterDogs[index].breed,
-                          style: Styles.bodySmall,
-                        ),
-                      )
-                    ],
-                  )),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                          child: Text(
+                            shelterDogs[index].breed,
+                            style: Styles.bodySmall,
+                          ),
+                        )
+                      ],
+                    )),
+              ),
             );
           }),
         ),
@@ -156,7 +178,8 @@ class ShelterProfileController extends GetxController {
         // TODO: Add an if statement to check if it has RRSS
         Padding(padding: EdgeInsets.all(5)),
 
-        getSocialNetworks() // TODO : Change this if it does not have social media
+        getSocialNetworks()
+        // TODO : Change this if it does not have social media
       ],
     ));
   }

@@ -13,7 +13,7 @@ import '../../shared/constants/constants.dart';
 import '../../shared/widgets/dialogs.dart';
 
 class DogInfoController extends GetxController {
-  Dog dog = Get.arguments;
+  Dog dog = Get.arguments; // TODO: Check if this is really useful bc at the end it is using the dogSingleton
   RxInt imageIndex = 0.obs;
   Rx<Shelter> dogShelter = Shelter.empty().obs;
 
