@@ -54,6 +54,7 @@ class DogReservedScreen extends GetView<DogInfoController> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Align(
+                                          alignment: Alignment.centerLeft,
                                           child: Container(
                                             width: 40,
                                             height: 40,
@@ -70,16 +71,19 @@ class DogReservedScreen extends GetView<DogInfoController> {
                                                       .displaySmall),
                                             ),
                                           ),
-                                          alignment: Alignment.centerLeft,
                                         ),
                                         Container(
-                                          padding: EdgeInsets.fromLTRB(
+                                          padding: const EdgeInsets.fromLTRB(
                                               7.5, 8.5, 0, 0),
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
                                               0.7,
                                           child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               Text(
                                                   StringConstants
@@ -95,10 +99,6 @@ class DogReservedScreen extends GetView<DogInfoController> {
                                                     .labelMedium,
                                               ),
                                             ],
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
                                           ),
                                         ),
                                       ])
@@ -111,7 +111,7 @@ class DogReservedScreen extends GetView<DogInfoController> {
                 ),
                 AppPrimaryButton(
                     text: StringConstants.continueContactLabel,
-                    onPressed: controller.navigateToSingleChat),
+                    onPressed: controller.reserveAndContinue),
                 Padding(
                     padding: EdgeInsets.all(
                         MediaQuery.of(context).size.height * 0.01)),

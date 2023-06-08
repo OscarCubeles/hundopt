@@ -23,34 +23,43 @@ class DogInfoController extends GetxController {
     if (DogSingleton().dogs == null) {
       await DogRepository().retrieveDogs();
     }
-    if(ShelterSingleton().shelters == null){
+    if(ShelterSingleton().shelters == []){
       await ShelterRepository().retrieveShelters();
     }
     retrieveShelter();
   }
 
   void retrieveShelter(){
-    for(Shelter shelter in ShelterSingleton().shelters!){
+    for(int i = 0; i < ShelterSingleton().shelters.length; i++){
+      if(ShelterSingleton().shelters[i].id == currentDog().shelterID){
+          ShelterSingleton().shelterIndex = i;
+      }
+    }
+    for(Shelter shelter in ShelterSingleton().shelters){
       if(shelter.id == currentDog().shelterID){
         copyShelter(shelter);
-        print(shelter.id);
       }
     }
   }
 
   void copyShelter(Shelter srcShelter){
+    dogShelter.value.id = srcShelter.id;
     dogShelter.value.location = srcShelter.location;
     dogShelter.value.name = srcShelter.name;
     dogShelter.value.pictureURL = srcShelter.pictureURL;
+    dogShelter.value.email = srcShelter.email;
   }
 
   Dog currentDog() {
-    return DogSingleton().dogs![DogSingleton().dogIndex!];
+    return DogSingleton().dogs![DogSingleton().dogIndex!]; // TODO: Put this as a service
+  }
+
+  Shelter currentShelter(){
+    return ShelterSingleton().shelters[ShelterSingleton().shelterIndex]; // TODO: Put this as a service
   }
 
   void updateIndex(int index) {
     imageIndex.value = index;
-    print("objecthols");
   }
 
   void navigateToExplore() {
@@ -69,56 +78,39 @@ class DogInfoController extends GetxController {
             buttonColor: ColorConstants.appColor,
             onPressed: () => toShowAdoptDetails(),
             onClose: () => Get.back(),
-            onTextPressed: () => Get.back(),
+            onTextPressed: () => navigateToSingleChat(),
           );
         });
   }
 
+
+
   void toShowAdoptDetails() {
+    if(dog.isReserved || currentDog().isReserved){
+      Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: [dog, dogShelter]); // TODO: Check why this redirect does not work
+    }
     Get.toNamed(Routes.DOG_INFO + Routes.RESERVED_DOG);
   }
 
+  void reserveAndContinue() async {
+    currentDog().isReserved = true;
+    dog.isReserved = true;
+    await DogRepository().reserveDog(dog.id);
+
+    Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: [dog, dogShelter]);
+  }
+
   void navigateToSingleChat() {
-    Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: dog);
+    Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: [dog, dogShelter]);
   }
 
   void navigateBack() {
     Get.toNamed(Routes.DOG_INFO, arguments: dog);
   }
 
-  Widget getTimeline(int index, height) {
-    return index != 10
-        ? Container(
-            padding: EdgeInsets.all(10),
-          )
-        : Padding(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-              width: 4,
-              height: computeHeight(index, height),
-              color: ColorConstants.appColor,
-            ),
-            padding: EdgeInsets.fromLTRB(17.5, 0, 0, 0),
-          );
+  void navigateToShelterScreen(){
+    Get.toNamed(Routes.SHELTER_PROFILE);
   }
 
-  Widget getCustomPadding(int index, height) {
-    return index == 0
-        ? Container(
-            padding: EdgeInsets.all(10),
-          )
-        : Padding(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-              width: 4,
-              height: computeHeight(index, height),
-              color: ColorConstants.black,
-            ),
-            padding: EdgeInsets.fromLTRB(17.5, 0, 0, 0),
-          );
-  }
 
-  double computeHeight(int index, height) {
-    return index != 2 ? height : (height + 40);
-  }
 }

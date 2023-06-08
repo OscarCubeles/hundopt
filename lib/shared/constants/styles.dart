@@ -92,4 +92,11 @@ class Styles {
     fontFamily: "DM Sans",
     overflow: TextOverflow.clip,
   );
+
+  static TextStyle shelterHeadline = const TextStyle(
+      fontSize: 25,
+      fontFamily: "DM Sans",
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+      overflow: TextOverflow.clip);
 }

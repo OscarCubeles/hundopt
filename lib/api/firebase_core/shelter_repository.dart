@@ -16,8 +16,11 @@ class ShelterRepository{
           phone: data['phone'],
           location: data['location'],
           pictureURL: data['pictureURL'],
-          dogsId: List<String>.from(data['dogsId'] ?? []),
-          socialNetworks: List<String>.from(data['socialNetworks'] ?? []),
+          dogsId: List<String>.from(data['dogs-id'] ?? []),//TODO: CHeck why social networks do not appear
+          facebook: data['facebook'],
+          tiktok: data['tiktok'],
+          twitter: data['twitter'],
+          linkedin: data['linkedin'],
         );
         shelters.add(shelter);
       }
@@ -26,4 +29,7 @@ class ShelterRepository{
       print('Error retrieving shelters: $error');
     });
   }
+
+
+
 }

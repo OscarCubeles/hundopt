@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../api/firebase_core/dog_repository.dart';
+import '../../api/firebase_core/shelter_repository.dart';
+import '../../models/dog.dart';
 import '../../models/shelter.dart';
 import '../../shared/constants/styles.dart';
+import '../../shared/services/dog_singleton.dart';
+import '../../shared/services/shelter_singleton.dart';
 
 class ShelterProfileController extends GetxController {
   List<String> socialMediaList = [];
   RxBool isBarLeft = true.obs;
-  Shelter shelter = Shelter(
-      name: 'Perrera feliz',
-      email: 'info@perrera.com',
-      phone: '+34 665787221',
-      location: "Barcelona Carrer Cases 21",
-      id: '',
-      pictureURL: '',
-      dogsId: [],
-      socialNetworks: []);
+  RxList shelterDogs = [].obs;
+
 
   Map<String, IconData> socialMediaMap = {
     'Twitter': FontAwesomeIcons.twitter,
@@ -33,9 +31,29 @@ class ShelterProfileController extends GetxController {
   };
 
   @override
-  void onInit() {
+  void onInit() async {
+    super.onInit();
     isBarLeft.value = true;
     //socialMediaList = socialMediaMap.keys.toList();
+    // TODO: Put this as a service bc its kinda ugly to have it everywhere
+    if (DogSingleton().dogs == null) {
+      await DogRepository().retrieveDogs();
+    }
+    if (ShelterSingleton().shelters == []) {
+      await ShelterRepository().retrieveShelters();
+    }
+    shelterDogs.assignAll(await DogRepository().fetchDogsByShelterID(currentShelter().id));
+
+    // Trigger view update
+    update();
+  }
+
+  Dog currentDog() {
+    return DogSingleton().dogs![DogSingleton().dogIndex!]; // TODO: Put this as a service
+  }
+
+  Shelter currentShelter(){
+    return ShelterSingleton().shelters[ShelterSingleton().shelterIndex]; // TODO: Put this as a service
   }
 
   void navigateBack() {
@@ -55,7 +73,7 @@ class ShelterProfileController extends GetxController {
           shrinkWrap: true,
           crossAxisCount: 2,
           childAspectRatio: 0.8,
-          children: List.generate(20, (index) {
+          children: List.generate(shelterDogs.length, (index) {
             return GridTile(
               child: Container(
                   margin: EdgeInsets.all(10),
@@ -72,8 +90,8 @@ class ShelterProfileController extends GetxController {
                           child: SizedBox.fromSize(
                             child: AspectRatio(
                               aspectRatio: 1 / 1,
-                              child: Image.asset(
-                                'assets/images/kira-dog.JPG',
+                              child: Image.network(
+                                shelterDogs[index].mainPictureURL,
                                 fit: BoxFit.cover,
                                 width: 84.0,
                                 height: 84.0,
@@ -85,8 +103,15 @@ class ShelterProfileController extends GetxController {
                       Padding(
                         padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
                         child: Text(
-                          "Kira",
+                          shelterDogs[index].name,
                           style: Styles.headlineMedium,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        child: Text(
+                          shelterDogs[index].breed,
+                          style: Styles.bodySmall,
                         ),
                       )
                     ],
@@ -99,6 +124,7 @@ class ShelterProfileController extends GetxController {
   }
 
   Widget getBodyContent(double screenWidth) {
+    update();
     return isBarLeft.value ? getDogGrid(screenWidth) : getShelterBody();
   }
 
@@ -110,19 +136,19 @@ class ShelterProfileController extends GetxController {
       children: [
         Text("Ubicación", style: Styles.headlineMedium),
         Text(
-          shelter.location,
+          currentShelter().location,
           style: Styles.bodySmall,
         ),
         Padding(padding: EdgeInsets.all(10)),
         Text("Teléfono", style: Styles.headlineMedium),
         Text(
-          shelter.phone,
+          currentShelter().phone,
           style: Styles.bodySmall,
         ),
         Padding(padding: EdgeInsets.all(10)),
         Text("Correo Electrónico", style: Styles.headlineMedium),
         Text(
-          shelter.email,
+          currentShelter().email,
           style: Styles.bodySmall,
         ),
         Padding(padding: EdgeInsets.all(10)),
@@ -130,7 +156,7 @@ class ShelterProfileController extends GetxController {
         // TODO: Add an if statement to check if it has RRSS
         Padding(padding: EdgeInsets.all(5)),
 
-        //getSocialNetworks() // TODO : Change this if it does not have social media
+        getSocialNetworks() // TODO : Change this if it does not have social media
       ],
     ));
   }

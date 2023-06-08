@@ -23,6 +23,8 @@ class ColorConstants {
   static Color transparentWhite = Color(0x93FFFFFF);
   static Color appChatMsg = Color(0x8F2C6A4A);
   static Color chatTimestamp = Color(0x088A91A8);
+  static Color invisible = Color(0x00E53434);
+
   static const MaterialColor appMaterialColor = MaterialColor(
     0xFFE57373,
     <int, Color>{

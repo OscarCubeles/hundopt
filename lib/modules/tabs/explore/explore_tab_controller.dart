@@ -12,8 +12,10 @@ import 'package:hundopt/shared/services/dog_singleton.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../api/firebase_core/shelter_repository.dart';
 import '../../../models/dog.dart';
 import '../../../routes/app_pages.dart';
+import '../../../shared/services/shelter_singleton.dart';
 
 class ExploreController extends GetxController {
   final Rx<List<Dog>> _dogList = Rx<List<Dog>>([]);
@@ -33,6 +35,10 @@ class ExploreController extends GetxController {
       await DogRepository().retrieveDogs();
     }
     _dogList.value = DogSingleton().dogs!;
+    if (ShelterSingleton().shelters == []) {
+      await ShelterRepository().retrieveShelters();
+    }
+    retrieveShelter();
   }
 
   int initialPage() {
@@ -41,9 +47,28 @@ class ExploreController extends GetxController {
         : DogSingleton().dogIndex!;
   }
 
+  void retrieveShelter() {
+    for (int i = 0; i < ShelterSingleton().shelters.length; i++) {
+      if (ShelterSingleton().shelters[i].id ==
+          DogSingleton().dogs![DogSingleton().dogIndex!].shelterID) {
+        ShelterSingleton().shelterIndex = i;
+        print(ShelterSingleton().shelters[i].name);
+        return;
+      }
+    }
+  }
+
   void navigateToDogInfo(int index) {
-    print(index);
     DogSingleton().dogIndex = index;
+    print("dogindex: $index");
+    print("dog");
+    print(DogSingleton().dogs![DogSingleton().dogIndex!].id);
+    print("name");
+    print(DogSingleton().dogs![DogSingleton().dogIndex!].name);
+    print("Shelter");
+    print(DogSingleton().dogs![DogSingleton().dogIndex!].shelterID);
+
+    retrieveShelter();
     Get.offNamed(Routes.DOG_INFO, arguments: dogList[index]);
   }
 

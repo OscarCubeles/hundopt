@@ -77,4 +77,26 @@ class Dog {
       'pictureURLs': pictureURLs,
     };
   }
+
+  factory Dog.fromMap(Map<String, dynamic> map) {
+    return Dog(
+      name: map['name'] ?? '',
+      mainPictureURL: map['mainPictureURL'] ?? '',
+      location: map['location'] ?? '',
+      id: map['id'] ?? '',
+      age: map['age'] ?? 0,
+      breed: map['breed'] ?? '',
+      description: map['description'] ?? '',
+      gender: map['gender'] ?? '',
+      isReserved: map['isReserved'] ?? false,
+      shelterID: map['shelterID'] ?? '',
+      size: map['size'] ?? '',
+      personality: List<String>.from(map['personality'] ?? []),
+      friendly: List<String>.from(map['friendly'] ?? []),
+      notFriendly: List<String>.from(map['notFriendly'] ?? []),
+      pictureURLs: List<String>.from(map['pictureURLs'] ?? []),
+      healthNegative: List<String>.from(map['healthNegative'] ?? []),
+      healthPositive: List<String>.from(map['healthPositive'] ?? []),
+    );
+  }
 }

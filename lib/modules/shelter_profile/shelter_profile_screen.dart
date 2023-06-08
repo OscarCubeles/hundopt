@@ -6,6 +6,7 @@ import 'package:hundopt/modules/shelter_profile/shelter_profile.dart';
 import 'package:like_button/like_button.dart';
 
 import '../../shared/constants/colors.dart';
+import '../../shared/constants/styles.dart';
 import '../../shared/widgets/app_bar.dart';
 import '../../shared/widgets/horizontal_bar.dart';
 
@@ -42,8 +43,11 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(controller.shelter.name,
-                          style: Theme.of(context).textTheme.headlineSmall),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(controller.currentShelter().name,
+                            style: Styles.shelterHeadline),
+                      ),
                       SizedBox(
                         height: 16,
                       ),
@@ -57,7 +61,7 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
                   CircleAvatar(
                     radius: 50,
                     backgroundImage:
-                        AssetImage('assets/images/perrera-test.png'),
+                        NetworkImage(controller.currentShelter().pictureURL),
                   ),
                 ],
               ),
@@ -93,7 +97,10 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(CupertinoIcons.info, size: 30,),
+                        Icon(
+                          CupertinoIcons.info,
+                          size: 30,
+                        ),
                         Align(
                           alignment: Alignment.center,
                           child: Text(

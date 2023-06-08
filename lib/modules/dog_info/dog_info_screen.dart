@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/dog_info/dog_info_controller.dart';
-import 'package:hundopt/shared/constants/constants.dart';
 import 'package:hundopt/shared/shared.dart';
 import 'package:hundopt/shared/widgets/grid_gender_tile.dart';
 import 'package:hundopt/shared/widgets/grid_text_tile.dart';
@@ -12,14 +9,7 @@ import 'package:like_button/like_button.dart';
 import '../../shared/widgets/feature_list.dart';
 
 class DogInfoScreen extends GetView<DogInfoController> {
-  DogInfoScreen({super.key});
-
-  /*
-  final List<String> images = [
-    "assets/images/kira-dog.JPG",
-    "assets/images/kira-dog2.JPG",
-    "assets/images/kira-dog3.JPG",
-  ];*/
+  const DogInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +40,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                           ),
                         ),
                         Container(
-                          //TODO: Optional container to add color  gradeint on the top of the image
+                          //Optional container to add color  gradeint on the top of the image
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
@@ -82,10 +72,12 @@ class DogInfoScreen extends GetView<DogInfoController> {
                 top: 40.0,
                 right: 10.0,
                 child: IconButton(
-                  color: ColorConstants.background,
+                  color: controller.dog.isReserved
+                      ? ColorConstants.background
+                      : ColorConstants.invisible,
                   icon: Icon(Icons.bookmark),
                   onPressed: () {
-                    Navigator.of(context).pop();
+
                   },
                 ),
               ),
@@ -116,7 +108,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                     )),
               ),
             ]),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -127,16 +119,16 @@ class DogInfoScreen extends GetView<DogInfoController> {
                     children: [
                       Text(controller.currentDog().name,
                           style: textTheme.headlineSmall),
-                      LikeButton(
+                      const LikeButton(
                         size: 40,
                       ),
                     ],
                   ),
                   Text(controller.currentDog().breed,
                       style: textTheme.bodyMedium),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Text("Descripción", style: textTheme.headlineMedium),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     controller.currentDog().description,
                     style: Styles.bodyDescription,
@@ -150,7 +142,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                   ),
                   Column(
                     children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -168,7 +160,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                   Text(
@@ -211,10 +203,6 @@ class DogInfoScreen extends GetView<DogInfoController> {
                       ),
                       Row(
                         children: [
-                          /*Icon(
-                            CupertinoIcons.location_solid,
-                            color: Colors.black,
-                          ),*/
                           Text(
                             controller.currentDog().location,
                             style: textTheme.bodyMedium,
@@ -223,38 +211,34 @@ class DogInfoScreen extends GetView<DogInfoController> {
                       ),
                     ],
                   ),
-                  Obx(() => ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    onTap: () => print("Perrera pressed"),
-                    title: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Centro",
-                            style: textTheme.headlineMedium,
-                            textAlign: TextAlign.justify,
-                          ),
-                          Text(controller.dogShelter.value.name,
-                              style: textTheme.bodyMedium),
-                        ]),
-                    subtitle: Row(
-                      children: [
-                        /*Icon(
-                          CupertinoIcons.location_solid,
-                          color: Colors.black,
-                        ),*/
-                        Text(
-                          controller.dogShelter.value.location,
-                          style: textTheme.bodySmall,
+                  ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        onTap: controller.navigateToShelterScreen,
+                        title: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Centro",
+                                style: textTheme.headlineMedium,
+                                textAlign: TextAlign.justify,
+                              ),
+                              Text(controller.currentShelter().name,
+                                  style: textTheme.bodyMedium),
+                            ]),
+                        subtitle: Row(
+                          children: [
+                            Text(
+                              controller.currentShelter().location,
+                              style: textTheme.bodySmall,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    trailing: CircleAvatar(
-                      backgroundImage:
-                      NetworkImage(controller.dogShelter.value.pictureURL),
-                    ),
-                  )),
+                        trailing: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              controller.currentShelter().pictureURL),
+                        ),
+                      ),
                   Padding(
                       padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                       child: AppPrimaryButton(

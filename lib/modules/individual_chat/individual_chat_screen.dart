@@ -35,8 +35,8 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                   GestureDetector(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.asset(
-                        'assets/images/kira-dog.JPG',
+                      child: Image.network(
+                        controller.currentDog().mainPictureURL,
                         width: 48,
                         height: 48,
                           fit: BoxFit.cover
@@ -51,12 +51,12 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          controller.dog.name,
+                          controller.currentDog().name,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         SizedBox(height: 4),
                         Text(
-                          'Perrera Test', // TODO: Change the text for the shelter name
+                          controller.currentShelter().name, // TODO: Change the text for the shelter name
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
@@ -67,8 +67,8 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                       padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
                       child: GestureDetector(
                         child: CircleAvatar(
-                          backgroundImage: AssetImage(
-                              'assets/images/perrera-test.png'),
+                          backgroundImage: NetworkImage(
+                              controller.currentShelter().pictureURL),
                           radius: 20,
                         ),
                         onTap: controller.navigateToShelter,
