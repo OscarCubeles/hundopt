@@ -8,11 +8,11 @@ import 'package:intl/intl.dart';
 import '../../../api/firebase_core/auth.dart';
 import '../../../models/chat.dart';
 import '../../../models/dog.dart';
-import '../../../models/old_chat.dart';
 import '../../../models/user.dart';
+import '../../../routes/app_pages.dart';
+import '../../../shared/services/shelter_singleton.dart';
 
 class ChatController extends GetxController {
-  var chatList = <OldChat>[].obs;
   RxList userChats = [].obs;
   late HundoptUser user = HundoptUser.empty();
 
@@ -20,10 +20,33 @@ class ChatController extends GetxController {
   void onInit() async {
     super.onInit();
     user = (await Auth().retrieveUser())!;
-    //userChats = await ChatRepository().fetchUserChats(user.id);
     userChats.assignAll(await ChatRepository().fetchUserChats(user.id));
     update();
-    initChats();
+  }
+
+  void retrieveShelter() {
+    for (int i = 0; i < ShelterSingleton().shelters.length; i++) {
+      if (ShelterSingleton().shelters[i].id ==
+          DogSingleton().dogs![DogSingleton().dogIndex!].shelterID) {
+        ShelterSingleton().shelterIndex = i;
+        print(ShelterSingleton().shelters[i].name);
+        return;
+      }
+    }
+  }
+
+  void navigateToSingleChat(int dogIndex) {
+    retrieveShelter();
+    // TODO: Add this method in the service that uses the singleton, the service could be called dogmanager
+    int i = 0;
+    for (Dog tmpDog in DogSingleton().dogs!) {
+      if (userChats[dogIndex].dogID == tmpDog.id) {
+        DogSingleton().dogIndex = i;
+        Get.offNamed(Routes.INDIVIDUAL_CHAT);
+        break;
+      }
+      i++;
+    }
   }
 
   Widget chatSeparator(int index) {
@@ -55,71 +78,6 @@ class ChatController extends GetxController {
 
   String lastMsg(Chat chat) {
     return chat.messages[chat.messages.length - 1].text;
-  }
-
-  void initChats() {
-    addChat(OldChat(
-      name: 'TestDog3',
-      lastMessage: 'Esta disponible?',
-      pictureUrl:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6yiGZN_wWoSRP4BfKxvubTLJlVXWQcsFrolaA8_INriWYk8RokDPac2QLI6jTBfr97WI&usqp=CAU",
-      lastMessageReceivedTime: DateTime.now(),
-    ));
-    addChat(OldChat(
-      name: 'TestDog2',
-      lastMessage: 'Esta disponible?',
-      pictureUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/6/60/YellowLabradorLooking.jpg",
-      lastMessageReceivedTime: DateTime.now(),
-    ));
-    addChat(OldChat(
-      name: 'TestDog2',
-      lastMessage: 'Esta disponible?',
-      pictureUrl:
-          'https://img.rawpixel.com/private/static/images/website/2022-05/ns8230-image.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=b3961e17298745c0868eeef46211c3d0',
-      lastMessageReceivedTime: DateTime.now(),
-    ));
-    addChat(OldChat(
-      name: 'TestDog',
-      lastMessage: 'Esta disponible?',
-      pictureUrl:
-          'https://img.rawpixel.com/private/static/images/website/2022-05/ns8230-image.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=b3961e17298745c0868eeef46211c3d0',
-      lastMessageReceivedTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day - 1),
-    ));
-    addChat(OldChat(
-      name: 'TestDog2',
-      lastMessage: 'Esta disponible?',
-      pictureUrl:
-          'https://img.rawpixel.com/private/static/images/website/2022-05/ns8230-image.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=b3961e17298745c0868eeef46211c3d0',
-      lastMessageReceivedTime: DateTime(DateTime.now().year,
-          DateTime.now().month - 3, DateTime.now().day - 1),
-    ));
-    addChat(OldChat(
-      name: 'TestDog2',
-      lastMessage: 'Esta disponible?',
-      pictureUrl:
-          'https://img.rawpixel.com/private/static/images/website/2022-05/ns8230-image.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=b3961e17298745c0868eeef46211c3d0',
-      lastMessageReceivedTime: DateTime.now(),
-    ));
-    addChat(OldChat(
-      name: 'TestDog2',
-      lastMessage: 'Esta disponible?',
-      pictureUrl:
-          'https://img.rawpixel.com/private/static/images/website/2022-05/ns8230-image.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=b3961e17298745c0868eeef46211c3d0',
-      lastMessageReceivedTime: DateTime.now(),
-    ));
-    addChat(OldChat(
-      name: 'TestDog2',
-      lastMessage: 'Esta disponible?',
-      pictureUrl:
-          'https://img.rawpixel.com/private/static/images/website/2022-05/ns8230-image.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=b3961e17298745c0868eeef46211c3d0',
-      lastMessageReceivedTime: DateTime.now(),
-    ));
-  }
-
-  void addChat(OldChat chat) {
-    chatList.add(chat);
   }
 
   bool isToday(DateTime dateTime) {

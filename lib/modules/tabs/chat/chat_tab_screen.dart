@@ -35,7 +35,7 @@ class ChatTab extends GetView<ChatController> {
                           Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
                           GestureDetector(
                             onTap: () {
-                              print("hola");
+                              controller.navigateToSingleChat(index);
                             },
                             child: Row(
                               children: [

@@ -16,7 +16,6 @@ class ShelterProfileController extends GetxController {
   RxBool isBarLeft = true.obs;
   RxList shelterDogs = [].obs;
 
-
   @override
   void onInit() async {
     super.onInit();
@@ -31,18 +30,17 @@ class ShelterProfileController extends GetxController {
     }
     shelterDogs
         .assignAll(await DogRepository().fetchShelterDogs(currentShelter().id));
-
     update();
   }
 
   Dog currentDog() {
-    return DogSingleton()
-        .dogs![DogSingleton().dogIndex!]; // TODO: Put this as a service
+    // TODO: Put this as a service
+    return DogSingleton().dogs![DogSingleton().dogIndex!];
   }
 
   Shelter currentShelter() {
-    return ShelterSingleton().shelters[
-        ShelterSingleton().shelterIndex]; // TODO: Put this as a service
+    // TODO: Put this as a service
+    return ShelterSingleton().shelters[ShelterSingleton().shelterIndex];
   }
 
   void navigateBack() {
@@ -66,8 +64,6 @@ class ShelterProfileController extends GetxController {
       i++;
     }
   }
-
-
 
   // TODO: Put this widget as widget constant
   Widget getDogGrid(double screenWidth) {
@@ -172,89 +168,88 @@ class ShelterProfileController extends GetxController {
     ));
   }
 
-
-
-
   Widget getSocialNetworks2() {
-    return currentShelter().hasSocialNetworks() ? Container(
-      height: 500,
-      child: ListView(
-        children: [
-          if (currentShelter().facebook.isNotEmpty)
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(
-                    FontAwesomeIcons.facebook,
-                    color: Colors.blue[900],
+    return currentShelter().hasSocialNetworks()
+        ? Container(
+            height: 500,
+            child: ListView(
+              children: [
+                if (currentShelter().facebook.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.facebook,
+                          color: Colors.blue[900],
+                        ),
+                        Padding(padding: EdgeInsets.all(10)),
+                        Text(
+                          currentShelter().facebook,
+                          style: Styles.bodySmall,
+                        ),
+                      ],
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.all(10)),
-                  Text(
-                    currentShelter().facebook,
-                    style: Styles.bodySmall,
+                if (currentShelter().twitter.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.twitter,
+                          color: Colors.blue,
+                        ),
+                        Padding(padding: EdgeInsets.all(10)),
+                        Text(
+                          currentShelter().twitter,
+                          style: Styles.bodySmall,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                if (currentShelter().linkedin.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.linkedin,
+                          color: Colors.blue[900],
+                        ),
+                        Padding(padding: EdgeInsets.all(10)),
+                        Text(
+                          currentShelter().linkedin,
+                          style: Styles.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                if (currentShelter().tiktok.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.tiktok,
+                          color: Colors.black,
+                        ),
+                        Padding(padding: EdgeInsets.all(10)),
+                        Text(
+                          currentShelter().tiktok,
+                          style: Styles.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
             ),
-          if (currentShelter().twitter.isNotEmpty)
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(
-                    FontAwesomeIcons.twitter,
-                    color: Colors.blue,
-                  ),
-                  Padding(padding: EdgeInsets.all(10)),
-                  Text(
-                    currentShelter().twitter,
-                    style: Styles.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-          if (currentShelter().linkedin.isNotEmpty)
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(
-                    FontAwesomeIcons.linkedin,
-                    color: Colors.blue[900],
-                  ),
-                  Padding(padding: EdgeInsets.all(10)),
-                  Text(
-                    currentShelter().linkedin,
-                    style: Styles.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-          if (currentShelter().tiktok.isNotEmpty)
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(
-                    FontAwesomeIcons.tiktok,
-                    color: Colors.black,
-                  ),
-                  Padding(padding: EdgeInsets.all(10)),
-                  Text(
-                    currentShelter().tiktok,
-                    style: Styles.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
-    ) : Container();
+          )
+        : Container();
   }
 
   void onLikePressed() {
