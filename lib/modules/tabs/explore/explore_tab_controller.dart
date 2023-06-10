@@ -67,7 +67,6 @@ class ExploreController extends GetxController {
     print(DogSingleton().dogs![DogSingleton().dogIndex!].name);
     print("Shelter");
     print(DogSingleton().dogs![DogSingleton().dogIndex!].shelterID);
-
     retrieveShelter();
     Get.offNamed(Routes.DOG_INFO, arguments: dogList[index]);
   }

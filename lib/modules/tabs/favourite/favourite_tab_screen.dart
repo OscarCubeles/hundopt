@@ -67,7 +67,10 @@ class FavouriteTab extends GetView<FavouriteController> {
                                 children: List.generate(
                                     controller.favDogs.length, (index) {
                                   return GestureDetector(
-                                      onTap: () => print("Tile pressed $index"),
+                                      onTap: () => {
+                                            controller.navigateToDogInfo(
+                                                controller.favDogs[index]),
+                                          },
                                       // Add a function to move to the dog or shelter
                                       child: GridTile(
                                         child: Container(
@@ -131,78 +134,81 @@ class FavouriteTab extends GetView<FavouriteController> {
                               ),
                             )),
                         Obx(() => SingleChildScrollView(
-                          child: GridView.count(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.8,
-                            children: List.generate(
-                                controller.favShelters.length, (index) {
-                              return GestureDetector(
-                                  onTap: () => print("Tile pressed $index"),
-                                  // Add a function to move to the dog or shelter
-                                  child: GridTile(
-                                    child: Container(
-                                        margin: EdgeInsets.fromLTRB(
-                                            5, 20, 5, 0),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(10),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width, // set maximum
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    8.0),
-                                                child: SizedBox.fromSize(
-                                                  child: AspectRatio(
-                                                    child: Image.network(
-                                                        controller
-                                                            .favShelters[index]
-                                                            .pictureURL,
-                                                        fit: BoxFit.cover),
-                                                    aspectRatio: 1 / 1,
+                              child: GridView.count(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.8,
+                                children: List.generate(
+                                    controller.favShelters.length, (index) {
+                                  return GestureDetector(
+                                      onTap: () => {
+                                            controller.navigateToShelter(
+                                                controller.favShelters[index])
+                                          },
+                                      // Add a function to move to the dog or shelter
+                                      child: GridTile(
+                                        child: Container(
+                                            margin: EdgeInsets.fromLTRB(
+                                                5, 20, 5, 0),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width, // set maximum
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                    child: SizedBox.fromSize(
+                                                      child: AspectRatio(
+                                                        child: Image.network(
+                                                            controller
+                                                                .favShelters[
+                                                                    index]
+                                                                .pictureURL,
+                                                            fit: BoxFit.cover),
+                                                        aspectRatio: 1 / 1,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 0, 0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    controller
-                                                        .favShelters[index]
-                                                        .name,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headlineMedium,
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        controller
+                                                            .favShelters[index]
+                                                            .name,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headlineMedium,
+                                                      ),
+                                                      LikeButton(
+                                                        isLiked:
+                                                            true, // TODO: Change this accordingly with the like state value
+                                                      )
+                                                    ],
                                                   ),
-                                                  LikeButton(
-                                                    isLiked:
-                                                    true, // TODO: Change this accordingly with the like state value
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        )),
-                                  ));
-                            }),
-                          ),
-                        ))
-                        
+                                                )
+                                              ],
+                                            )),
+                                      ));
+                                }),
+                              ),
+                            ))
                       ]))
             ],
           ),

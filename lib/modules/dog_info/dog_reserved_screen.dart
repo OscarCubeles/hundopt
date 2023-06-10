@@ -19,7 +19,7 @@ class DogReservedScreen extends GetView<DogInfoController> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "¡${controller.dog.name}${StringConstants.titleReservedText}",
+                    "¡${controller.dog!.name}${StringConstants.titleReservedText}",
                     style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.left,
                   ),
