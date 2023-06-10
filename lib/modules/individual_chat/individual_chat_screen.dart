@@ -36,11 +36,10 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
-                        controller.currentDog().mainPictureURL,
-                        width: 48,
-                        height: 48,
-                          fit: BoxFit.cover
-                      ),
+                          controller.currentDog().mainPictureURL,
+                          width: 48,
+                          height: 48,
+                          fit: BoxFit.cover),
                     ),
                     onTap: controller.getToDogInfo,
                   ),
@@ -56,7 +55,8 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          controller.currentShelter().name, // TODO: Change the text for the shelter name
+                          controller.currentShelter().name,
+                          // TODO: Change the text for the shelter name
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
@@ -76,19 +76,22 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                 ],
               ),
             ),
-            Expanded(
+            Obx(
+                  () => Expanded(
                 child: ListView.builder(
-              controller: controller.scrollController,
-              itemCount: 20,
-              itemBuilder: (context, index) {
-                // received message
-                return ChatBody(
-                  isOwnMessage: index % 2 == 0,
-                  hour: '10:00 AM',
-                  text: 'Lorem ipsum lorem ipsum',
-                );
-              },
-            )),
+                  controller: controller.scrollController,
+                  itemCount: controller.chat.value.messages.length,
+                  itemBuilder: (context, index) {
+                    // received message
+                    return ChatBody(
+                      isOwnMessage: !controller.chat.value.messages[index].isUser,
+                      hour: controller.chat.value.messages[index].date,
+                      text: controller.chat.value.messages[index].text,
+                    );
+                  },
+                ),
+              ),
+            ),
             Container(
               height: 50,
               margin: EdgeInsets.fromLTRB(20, 0, 20, 0),

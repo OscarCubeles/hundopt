@@ -1,23 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/api/firebase_core/chat_repository.dart';
 
+import '../../api/firebase_core/auth.dart';
 import '../../api/firebase_core/dog_repository.dart';
 import '../../api/firebase_core/shelter_repository.dart';
+import '../../models/chat.dart';
 import '../../models/dog.dart';
 import '../../models/shelter.dart';
+import '../../models/user.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/services/dog_singleton.dart';
 import '../../shared/services/shelter_singleton.dart';
 
 class IndividualChatController extends GetxController{
   final ScrollController scrollController = ScrollController();
-  //final Dog dog = Get.arguments[0];
-  //final Rx<Shelter> shelter = Get.arguments[1];
+  Rx<Chat> chat = Chat.empty().obs;
+  late HundoptUser user = HundoptUser.empty();
 
 
   @override
   void onInit() async{
     super.onInit();
+    user = (await Auth().retrieveUser())!;
     //scrollToBottom();
     if (DogSingleton().dogs == null) {
       await DogRepository().retrieveDogs();
@@ -26,6 +31,8 @@ class IndividualChatController extends GetxController{
       await ShelterRepository().retrieveShelters();
     }
 
+    chat.value = (await ChatRepository().fetchChatByUserAndDogIDs(user.id, currentDog().id));
+    update();
     retrieveShelter();
   }
 

@@ -39,4 +39,20 @@ class ChatRepository {
     userChats.assignAll(chats);
     return userChats;
   }
+
+  Future<Chat> fetchChatByUserAndDogIDs(String userID, String dogID) async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('chats')
+        .where('userID', isEqualTo: userID)
+        .where('dogID', isEqualTo: dogID)
+        .get();
+
+    if (querySnapshot.size == 1) {
+      final chatData = querySnapshot.docs.first.data();
+      final chatID = querySnapshot.docs.first.id;
+      return Chat.fromMap(chatID, chatData);
+    } else {
+      return Chat.empty(); // Chat not found or multiple matching chats
+    }
+  }
 }

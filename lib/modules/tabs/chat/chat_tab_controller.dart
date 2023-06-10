@@ -35,14 +35,14 @@ class ChatController extends GetxController {
     }
   }
 
-  void navigateToSingleChat(int dogIndex) {
+  void navigateToSingleChat(int chatIndex) {
     retrieveShelter();
     // TODO: Add this method in the service that uses the singleton, the service could be called dogmanager
     int i = 0;
     for (Dog tmpDog in DogSingleton().dogs!) {
-      if (userChats[dogIndex].dogID == tmpDog.id) {
+      if (userChats[chatIndex].dogID == tmpDog.id) {
         DogSingleton().dogIndex = i;
-        Get.offNamed(Routes.INDIVIDUAL_CHAT);
+        Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: userChats[chatIndex]);
         break;
       }
       i++;

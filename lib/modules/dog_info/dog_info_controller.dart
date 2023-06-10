@@ -6,6 +6,7 @@ import 'package:hundopt/shared/services/dog_singleton.dart';
 import 'package:hundopt/shared/services/shelter_singleton.dart';
 
 import '../../api/firebase_core/dog_repository.dart';
+import '../../models/chat.dart';
 import '../../models/dog.dart';
 import '../../models/shelter.dart';
 import '../../routes/app_pages.dart';
@@ -87,7 +88,7 @@ class DogInfoController extends GetxController {
 
   void toShowAdoptDetails() {
     if(dog!.isReserved || currentDog().isReserved){
-      Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: [dog, dogShelter]); // TODO: Check why this redirect does not work
+      Get.toNamed(Routes.INDIVIDUAL_CHAT); // TODO: Check why this redirect does not work
     }
     Get.toNamed(Routes.DOG_INFO + Routes.RESERVED_DOG);
   }
@@ -97,11 +98,11 @@ class DogInfoController extends GetxController {
     dog!.isReserved = true;
     await DogRepository().reserveDog(dog!.id);
 
-    Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: [dog, dogShelter]);
+    Get.toNamed(Routes.INDIVIDUAL_CHAT);
   }
 
   void navigateToSingleChat() {
-    Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: [dog, dogShelter]);
+    Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: Chat.empty());
   }
 
   void navigateBack() {

@@ -17,6 +17,14 @@ class Chat {
     required this.messages,
   });
 
+  Chat.empty()
+      : chatID = '',
+        shelterID = '',
+        userID = '',
+        dogID = '',
+        lastMessageDate = '',
+        messages = [];
+
   Map<String, dynamic> toMap() {
     return {
       'shelterID': shelterID,
