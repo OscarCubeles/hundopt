@@ -85,7 +85,7 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                     // received message
                     return ChatBody(
                       isOwnMessage: !controller.chat.value.messages[index].isUser,
-                      hour: controller.chat.value.messages[index].date,
+                      hour: controller.msgDate(controller.chat.value.messages[index].date),
                       text: controller.chat.value.messages[index].text,
                     );
                   },
@@ -113,6 +113,8 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: controller.textEditingController,
+                      onChanged: controller.messageChanged,
                       cursorColor: ColorConstants.appColor,
                       decoration: InputDecoration(
                         hintText: 'Write a message...',
@@ -126,7 +128,7 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                   ),
                   InkWell(
                     onTap: () {
-                      // handle button press
+                      controller.addChatMessage();
                     },
                     child: Container(
                         width: 35,

@@ -54,6 +54,7 @@ class Styles {
     fontWeight: FontWeight.normal,
     color: Colors.black,
     fontFamily: "DM Sans",
+    overflow: TextOverflow.ellipsis,
   );
 
   static TextStyle displaySmall = TextStyle(
@@ -99,4 +100,19 @@ class Styles {
       fontWeight: FontWeight.bold,
       color: Colors.black,
       overflow: TextOverflow.clip);
+
+  static TextStyle dateTimestamp = TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.normal,
+    color: ColorConstants.chatTextGray,
+    fontFamily: "DM Sans",
+  );
+
+  static TextStyle chatTabText = TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.normal,
+    color: ColorConstants.chatTextGray,
+    fontFamily: "DM Sans",
+    overflow: TextOverflow.clip,
+  );
 }

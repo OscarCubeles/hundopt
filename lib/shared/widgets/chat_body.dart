@@ -46,7 +46,7 @@ class ChatBody extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               hour,
-              style: Styles.timestampGray,
+              style: Styles.dateTimestamp,
             ),
           ],
         ),
@@ -79,7 +79,7 @@ class ChatBody extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               hour,
-              style: Styles.timestampGray,
+              style: Styles.dateTimestamp,
             ),
           ],
         ),

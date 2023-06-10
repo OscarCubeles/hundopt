@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/shared/utils/date_formatter.dart';
 
 import '../../models/chat.dart';
 import '../../models/message.dart';
@@ -55,4 +56,23 @@ class ChatRepository {
       return Chat.empty(); // Chat not found or multiple matching chats
     }
   }
+
+  Future<void> uploadChat(String userID, String shelterID, Chat chat) async {
+    Chat modifiedChat = chat;
+    modifiedChat.lastMessageDate = DateFormatter().currTime();
+
+    // Update the necessary fields in the modified chat object
+    try {
+      // Retrieve the Firestore instance
+      final firestore = FirebaseFirestore.instance;
+      // Convert the modified chat object to a map
+      Map<String, dynamic> chatData = modifiedChat.toMap();
+      // Upload the modified chat to Firebase
+      await firestore.collection('chats').doc(modifiedChat.chatID).set(chatData);
+    } catch (e) {
+      // Handle any errors that occur during the upload process
+      print('Failed to upload chat: $e');
+    }
+  }
+
 }

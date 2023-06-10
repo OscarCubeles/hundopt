@@ -76,7 +76,7 @@ class ChatTab extends GetView<ChatController> {
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelMedium,
-                                          overflow: TextOverflow.ellipsis,
+                                          overflow: TextOverflow.clip,
                                         ),
                                       ),
                                     ],
@@ -91,14 +91,22 @@ class ChatTab extends GetView<ChatController> {
                                       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                                       child: Align(
                                         alignment: Alignment.topRight,
-                                        child: Text(
-                                          controller.userChats[index].lastMessageDate,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Flexible(
+                                              child: Text(
+                                                controller.msgDate(controller.userChats[index].lastMessageDate),
+                                                style: Styles.chatTabText,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ))
+                                    )
+
+                                )
                               ], //                                        Theme.of(context).textTheme.labelSmall,
                             ),
                           ),

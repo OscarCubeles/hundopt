@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:hundopt/api/firebase_core/chat_repository.dart';
 import 'package:hundopt/shared/constants/constants.dart';
 import 'package:hundopt/shared/services/dog_singleton.dart';
-import 'package:intl/intl.dart';
+import 'package:hundopt/shared/utils/date_formatter.dart';
 
 import '../../../api/firebase_core/auth.dart';
 import '../../../models/chat.dart';
@@ -42,7 +42,7 @@ class ChatController extends GetxController {
     for (Dog tmpDog in DogSingleton().dogs!) {
       if (userChats[chatIndex].dogID == tmpDog.id) {
         DogSingleton().dogIndex = i;
-        Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: userChats[chatIndex]);
+        Get.offNamed(Routes.INDIVIDUAL_CHAT, arguments: userChats[chatIndex]);
         break;
       }
       i++;
@@ -80,35 +80,16 @@ class ChatController extends GetxController {
     return chat.messages[chat.messages.length - 1].text;
   }
 
-  bool isToday(DateTime dateTime) {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    return dateTime.day == today.day &&
-        dateTime.year == today.year &&
-        dateTime.month == today.month;
-  }
-
-  bool isYesterday(DateTime dateTime) {
-    final now = DateTime.now();
-    final yesterday = DateTime(now.year, now.month, now.day - 1);
-    return dateTime.day == yesterday.day &&
-        dateTime.year == yesterday.year &&
-        dateTime.month == yesterday.month;
-  }
-
-  Widget getChatDate(DateTime dateTime, TextStyle style) {
-    String formattedDate;
-    if (isToday(dateTime)) {
-      formattedDate = DateFormat('h:mm a').format(dateTime);
-    } else if (isYesterday(dateTime)) {
-      formattedDate = StringConstants.yesterdayLabel;
+  String msgDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    // Get the current date and time
+    if (DateFormatter().isToday(dateTime)) {
+      return DateFormatter().formatHour(dateTime);
+    } else if (DateFormatter().isYesterday(dateTime)) {
+      return 'Ayer';
     } else {
-      formattedDate = DateFormat('d/M/yy').format(dateTime);
+      return DateFormatter().formatDate(dateTime);
     }
-    return Text(
-      formattedDate,
-      style: style,
-      overflow: TextOverflow.ellipsis,
-    );
   }
+
 }
