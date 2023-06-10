@@ -27,9 +27,8 @@ class ChatTab extends GetView<ChatController> {
                     physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: controller.chatList.length,
+                    itemCount: controller.userChats.length,
                     itemBuilder: (context, index) {
-                      final chat = controller.chatList[index];
                       return Container(
                           child: Column(
                         children: [
@@ -43,7 +42,7 @@ class ChatTab extends GetView<ChatController> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: Image.network(
-                                    chat.pictureUrl,
+                                    controller.chatPictureURL(controller.userChats[index]),
                                     width: 84.0,
                                     height: 84.0,
                                     fit: BoxFit.cover,
@@ -63,7 +62,7 @@ class ChatTab extends GetView<ChatController> {
                                       Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          chat.name,
+                                          controller.chatName(controller.userChats[index]),
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelLarge,
@@ -73,7 +72,7 @@ class ChatTab extends GetView<ChatController> {
                                       Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          chat.lastMessage,
+                                          controller.lastMsg(controller.userChats[index]),
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelMedium,
@@ -92,21 +91,19 @@ class ChatTab extends GetView<ChatController> {
                                       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                                       child: Align(
                                         alignment: Alignment.topRight,
-                                        child: controller.getChatDate(
-                                            chat.lastMessageReceivedTime,
-                                            Theme.of(context)
-                                                .textTheme
-                                                .labelSmall!),
+                                        child: Text(
+                                          controller.userChats[index].lastMessageDate,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!,
+                                        ),
                                       ),
                                     ))
                               ], //                                        Theme.of(context).textTheme.labelSmall,
                             ),
                           ),
                           Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
-                          Container(
-                            height: 0.5,
-                            color: ColorConstants.appGrey,
-                          )
+                          controller.chatSeparator(index)
                         ],
                       ));
                     },
