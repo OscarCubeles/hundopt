@@ -88,7 +88,7 @@ class DogRepository {
     return shelterDogs;
   }
 
-  Future<RxList<Dog>> fetchUserDogs(HundoptUser user) async {
+  Future<RxList<Dog>> fetchAdoptingDogs(HundoptUser user) async {
     final adoptingDogs = <Dog>[].obs;
     for (final dogId in user.adoptingDogs) {
       final dogSnapshot = await FirebaseFirestore.instance
@@ -102,6 +102,22 @@ class DogRepository {
       }
     }
     return adoptingDogs;
+  }
+
+  Future<RxList<Dog>> fetchFavDogs(HundoptUser user) async {
+    final favDogs = <Dog>[].obs;
+    for (final dogId in user.favDogs) {
+      final dogSnapshot = await FirebaseFirestore.instance
+          .collection('dogs')
+          .doc(dogId)
+          .get();
+      if (dogSnapshot.exists) {
+        final dogData = dogSnapshot.data() as Map<String, dynamic>;
+        final dog = Dog.fromMap(dogData);
+        favDogs.add(dog);
+      }
+    }
+    return favDogs;
   }
 
 

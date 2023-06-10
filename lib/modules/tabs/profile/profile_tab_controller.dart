@@ -28,7 +28,7 @@ class ProfileController extends GetxController {
   void setScreenValues() async {
     username.value = '@${user.username}';
     fullName.value = user.fullName;
-    userAdoptingDogs.assignAll(await DogRepository().fetchUserDogs(user));
+    userAdoptingDogs.assignAll(await DogRepository().fetchAdoptingDogs(user));
     update();
   }
 

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../models/shelter.dart';
+import '../../models/user.dart';
 import '../../shared/services/shelter_singleton.dart';
 
 class ShelterRepository{
@@ -28,6 +30,22 @@ class ShelterRepository{
     }).catchError((error) {
       print('Error retrieving shelters: $error');
     });
+  }
+
+  Future<RxList<Shelter>> fetchFavShelters(HundoptUser user) async {
+    final favShelters = <Shelter>[].obs;
+    for (final shelterId in user.favShelters) {
+      final shelterSnapshot = await FirebaseFirestore.instance
+          .collection('shelters')
+          .doc(shelterId)
+          .get();
+      if (shelterSnapshot.exists) {
+        final shelterData = shelterSnapshot.data() as Map<String, dynamic>;
+        final shelter = Shelter.fromMap(shelterData);
+        favShelters.add(shelter);
+      }
+    }
+    return favShelters;
   }
 
 

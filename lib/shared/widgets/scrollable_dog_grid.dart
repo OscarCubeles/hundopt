@@ -5,25 +5,32 @@ import 'package:like_button/like_button.dart';
 
 import '../../models/dog.dart';
 
-class ScrollableGrid extends StatelessWidget{
-  const ScrollableGrid({super.key, required this.onLikeTap, required this.onTileTab});
+class ScrollableDogGrid extends StatelessWidget {
+  const ScrollableDogGrid(
+      {super.key,
+      required this.onLikeTap,
+      required this.onTileTab,
+      required this.dogs});
+
   final VoidCallback onLikeTap;
   final VoidCallback onTileTab;
+  final RxList dogs;
 
   @override
   Widget build(BuildContext context) {
-    return  SingleChildScrollView(
-        child: GridView.count(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          crossAxisCount: 2,
-          childAspectRatio: 0.8,
-          children: List.generate(20, (index) {
-            return GestureDetector(
-              onTap: () => print("Tile pressed $index"), // Add a function to move to the dog or shelter
+    return SingleChildScrollView(
+      child: GridView.count(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        crossAxisCount: 2,
+        childAspectRatio: 0.8,
+        children: List.generate(dogs.length, (index) {
+          return GestureDetector(
+              onTap: () => print("Tile pressed $index"),
+              // Add a function to move to the dog or shelter
               child: GridTile(
                 child: Container(
-                    margin: EdgeInsets.fromLTRB(5,20,5,0),
+                    margin: EdgeInsets.fromLTRB(5, 20, 5, 0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -31,12 +38,15 @@ class ScrollableGrid extends StatelessWidget{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width, // set maximum
+                          width:
+                              MediaQuery.of(context).size.width, // set maximum
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: SizedBox.fromSize(
                               child: AspectRatio(
-                                child: Image.asset('assets/images/example_dog.jpg', fit: BoxFit.fill),
+                                child: Image.network(
+                                    dogs[index].mainPictureURL,
+                                    fit: BoxFit.fill),
                                 aspectRatio: 1 / 1,
                               ),
                             ),
@@ -47,17 +57,22 @@ class ScrollableGrid extends StatelessWidget{
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Kira", style: Theme.of(context).textTheme.headlineMedium,),
-                              LikeButton()
+                              Text(
+                                dogs[index].name,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              LikeButton(
+                                isLiked: true, // TODO: Change this accordingly with the like state value
+                              )
                             ],
                           ),
                         )
                       ],
                     )),
-              )
-            );
-          }),
-        ),
-      );
+              ));
+        }),
+      ),
+    );
   }
 }

@@ -40,4 +40,22 @@ class Shelter {
   bool hasSocialNetworks(){
     return !(linkedin == "" && tiktok == "" && facebook == "" && twitter == "");
   }
+
+  factory Shelter.fromMap(Map<String, dynamic> map) {
+    return Shelter(
+      name: map['name'] ?? '',
+      pictureURL: map['pictureURL'] ?? '',
+      location: map['location'] ?? '',
+      id: map['id'] ?? '',
+      email: map['email'] ?? 0,
+      facebook: map['facebook'] ?? '',
+      linkedin: map['linkedin'] ?? '',
+      twitter: map['twitter'] ?? '',
+      tiktok: map['tiktok'] ?? '',
+      phone: map['phone'] ?? '',
+      dogsId: List<String>.from(map['dogs-id'] ?? []),
+
+    );
+  }
+
 }
