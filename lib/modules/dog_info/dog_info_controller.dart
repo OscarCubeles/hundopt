@@ -99,6 +99,7 @@ class DogInfoController extends GetxController {
     // TODO: Check why this redirect does not work
     if(dog!.isReserved || currentDog().isReserved){
       Get.toNamed(Routes.INDIVIDUAL_CHAT);
+      return;
     }
     Get.toNamed(Routes.DOG_INFO + Routes.RESERVED_DOG);
   }
@@ -114,7 +115,6 @@ class DogInfoController extends GetxController {
   }
 
   void navigateToSingleChat() async {
-    // TODO: Check if the user has already chatted with the shelter, if not, create the chat, if yes, gather it
     await ChatRepository().getOrCreateChat(user.id, currentDog());
     Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: Chat.empty());
   }
