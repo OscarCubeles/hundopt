@@ -144,7 +144,7 @@ class StringConstants {
   static const String titleAdoptDialogText =
       "¡Felicidades, estás un paso más cerca de adoptar a ";
   static const String bodyAdoptDialogText =
-      "Si desea empezar el proceso de adopción, presione Reservar y Contactar. Se reservará el perro y este no se le mostrará a otros usuarios. Si sólo quiere contactar al centro donde se encuentra el perro, presione Sólo Contactar. Para ir atrás, presione la cruz superior izquierda.";
+      "Si desea empezar el proceso de adopción, presione Reservar y Contactar. Se reservará el perro y este aparecerá como reservado a los otros usuarios. Si sólo quiere contactar al centro donde se encuentra el perro, presione Sólo Contactar. Para ir atrás, presione la cruz superior izquierda.";
   static const String titleReservedText =
       " se ha reservado correctamente para ti 🎉!";
   static const String bodyReservedText =

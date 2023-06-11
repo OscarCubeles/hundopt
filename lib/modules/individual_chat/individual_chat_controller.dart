@@ -56,6 +56,10 @@ class IndividualChatController extends GetxController {
         text: messageText.value, date: DateTime.now().toString(), isUser: true);
     messageText.value = "";
     textEditingController.clear();
+    if(chat.value.isEmpty()){
+    chat.value = (await ChatRepository()
+        .fetchChatByUserAndDogIDs(user.id, currentDog().id));
+    }
     chat.update((val) {
       val?.messages.add(newMsg);
     });
@@ -78,11 +82,13 @@ class IndividualChatController extends GetxController {
 
   void scrollToBottom() {
     // TODO: This throws an error on console, check why
-    scrollController.animateTo(
-      scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 100),
-      curve: Curves.easeOut,
-    );
+    if (chat.value.messages.isNotEmpty) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 100),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   void navigateToChats() {

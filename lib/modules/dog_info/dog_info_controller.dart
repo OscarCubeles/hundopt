@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hundopt/api/firebase_core/chat_repository.dart';
 import 'package:hundopt/api/firebase_core/shelter_repository.dart';
 import 'package:hundopt/shared/services/dog_singleton.dart';
 import 'package:hundopt/shared/services/shelter_singleton.dart';
 
+import '../../api/firebase_core/auth.dart';
 import '../../api/firebase_core/dog_repository.dart';
 import '../../models/chat.dart';
 import '../../models/dog.dart';
 import '../../models/shelter.dart';
+import '../../models/user.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/dialogs.dart';
@@ -17,6 +20,8 @@ class DogInfoController extends GetxController {
   Dog? dog = Get.arguments; // TODO: Check if this is really useful bc at the end it is using the dogSingleton
   RxInt imageIndex = 0.obs;
   Rx<Shelter> dogShelter = Shelter.empty().obs;
+  late HundoptUser user = HundoptUser.empty();
+
 
   @override
   Future<void> onInit() async {
@@ -27,6 +32,8 @@ class DogInfoController extends GetxController {
     if(ShelterSingleton().shelters == []){
       await ShelterRepository().retrieveShelters();
     }
+    user = (await Auth().retrieveUser())!;
+
     retrieveShelter();
   }
 
@@ -52,11 +59,13 @@ class DogInfoController extends GetxController {
   }
 
   Dog currentDog() {
-    return DogSingleton().dogs![DogSingleton().dogIndex!]; // TODO: Put this as a service
+    // TODO: Put this as a service
+    return DogSingleton().dogs![DogSingleton().dogIndex!];
   }
 
   Shelter currentShelter(){
-    return ShelterSingleton().shelters[ShelterSingleton().shelterIndex]; // TODO: Put this as a service
+    // TODO: Put this as a service
+    return ShelterSingleton().shelters[ShelterSingleton().shelterIndex];
   }
 
   void updateIndex(int index) {
@@ -87,8 +96,9 @@ class DogInfoController extends GetxController {
 
 
   void toShowAdoptDetails() {
+    // TODO: Check why this redirect does not work
     if(dog!.isReserved || currentDog().isReserved){
-      Get.toNamed(Routes.INDIVIDUAL_CHAT); // TODO: Check why this redirect does not work
+      Get.toNamed(Routes.INDIVIDUAL_CHAT);
     }
     Get.toNamed(Routes.DOG_INFO + Routes.RESERVED_DOG);
   }
@@ -97,11 +107,15 @@ class DogInfoController extends GetxController {
     currentDog().isReserved = true;
     dog!.isReserved = true;
     await DogRepository().reserveDog(dog!.id);
-
+    print("hadaksdjadkja");
+  // TODO: Check if the user has already chatted with the shelter, if not, create the chat, if yes, gather it
+    await ChatRepository().getOrCreateChat(user.id, currentDog()); //TODO: REMOVE THE RETURN OF THE CHAT AS IT IS NOT NECESSARY
     Get.toNamed(Routes.INDIVIDUAL_CHAT);
   }
 
-  void navigateToSingleChat() {
+  void navigateToSingleChat() async {
+    // TODO: Check if the user has already chatted with the shelter, if not, create the chat, if yes, gather it
+    await ChatRepository().getOrCreateChat(user.id, currentDog());
     Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: Chat.empty());
   }
 

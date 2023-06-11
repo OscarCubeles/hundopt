@@ -35,12 +35,10 @@ class Chat {
     };
   }
 
-
-
   factory Chat.fromMap(String chatID, Map<String, dynamic> map) {
     List<dynamic> messagesData = map['messages'] ?? [];
-    List<Message> messages = messagesData.map((message) => Message.fromMap(message)).toList();
-
+    List<Message> messages =
+    messagesData.map((message) => Message.fromMap(message)).toList();
     return Chat(
       chatID: chatID,
       shelterID: map['shelterID'] ?? '',
@@ -50,4 +48,14 @@ class Chat {
       messages: messages,
     );
   }
+
+  bool isEmpty() {
+    return chatID.isEmpty &&
+        shelterID.isEmpty &&
+        userID.isEmpty &&
+        dogID.isEmpty &&
+        lastMessageDate.isEmpty &&
+        messages.isEmpty;
+  }
+
 }

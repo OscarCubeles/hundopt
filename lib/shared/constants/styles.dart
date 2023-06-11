@@ -54,7 +54,6 @@ class Styles {
     fontWeight: FontWeight.normal,
     color: Colors.black,
     fontFamily: "DM Sans",
-    overflow: TextOverflow.ellipsis,
   );
 
   static TextStyle displaySmall = TextStyle(

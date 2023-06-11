@@ -56,7 +56,6 @@ class IndividualChatScreen extends GetView<IndividualChatController> {
                         SizedBox(height: 4),
                         Text(
                           controller.currentShelter().name,
-                          // TODO: Change the text for the shelter name
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
