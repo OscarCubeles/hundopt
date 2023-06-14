@@ -119,9 +119,20 @@ class DogInfoScreen extends GetView<DogInfoController> {
                     children: [
                       Text(controller.currentDog().name,
                           style: textTheme.headlineSmall),
-                      const LikeButton(
-                        size: 40,
-                      ),
+                      Obx(
+                            () =>  LikeButton(
+                            onTap: (bool isLiked) {
+                              controller.toggleLikeStatus(controller
+                                  .currentDog().id);
+                              return Future.value(!isLiked);
+                            },
+                            size: 40,
+                            isLiked: controller
+                                .isDogLiked(controller
+                                .currentDog().id)),
+
+                      )
+                      ,
                     ],
                   ),
                   Text(controller.currentDog().breed,

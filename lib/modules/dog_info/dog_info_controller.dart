@@ -7,6 +7,7 @@ import 'package:hundopt/shared/services/shelter_singleton.dart';
 
 import '../../api/firebase_core/auth.dart';
 import '../../api/firebase_core/dog_repository.dart';
+import '../../api/firebase_core/user_repository.dart';
 import '../../models/chat.dart';
 import '../../models/dog.dart';
 import '../../models/shelter.dart';
@@ -19,7 +20,7 @@ class DogInfoController extends GetxController {
   Dog? dog = Get.arguments; // TODO: Check if this is really useful bc at the end it is using the dogSingleton
   RxInt imageIndex = 0.obs;
   Rx<Shelter> dogShelter = Shelter.empty().obs;
-  late HundoptUser user = HundoptUser.empty();
+  Rx<HundoptUser> user = HundoptUser.empty().obs;
 
 
   @override
@@ -31,7 +32,7 @@ class DogInfoController extends GetxController {
     if(ShelterSingleton().shelters == []){
       await ShelterRepository().retrieveShelters();
     }
-    user = (await Auth().retrieveUser())!;
+    user.value = (await Auth().retrieveUser())!;
 
     retrieveShelter();
   }
@@ -103,16 +104,47 @@ class DogInfoController extends GetxController {
     Get.toNamed(Routes.DOG_INFO + Routes.RESERVED_DOG);
   }
 
+  // TODO: Put this as a service
+  void dislikeDog(String dogId) async {
+    await UserRepository().removeFavDog(user.value.id, dogId);
+    user.value.favDogs.remove(dogId);
+  }
+
+  // TODO: Put this as a service
+  void likeDog(String dogId) async {
+    await UserRepository().addFavDog(user.value.id, dogId);
+    user.value.favDogs.add(dogId);
+  }
+
+  // TODO: Put this as a service
+  bool isDogLiked(String dogId) {
+    for (int i = 0; i < user.value.favDogs.length; i++) {
+      if (dogId == user.value.favDogs[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // TODO: Add this as a service
+  void toggleLikeStatus(String dogId) {
+    if (isDogLiked(dogId)) {
+      dislikeDog(dogId);
+      return;
+    }
+    likeDog(dogId);
+  }
+
   void reserveAndContinue() async {
     currentDog().isReserved = true;
     dog!.isReserved = true;
     await DogRepository().reserveDog(dog!.id);
-    await ChatRepository().getOrCreateChat(user.id, currentDog()); //TODO: REMOVE THE RETURN OF THE CHAT AS IT IS NOT NECESSARY
+    await ChatRepository().getOrCreateChat(user.value.id, currentDog()); //TODO: REMOVE THE RETURN OF THE CHAT AS IT IS NOT NECESSARY
     Get.toNamed(Routes.INDIVIDUAL_CHAT);
   }
 
   void navigateToSingleChat() async {
-    await ChatRepository().getOrCreateChat(user.id, currentDog());
+    await ChatRepository().getOrCreateChat(user.value.id, currentDog());
     Get.toNamed(Routes.INDIVIDUAL_CHAT, arguments: Chat.empty());
   }
 

@@ -6,6 +6,7 @@ import 'package:hundopt/shared/services/dog_singleton.dart';
 import 'package:hundopt/shared/utils/date_formatter.dart';
 
 import '../../../api/firebase_core/auth.dart';
+import '../../../api/firebase_core/shelter_repository.dart';
 import '../../../models/chat.dart';
 import '../../../models/dog.dart';
 import '../../../models/user.dart';
@@ -21,13 +22,16 @@ class ChatController extends GetxController {
     super.onInit();
     user = (await Auth().retrieveUser())!;
     userChats.assignAll(await ChatRepository().fetchUserChats(user.id));
+    if (ShelterSingleton().shelters == []) {
+      await ShelterRepository().retrieveShelters();
+    }
     update();
   }
 
-  void retrieveShelter() {
+  void retrieveShelter(int index) {
     for (int i = 0; i < ShelterSingleton().shelters.length; i++) {
       if (ShelterSingleton().shelters[i].id ==
-          DogSingleton().dogs![DogSingleton().dogIndex!].shelterID) {
+          userChats[index].shelterID) {
         ShelterSingleton().shelterIndex = i;
         print(ShelterSingleton().shelters[i].name);
         return;
@@ -36,7 +40,7 @@ class ChatController extends GetxController {
   }
 
   void navigateToSingleChat(int chatIndex) {
-    retrieveShelter();
+    retrieveShelter(chatIndex);
     // TODO: Add this method in the service that uses the singleton, the service could be called dogmanager
     int i = 0;
     for (Dog tmpDog in DogSingleton().dogs!) {

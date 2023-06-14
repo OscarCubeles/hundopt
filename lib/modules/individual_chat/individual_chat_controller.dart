@@ -81,7 +81,6 @@ class IndividualChatController extends GetxController {
   }
 
   void scrollToBottom() {
-    // TODO: This throws an error on console, check why
     if (chat.value.messages.isNotEmpty) {
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
