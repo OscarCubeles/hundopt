@@ -4,15 +4,10 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/modules/tabs/explore/explore_tab_controller.dart';
 import 'package:like_button/like_button.dart';
-import 'package:video_player/video_player.dart';
 
 import '../../../../shared/constants/colors.dart';
-import '../../../../shared/widgets/app_bar.dart';
-import '../../../shared/constants/string_constants.dart';
+
 import '../../../shared/constants/styles.dart';
-import '../../../shared/widgets/app_page.dart';
-import '../../../shared/widgets/video_player_item.dart';
-import '../../home/home_controller.dart';
 
 class ExploreTab extends GetView<ExploreController> {
   const ExploreTab({super.key});
@@ -23,9 +18,8 @@ class ExploreTab extends GetView<ExploreController> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Obx(() => PageView.builder(
-              controller: PageController(
-                  initialPage: controller.initialPage()
-              ), // TODO: Create custom page controller to set the initial one to a custom one
+              controller: PageController(initialPage: controller.initialPage()),
+              // TODO: Create custom page controller to set the initial one to a custom one
               scrollDirection: Axis.vertical,
               itemCount: controller.dogList.length,
               itemBuilder: (context, index) {
@@ -33,7 +27,8 @@ class ExploreTab extends GetView<ExploreController> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(controller.dogList[index].mainPictureURL),
+                      image: NetworkImage(
+                          controller.dogList[index].mainPictureURL),
                     ),
                   ),
                   child: GestureDetector(
@@ -96,16 +91,24 @@ class ExploreTab extends GetView<ExploreController> {
                                           ),
                                           Spacer(),
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 10, 20),
                                             child: Obx(
-                                              () => LikeButton(
-                                                  size: 50,
-                                                  isLiked:
-                                                      controller.isLiked.value),
+                                              () =>  LikeButton(
+                                                onTap: (bool isLiked) {
+                                                  controller.toggleLikeStatus(controller
+                                                      .dogList[index].id);
+                                                  return Future.value(!isLiked);
+                                                },
+                                                    size: 50,
+                                                    isLiked: controller
+                                                        .isDogLiked(controller
+                                                        .dogList[index].id)),
+
+                                              )
                                             ),
-                                          ),
-                                          SizedBox(width: 8),
+
+                                          const SizedBox(width: 8),
                                         ],
                                       ),
                                     ),

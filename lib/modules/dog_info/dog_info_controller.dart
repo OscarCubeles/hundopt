@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/api/firebase_core/chat_repository.dart';
@@ -108,8 +107,6 @@ class DogInfoController extends GetxController {
     currentDog().isReserved = true;
     dog!.isReserved = true;
     await DogRepository().reserveDog(dog!.id);
-    print("hadaksdjadkja");
-  // TODO: Check if the user has already chatted with the shelter, if not, create the chat, if yes, gather it
     await ChatRepository().getOrCreateChat(user.id, currentDog()); //TODO: REMOVE THE RETURN OF THE CHAT AS IT IS NOT NECESSARY
     Get.toNamed(Routes.INDIVIDUAL_CHAT);
   }

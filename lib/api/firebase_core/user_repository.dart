@@ -65,9 +65,44 @@ class UserRepository {
     }
   }
 
+  Future addFavDog(String userId, String dogId) async {
+    await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'favDogs': FieldValue.arrayUnion([dogId])
+    }).then((value) {
+      print('Dog added to favorites successfully!');
+    }).catchError((error) {
+      print('Failed to add dog to favorites: $error');
+    });
+  }
 
+  Future removeFavDog(String userId, String dogId) async {
+    await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'favDogs': FieldValue.arrayRemove([dogId])
+    }).then((value) {
+      print('Dog removed from favorites successfully!');
+    }).catchError((error) {
+      print('Failed to remove dog from favorites: $error');
+    });
+  }
 
+  Future addFavShelter(String userId, String dogId) async {
+    await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'favShelters': FieldValue.arrayUnion([dogId])
+    }).then((value) {
+      print('Shelter added to favorites successfully!');
+    }).catchError((error) {
+      print('Failed to add shelter to favorites: $error');
+    });
+  }
 
-
+  Future removeFavShelter(String userId, String dogId) async {
+    await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'favShelters': FieldValue.arrayRemove([dogId])
+    }).then((value) {
+      print('Shelter removed from favorites successfully!');
+    }).catchError((error) {
+      print('Failed to remove shelter from favorites: $error');
+    });
+  }
 
 }
