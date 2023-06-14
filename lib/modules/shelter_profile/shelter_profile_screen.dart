@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/shelter_profile/shelter_profile.dart';
 import 'package:like_button/like_button.dart';
 
 import '../../shared/constants/colors.dart';
 import '../../shared/constants/styles.dart';
-import '../../shared/widgets/app_bar.dart';
 import '../../shared/widgets/horizontal_bar.dart';
 
 class ShelterProfileScreen extends GetView<ShelterProfileController> {
@@ -23,12 +21,12 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(10, 0, 20, 0),
+              padding: const EdgeInsets.fromLTRB(10, 0, 20, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     color: ColorConstants.appColor,
                     onPressed: controller.navigateBack,
                   ),
@@ -36,26 +34,31 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(25, 20, 25, 0),
+              padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Text(controller.currentShelter().name,
                             style: Styles.shelterHeadline),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
-                      LikeButton()
-                      /*Text(
-                        controller.fullName,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      )*/
+                      Obx(
+                        () => LikeButton(
+                            onTap: (bool isLiked) {
+                              controller.toggleShelterLikeStatus(
+                                  controller.currentShelter());
+                              return Future.value(!isLiked);
+                            },
+                            isLiked: controller.isShelterLiked(
+                                controller.currentShelter().id)),
+                      )
                     ],
                   ),
                   CircleAvatar(
@@ -72,7 +75,7 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
                 GestureDetector(
                   onTap: controller.switchTab,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(10, 15, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(10, 15, 0, 0),
                     width: MediaQuery.of(context).size.width * 0.45,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -92,12 +95,12 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
                 GestureDetector(
                   onTap: controller.switchTab,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 15, 10, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 15, 10, 0),
                     width: MediaQuery.of(context).size.width * 0.45,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           CupertinoIcons.info,
                           size: 30,
                         ),
@@ -114,13 +117,13 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
                 )
               ],
             ),
-            Container(
+            SizedBox(
               height: 10,
               child: Obx(
                 () => HorizontalBar(isLeft: controller.isBarLeft.value),
               ),
             ),
-            Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
+            const Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
             Obx(() =>
                 controller.getBodyContent(MediaQuery.of(context).size.width))
           ],

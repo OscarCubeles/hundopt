@@ -51,7 +51,6 @@ class FavouriteTab extends GetView<FavouriteController> {
                   height: MediaQuery.of(context).size.height,
                   child: TabBarView(
                       controller: controller.tabBarController,
-
                       children: [
                         Obx(() => SingleChildScrollView(
                               child: GridView.count(
@@ -66,7 +65,6 @@ class FavouriteTab extends GetView<FavouriteController> {
                                             controller.navigateToDogInfo(
                                                 controller.favDogs[index]),
                                           },
-                                      // Add a function to move to the dog or shelter
                                       child: GridTile(
                                         child: Container(
                                             margin: const EdgeInsets.fromLTRB(
@@ -150,7 +148,7 @@ class FavouriteTab extends GetView<FavouriteController> {
                                   return GestureDetector(
                                       onTap: () => {
                                             controller.navigateToShelter(
-                                                controller.favShelters[index])
+                                                controller.favShelters[index], controller.favShelters.length)
                                           },
                                       // Add a function to move to the dog or shelter
                                       child: GridTile(
@@ -187,44 +185,30 @@ class FavouriteTab extends GetView<FavouriteController> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 0, 0, 0),
+                                                  padding: EdgeInsets.all(0),
                                                   child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      Text(
-                                                        controller
-                                                            .favShelters[index]
-                                                            .name,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headlineMedium,
-                                                      ),
+                                                      Expanded(
+                                                        child:  Text(
+                                                            controller.favShelters[index].name,
+                                                            style: Styles.headlineShelterMedium,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                        ),
                                                       Obx(
-                                                        () => LikeButton(
-                                                            onTap:
-                                                                (bool isLiked) {
-                                                              controller.toggleShelterLikeStatus(
-                                                                  controller
-                                                                      .favShelters[
-                                                                          index]
-                                                                      );
-                                                              return Future
-                                                                  .value(
-                                                                      !isLiked);
-                                                            },
-                                                            isLiked: controller
-                                                                .isDogLiked(controller
-                                                                    .favShelters[
-                                                                        index]
-                                                                    .id)),
-                                                      )
+                                                            () => LikeButton(
+                                                          onTap: (bool isLiked) {
+                                                            controller.toggleShelterLikeStatus(controller.favShelters[index]);
+                                                            return Future.value(!isLiked);
+                                                          },
+                                                          isLiked: controller.isShelterLiked(controller.favShelters[index].id),
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
-                                                )
+                                                ),
+
                                               ],
                                             )),
                                       ));

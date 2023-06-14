@@ -114,4 +114,12 @@ class Styles {
     fontFamily: "DM Sans",
     overflow: TextOverflow.clip,
   );
+
+  static TextStyle headlineShelterMedium =  TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+  fontFamily: "DM Sans",
+    overflow: TextOverflow.ellipsis,
+  );
 }

@@ -87,7 +87,7 @@ class ExploreController extends GetxController {
   void navigateToDogInfo(int index) {
     DogSingleton().dogIndex = index;
     retrieveShelter();
-    Get.offNamed(Routes.DOG_INFO, arguments: dogList[index]);
+    Get.toNamed(Routes.DOG_INFO, arguments: dogList[index]);
   }
 
   Future<void> updateValues() async {

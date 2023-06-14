@@ -36,10 +36,10 @@ class FavouriteController extends GetxController
     // TODO: CLean this ugly line of code
     tabBarController.addListener(() async {
       _selectedIndex.value = tabBarController.index;
-      await updateValues();
+
     });
-    Timer.periodic(const Duration(seconds: 1), (_) {
-      updateValues();
+    Timer.periodic(const Duration(seconds: 1), (_) async {
+      await updateValues();
     });
     favShelters
         .assignAll(await ShelterRepository().fetchFavShelters(user.value));
@@ -47,26 +47,28 @@ class FavouriteController extends GetxController
     update();
   }
 
-  Future updateValues() async{
-    favShelters
-        .assignAll(await ShelterRepository().fetchFavShelters(user.value));
-    favDogs.assignAll(await DogRepository().fetchFavDogs(user.value));
+  Future<void> updateValues() async {
+    final updatedShelters = await ShelterRepository().fetchFavShelters(user.value);
+    final updatedDogs = await DogRepository().fetchFavDogs(user.value);
+    favShelters.assignAll(updatedShelters);
+    favDogs.assignAll(updatedDogs);
+    update();
   }
 
   // TODO: Add this as a service
   void toggleShelterLikeStatus(Shelter shelter) {
     if (isShelterLiked(shelter.id)) {
       dislikeShelter(shelter);
-      return;
+    } else {
+      likeShelter(shelter);
     }
-    likeShelter(shelter);
   }
 
   // TODO: Put this as a service
   void dislikeShelter(Shelter shelter) async {
     await UserRepository().removeFavShelter(user.value.id, shelter.id);
     user.update((value) {
-      value?.favShelters.add(shelter.id);
+      value?.favShelters.remove(shelter.id);
     });
     favShelters.remove(shelter);
   }
@@ -94,9 +96,9 @@ class FavouriteController extends GetxController
   void toggleDogLikeStatus(Dog dog) {
     if (isDogLiked(dog.id)) {
       dislikeDog(dog);
-      return;
+    } else {
+      likeDog(dog);
     }
-    likeDog(dog);
   }
 
   // TODO: Put this as a service
@@ -140,7 +142,7 @@ class FavouriteController extends GetxController
     }
   }
 
-  void navigateToShelter(Shelter shelter) {
+  void navigateToShelter(Shelter shelter, int length) {
     // TODO: Make this as a service with a method named SetCurrentShelter  or similar
     int i = 0;
     for (Shelter tmpShelter in ShelterSingleton().shelters) {

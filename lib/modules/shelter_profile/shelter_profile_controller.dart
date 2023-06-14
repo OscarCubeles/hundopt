@@ -1,11 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../api/firebase_core/auth.dart';
 import '../../api/firebase_core/dog_repository.dart';
 import '../../api/firebase_core/shelter_repository.dart';
+import '../../api/firebase_core/user_repository.dart';
 import '../../models/dog.dart';
 import '../../models/shelter.dart';
+import '../../models/user.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/constants/styles.dart';
 import '../../shared/services/dog_singleton.dart';
@@ -13,6 +18,7 @@ import '../../shared/services/shelter_singleton.dart';
 
 class ShelterProfileController extends GetxController {
   List<String> socialMediaList = [];
+  late Rx<HundoptUser> user = HundoptUser.empty().obs;
   RxBool isBarLeft = true.obs;
   RxList shelterDogs = [].obs;
 
@@ -20,7 +26,9 @@ class ShelterProfileController extends GetxController {
   void onInit() async {
     super.onInit();
     isBarLeft.value = true;
-    //socialMediaList = socialMediaMap.keys.toList();
+
+    user.value = (await Auth().retrieveUser())!;
+
     // TODO: Put this as a service bc its kinda ugly to have it everywhere
     if (DogSingleton().dogs == null) {
       await DogRepository().retrieveDogs();
@@ -28,6 +36,7 @@ class ShelterProfileController extends GetxController {
     if (ShelterSingleton().shelters == []) {
       await ShelterRepository().retrieveShelters();
     }
+
     shelterDogs
         .assignAll(await DogRepository().fetchShelterDogs(currentShelter().id));
     update();
@@ -51,8 +60,44 @@ class ShelterProfileController extends GetxController {
     isBarLeft.value = !isBarLeft.value;
   }
 
+
+  void onLikePressed() {
+    //TODO: Set the shelter as liked
+  }
+
+
+  // TODO: Add this as a service
+  void toggleShelterLikeStatus(Shelter shelter) {
+    if (isShelterLiked(shelter.id)) {
+      dislikeShelter(shelter);
+      return;
+    }
+    likeShelter(shelter);
+  }
+
+  // TODO: Put this as a service
+  void dislikeShelter(Shelter shelter) async {
+    await UserRepository().removeFavShelter(user.value.id, shelter.id);
+    user.value.favShelters.remove(shelter.id);
+  }
+
+  // TODO: Put this as a service
+  void likeShelter(Shelter shelter) async {
+    await UserRepository().addFavShelter(user.value.id, shelter.id);
+    user.value.favShelters.add(shelter.id);
+  }
+
+  // TODO: Put this as a service
+  bool isShelterLiked(String shelterID) {
+    for (int i = 0; i < user.value.favShelters.length; i++) {
+      if (shelterID == user.value.favShelters[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   void navigateToDogInfo(Dog dog) {
-    print("${dog.name}");
     // TODO: Add this method in the service that uses the singleton, the service could be called dogmanager
     int i = 0;
     for (Dog tmpDog in DogSingleton().dogs!) {
@@ -65,8 +110,15 @@ class ShelterProfileController extends GetxController {
     }
   }
 
+
+  Widget getBodyContent(double screenWidth) {
+    update();
+    return isBarLeft.value ? dogGrid(screenWidth) : shelterInfo();
+  }
+
+
   // TODO: Put this widget as widget constant
-  Widget getDogGrid(double screenWidth) {
+  Widget dogGrid(double screenWidth) {
     return Expanded(
       child: SingleChildScrollView(
         child: GridView.count(
@@ -129,13 +181,8 @@ class ShelterProfileController extends GetxController {
     );
   }
 
-  Widget getBodyContent(double screenWidth) {
-    update();
-    return isBarLeft.value ? getDogGrid(screenWidth) : getShelterBody();
-  }
-
   // TODO CHange this strings to constants and put this widget as a widget constant
-  Widget getShelterBody() {
+  Widget shelterInfo() {
     return Expanded(
         child: ListView(
       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -159,16 +206,13 @@ class ShelterProfileController extends GetxController {
         ),
         Padding(padding: EdgeInsets.all(10)),
         Text("Redes Sociales", style: Styles.headlineMedium),
-        // TODO: Add an if statement to check if it has RRSS
         Padding(padding: EdgeInsets.all(5)),
-
-        getSocialNetworks2()
-        // TODO : Change this if it does not have social media
+        socialNetworksListView()
       ],
     ));
   }
 
-  Widget getSocialNetworks2() {
+  Widget socialNetworksListView() {
     return currentShelter().hasSocialNetworks()
         ? Container(
             height: 500,
@@ -252,7 +296,7 @@ class ShelterProfileController extends GetxController {
         : Container();
   }
 
-  void onLikePressed() {
-    //TODO: Set the shelter as liked
-  }
+
+
+
 }
