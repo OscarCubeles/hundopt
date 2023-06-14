@@ -33,18 +33,22 @@ class FavouriteController extends GetxController
     super.onInit();
     tabBarController = TabController(length: 2, vsync: this);
     user.value = (await Auth().retrieveUser())!;
-    // TODO: CLean this ugly line of code
+    // TODO: Clean this ugly line of code
     tabBarController.addListener(() async {
       _selectedIndex.value = tabBarController.index;
-
+      await updateValues();
     });
     Timer.periodic(const Duration(seconds: 1), (_) async {
-      await updateValues();
+      //await updateValues();
     });
     favShelters
         .assignAll(await ShelterRepository().fetchFavShelters(user.value));
     favDogs.assignAll(await DogRepository().fetchFavDogs(user.value));
+    if (ShelterSingleton().shelters == []) {
+      await ShelterRepository().retrieveShelters();
+    }
     update();
+
   }
 
   Future<void> updateValues() async {
@@ -135,6 +139,11 @@ class FavouriteController extends GetxController
     for (Dog tmpDog in DogSingleton().dogs!) {
       if (dog.id == tmpDog.id) {
         DogSingleton().dogIndex = i;
+        for(int j = 0; j < ShelterSingleton().shelters.length; j++){ //TODO: CHange this ugly thing
+          if(ShelterSingleton().shelters[j].id == tmpDog.shelterID){
+            ShelterSingleton().shelterIndex = j;
+          }
+        }
         Get.toNamed(Routes.DOG_INFO, arguments: tmpDog);
         break;
       }

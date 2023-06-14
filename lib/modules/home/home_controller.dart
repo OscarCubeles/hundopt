@@ -8,6 +8,8 @@ import 'package:hundopt/modules/tabs/tabs.dart';
 import 'package:hundopt/shared/services/shelter_singleton.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
+import '../tabs/favourite/favourite_tab_controller.dart';
+
 class HomeController extends GetxController {
   int newTab = Get.arguments;
   late PersistentTabController persistentTabController;
@@ -73,6 +75,8 @@ class HomeController extends GetxController {
 
   void switchTab(index) {
     var tab = _getCurrentTab(index);
+    final FavouriteController favouriteController = Get.find<FavouriteController>();
+    favouriteController.updateValues();
     currentTab.value = tab!;
   }
 
