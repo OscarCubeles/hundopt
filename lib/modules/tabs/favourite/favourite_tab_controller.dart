@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +19,6 @@ class FavouriteController extends GetxController
     with GetSingleTickerProviderStateMixin {
   late TextStyle centreLabelStyle;
   late TextStyle dogLabelStyle;
-  late Timer _timer;
 
 
   late Rx<HundoptUser> user = HundoptUser.empty().obs;
@@ -40,13 +38,12 @@ class FavouriteController extends GetxController
       _selectedIndex.value = tabBarController.index;
       await updateValues();
     });
-    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+    Timer.periodic(const Duration(seconds: 1), (_) {
       updateValues();
     });
     favShelters
         .assignAll(await ShelterRepository().fetchFavShelters(user.value));
     favDogs.assignAll(await DogRepository().fetchFavDogs(user.value));
-    print("dogs retrieved");
     update();
   }
 
@@ -59,11 +56,9 @@ class FavouriteController extends GetxController
   // TODO: Add this as a service
   void toggleShelterLikeStatus(Shelter shelter) {
     if (isShelterLiked(shelter.id)) {
-      print("disliked");
       dislikeShelter(shelter);
       return;
     }
-    print("liked");
     likeShelter(shelter);
   }
 
@@ -98,11 +93,9 @@ class FavouriteController extends GetxController
   // TODO: Add this as a service
   void toggleDogLikeStatus(Dog dog) {
     if (isDogLiked(dog.id)) {
-      print("disliked");
       dislikeDog(dog);
       return;
     }
-    print("liked");
     likeDog(dog);
   }
 
@@ -135,7 +128,6 @@ class FavouriteController extends GetxController
   }
 
   navigateToDogInfo(Dog dog) {
-    print("${dog.name}");
     // TODO: Add this method in the service that uses the singleton, the service could be called dogmanager
     int i = 0;
     for (Dog tmpDog in DogSingleton().dogs!) {
@@ -160,7 +152,6 @@ class FavouriteController extends GetxController
       i++;
     }
     Get.toNamed(Routes.SHELTER_PROFILE);
-    print("pressde"); // TODO: We should pass the shelter here when pressed
   }
 
   void swapColors() {}
