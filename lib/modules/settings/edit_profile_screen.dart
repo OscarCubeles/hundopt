@@ -37,22 +37,23 @@ class EditProfileScreen extends GetView<SettingsController> {
                                 child: GestureDetector(
                                   onTap: () => {
                                     // TODO: Add open image gallery
+                                    controller.uploadImageToFirebase()
                                   },
-                                  child: CircleAvatar(
+                                  child: Obx(() => CircleAvatar(
                                     radius: 50,
                                     // TODO: Add actual user image
                                     backgroundImage:
-                                        controller.user.pictureURL != ""
-                                            ? NetworkImage(
-                                                controller.user.pictureURL)
-                                            : Image.asset(
-                                                fit: BoxFit.fill,
-                                                AssetsPath.defaultProfilePic,
-                                              ).image,
+                                    controller.user.value.pictureURL != ""
+                                        ? NetworkImage(
+                                        controller.user.value.pictureURL)
+                                        : Image.asset(
+                                      fit: BoxFit.fill,
+                                      AssetsPath.defaultProfilePic,
+                                    ).image,
                                     child: Icon(CupertinoIcons.switch_camera,
                                         size: 50,
                                         color: ColorConstants.transparentWhite),
-                                  ),
+                                  )),
                                 )),
                           ],
                         ),

@@ -13,22 +13,29 @@ import '../../../shared/services/dog_singleton.dart';
 class ProfileController extends GetxController {
   RxString username = RxString('');
   RxString fullName = RxString('');
-  late HundoptUser user = HundoptUser.empty();
+  late Rx<HundoptUser> user = HundoptUser.empty().obs;
   RxList userAdoptingDogs = [].obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    user = (await Auth().retrieveUser())!;
+    user.value = (await Auth().retrieveUser())!;
     setScreenValues();
 
     update();
   }
 
   void setScreenValues() async {
-    username.value = '@${user.username}';
-    fullName.value = user.fullName;
-    userAdoptingDogs.assignAll(await DogRepository().fetchAdoptingDogs(user));
+    username.value = '@${user.value.username}';
+    fullName.value = user.value.fullName;
+    userAdoptingDogs.assignAll(await DogRepository().fetchAdoptingDogs(user.value));
+    update();
+  }
+
+  Future<void> updateValues() async {
+    user.value = (await Auth().forceRetrieveUser())!;
+    final updatedDogs = await DogRepository().fetchAdoptingDogs(user.value);
+    userAdoptingDogs.assignAll(updatedDogs);
     update();
   }
 

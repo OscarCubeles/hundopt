@@ -72,7 +72,7 @@ class DogInfoScreen extends GetView<DogInfoController> {
                 top: 40.0,
                 right: 10.0,
                 child: IconButton(
-                  color: controller.dog!.isReserved
+                  color: controller.currentDog().isReserved
                       ? ColorConstants.background
                       : ColorConstants.invisible,
                   icon: Icon(Icons.bookmark),

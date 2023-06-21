@@ -12,7 +12,7 @@ class ProfileTab extends GetView<ProfileController> {
   const ProfileTab({super.key});
 
   Object profileImage() {
-    return controller.user.pictureURL == ""
+    return controller.user.value.pictureURL == ""
         ? const AssetImage(AssetsPath.defaultProfilePic)
         : const NetworkImage(
             // TODO: Change this for the actual profile picture URL
@@ -47,8 +47,8 @@ class ProfileTab extends GetView<ProfileController> {
                   ),
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: controller.user.pictureURL != ""
-                        ? NetworkImage(controller.user.pictureURL)
+                    backgroundImage: controller.user.value.pictureURL != ""
+                        ? NetworkImage(controller.user.value.pictureURL)
                         : Image.asset(
                             fit: BoxFit.fill,
                             AssetsPath.defaultProfilePic,

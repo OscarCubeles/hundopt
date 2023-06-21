@@ -22,17 +22,17 @@ class SettingsController extends GetxController {
   RxString phone = RxString('');
   List<SettingOption> settingOptions = [];
   bool dataIsValid = false;
-  late HundoptUser user = HundoptUser.empty();
+  Rx<HundoptUser> user = HundoptUser.empty().obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     initFormFieldValidations();
     initSettingOptions();
-    user = await Auth().retrieveUser() as HundoptUser;
-    userName.value = user.username;
-    email.value = user.email;
-    phone.value = user.phone;
+    user.value = await Auth().retrieveUser() as HundoptUser;
+    userName.value = user.value.username;
+    email.value = user.value.email;
+    phone.value = user.value.phone;
   }
 
   void initSettingOptions() {
@@ -247,4 +247,22 @@ class SettingsController extends GetxController {
           );
         });
   }
+
+
+
+  void uploadImageToFirebase() async {
+    final imageUrl = await UserRepository().uploadImage();
+    if (imageUrl != null) {
+      // Image uploaded successfully, use the download URL
+      print('Image uploaded: $imageUrl');
+      await UserRepository().updatePictureURL(user.value.id, imageUrl);
+      user.value.pictureURL = imageUrl;
+      update();
+    } else {
+      // Failed to upload image
+      print('Failed to upload image');
+    }
+  }
+
+
 }

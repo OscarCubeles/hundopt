@@ -30,8 +30,7 @@ class ChatController extends GetxController {
 
   void retrieveShelter(int index) {
     for (int i = 0; i < ShelterSingleton().shelters.length; i++) {
-      if (ShelterSingleton().shelters[i].id ==
-          userChats[index].shelterID) {
+      if (ShelterSingleton().shelters[i].id == userChats[index].shelterID) {
         ShelterSingleton().shelterIndex = i;
         print(ShelterSingleton().shelters[i].name);
         return;
@@ -81,10 +80,13 @@ class ChatController extends GetxController {
   }
 
   String lastMsg(Chat chat) {
-    return chat.messages[chat.messages.length - 1].text;
+    return chat.messages.isNotEmpty
+        ? chat.messages[chat.messages.length - 1].text
+        : "";
   }
 
   String msgDate(String date) {
+    if(date.isEmpty) return "";
     DateTime dateTime = DateTime.parse(date);
     // Get the current date and time
     if (DateFormatter().isToday(dateTime)) {
@@ -95,5 +97,4 @@ class ChatController extends GetxController {
       return DateFormatter().formatDate(dateTime);
     }
   }
-
 }

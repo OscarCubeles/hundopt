@@ -17,7 +17,6 @@ import '../../shared/constants/constants.dart';
 import '../../shared/widgets/dialogs.dart';
 
 class DogInfoController extends GetxController {
-  Dog? dog = Get.arguments; // TODO: Check if this is really useful bc at the end it is using the dogSingleton
   RxInt imageIndex = 0.obs;
   Rx<Shelter> dogShelter = Shelter.empty().obs;
   Rx<HundoptUser> user = HundoptUser.empty().obs;
@@ -81,7 +80,7 @@ class DogInfoController extends GetxController {
         context: Get.context!,
         builder: (BuildContext context) {
           return NotificationDialog(
-            title: "${StringConstants.titleAdoptDialogText}${dog!.name}!",
+            title: "${StringConstants.titleAdoptDialogText}${currentDog().name}!",
             text: StringConstants.bodyAdoptDialogText,
             buttonText: StringConstants.btnConfirmAdoptLabel,
             underlinedText: StringConstants.btnConfirmContactLabel,
@@ -96,8 +95,9 @@ class DogInfoController extends GetxController {
 
 
   void toShowAdoptDetails() {
+    Dog aux = currentDog();
     // TODO: Check why this redirect does not work
-    if(dog!.isReserved || currentDog().isReserved){
+    if(currentDog().isReserved){
       Get.toNamed(Routes.INDIVIDUAL_CHAT);
       return;
     }
@@ -137,8 +137,8 @@ class DogInfoController extends GetxController {
 
   void reserveAndContinue() async {
     currentDog().isReserved = true;
-    dog!.isReserved = true;
-    await DogRepository().reserveDog(dog!.id);
+    await DogRepository().reserveDog(currentDog().id);
+    await UserRepository().addAdoptingDog(user.value.id, currentDog().id);
     await ChatRepository().getOrCreateChat(user.value.id, currentDog()); //TODO: REMOVE THE RETURN OF THE CHAT AS IT IS NOT NECESSARY
     Get.toNamed(Routes.INDIVIDUAL_CHAT);
   }
@@ -149,7 +149,7 @@ class DogInfoController extends GetxController {
   }
 
   void navigateBack() {
-    Get.toNamed(Routes.DOG_INFO, arguments: dog);
+    Get.toNamed(Routes.DOG_INFO, arguments: currentDog());
   }
 
   void navigateToShelterScreen(){

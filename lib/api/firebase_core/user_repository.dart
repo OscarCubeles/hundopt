@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../models/user.dart';
 
@@ -102,6 +105,63 @@ class UserRepository {
       print('Shelter removed from favorites successfully!');
     }).catchError((error) {
       print('Failed to remove shelter from favorites: $error');
+    });
+  }
+  Future<String?> uploadImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      var file = File(pickedFile.path);
+      final storageRef = FirebaseStorage.instance.ref().child('images');
+      final uploadTask = storageRef.putFile(file);
+
+      final snapshot = await uploadTask.whenComplete(() {});
+      if (snapshot.state == TaskState.success) {
+        final imageUrl = await snapshot.ref.getDownloadURL();
+        return imageUrl;
+      } else {
+        print('Image upload failed');
+        return null;
+      }
+    } else {
+      // User canceled image picking
+      return null;
+    }
+  }
+
+  Future<void> updatePictureURL(String userId, String pictureURL) async {
+    try {
+      final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+
+      await userRef.update({
+        'pictureURL': pictureURL,
+      });
+
+      print('Picture URL updated successfully');
+    } catch (e) {
+      print('Failed to update Picture URL: $e');
+      // Handle the error as needed
+    }
+  }
+
+  Future addAdoptingDog(String userId, String dogId) async {
+    await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'adoptingDogs': FieldValue.arrayUnion([dogId])
+    }).then((value) {
+      print('Dog added addopting dog successfully!');
+    }).catchError((error) {
+      print('Failed to add dog to favorites: $error');
+    });
+  }
+
+  Future removeAdoptingDog(String userId, String dogId) async {
+    await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      'adoptingDogs': FieldValue.arrayRemove([dogId])
+    }).then((value) {
+      print('Dog removed from favorites successfully!');
+    }).catchError((error) {
+      print('Failed to remove dog from favorites: $error');
     });
   }
 

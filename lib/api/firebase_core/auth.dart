@@ -53,6 +53,15 @@ class Auth {
     return userManager.userData;
   }
 
+  Future<HundoptUser?> forceRetrieveUser() async {
+    final userManager = UserSingleton();
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    HundoptUser user = await UserRepository().getUser(firebaseUser?.uid);
+    userManager.userData = user;
+    return userManager.userData;
+  }
+
+
   Future<bool> changeUserEmail(String newEmail, RxnString errText) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
