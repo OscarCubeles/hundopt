@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/modules/tabs/favourite/favourite_tab_controller.dart';
-import 'package:hundopt/shared/constants/colors.dart';
+import 'package:hundopt/modules/home/tabs/tabs.dart';
 import 'package:like_button/like_button.dart';
-
-import '../../../shared/constants/string_constants.dart';
-import '../../../shared/constants/styles.dart';
-import '../../../shared/widgets/app_page.dart';
+import '../../../../shared/shared.dart';
 
 class FavouriteTab extends GetView<FavouriteController> {
   const FavouriteTab({super.key});
@@ -148,7 +144,7 @@ class FavouriteTab extends GetView<FavouriteController> {
                                   return GestureDetector(
                                       onTap: () => {
                                             controller.navigateToShelter(
-                                                controller.favShelters[index], controller.favShelters.length)
+                                                controller.favShelters[index])
                                           },
                                       // Add a function to move to the dog or shelter
                                       child: GridTile(
@@ -185,7 +181,7 @@ class FavouriteTab extends GetView<FavouriteController> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsets.all(0),
+                                                  padding: const EdgeInsets.all(0),
                                                   child: Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [

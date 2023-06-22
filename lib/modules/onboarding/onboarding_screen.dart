@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/shared/shared.dart';
-
-import '../../shared/constants/constants.dart';
-import '../../shared/widgets/app_page.dart';
 import 'onboarding.dart';
 
 class OnboardingScreen extends GetView<OnboardingController> {
@@ -27,13 +23,27 @@ class OnboardingScreen extends GetView<OnboardingController> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.01)),
-                  Text(StringConstants.welcomeText,
-                      style: Styles.bodySmall, textAlign: TextAlign.justify,),
-                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.091)),
-                  AppPrimaryButton(text: StringConstants.fillFormLabel, onPressed: controller.navigateToForm),
-                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.01)),
-                  ClickableText(uText: StringConstants.onlyExploreText, text: "", onPressed: controller.navigateToExplore)
+                  Padding(
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.height * 0.01)),
+                  Text(
+                    StringConstants.welcomeText,
+                    style: Styles.bodySmall,
+                    textAlign: TextAlign.justify,
+                  ),
+                  Padding(
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.height * 0.091)),
+                  AppPrimaryButton(
+                      text: StringConstants.fillFormLabel,
+                      onPressed: controller.navigateToForm),
+                  Padding(
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.height * 0.01)),
+                  ClickableText(
+                      uText: StringConstants.onlyExploreText,
+                      text: "",
+                      onPressed: controller.navigateToExplore)
                 ],
               )),
         ));

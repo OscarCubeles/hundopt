@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/components/list_tile/gf_list_tile.dart';
-import 'package:hundopt/modules/tabs/chat/chat_tab_controller.dart';
+import 'package:hundopt/modules/home/tabs/tabs.dart';
 import 'package:hundopt/shared/shared.dart';
-import 'package:intl/intl.dart';
 
 class ChatTab extends GetView<ChatController> {
   const ChatTab({super.key});

@@ -2,9 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'routes/routes.dart';
 import 'app_binding.dart';
-import 'lang/lang.dart';
 import 'themes/themes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dependency_injection.dart';
@@ -93,9 +91,6 @@ class App extends StatelessWidget {
       smartManagement: SmartManagement.keepFactory,
       title: 'Hündopt',
       theme: LightTheme.theme(),
-      locale: TranslationService.locale,
-      fallbackLocale: TranslationService.fallbackLocale,
-      translations: TranslationService(),
       builder: EasyLoading.init(),
     );
   }

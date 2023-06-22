@@ -1,4 +1,3 @@
-import 'package:hundopt/api/api.dart';
 import 'package:get/get.dart';
 
 class AppBinding extends Bindings {

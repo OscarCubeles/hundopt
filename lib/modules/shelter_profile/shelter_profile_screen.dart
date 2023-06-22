@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/shelter_profile/shelter_profile.dart';
 import 'package:like_button/like_button.dart';
-
-import '../../shared/constants/colors.dart';
-import '../../shared/constants/styles.dart';
-import '../../shared/widgets/horizontal_bar.dart';
+import '../../shared/shared.dart';
 
 class ShelterProfileScreen extends GetView<ShelterProfileController> {
   const ShelterProfileScreen({super.key});

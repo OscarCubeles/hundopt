@@ -1,4 +1,4 @@
-import '../../models/user.dart';
+import '../../../../models/user.dart';
 
 class UserSingleton {
   static final UserSingleton _instance = UserSingleton._internal();
@@ -7,5 +7,4 @@ class UserSingleton {
   HundoptUser? userData;
 
   UserSingleton._internal();
-
 }

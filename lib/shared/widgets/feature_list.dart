@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../models/dog_feature.dart';
 import '../constants/colors.dart';
 import '../constants/styles.dart';
 
@@ -77,7 +75,7 @@ class FeatureList extends StatelessWidget {
       IconData icon, String featureName, Color color, TextStyle style) {
     return Row(
       children: [
-        Padding(padding: EdgeInsets.all(8.0), child: Icon(icon, color: color)),
+        Padding(padding: const EdgeInsets.all(8.0), child: Icon(icon, color: color)),
         Text(featureName, style: style),
       ],
     );

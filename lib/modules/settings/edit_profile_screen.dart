@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/modules/settings/settings_controller.dart';
 import 'package:hundopt/shared/shared.dart';
 
-import '../../shared/constants/constants.dart';
-import '../../shared/widgets/app_page.dart';
 
 class EditProfileScreen extends GetView<SettingsController> {
   const EditProfileScreen({super.key});

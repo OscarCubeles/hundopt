@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/dog_info/dog_info.dart';
 import 'package:hundopt/shared/shared.dart';

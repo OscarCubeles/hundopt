@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/modules/dog_info/dog_info_controller.dart';
 import 'package:hundopt/shared/shared.dart';
-import 'package:hundopt/shared/widgets/grid_gender_tile.dart';
-import 'package:hundopt/shared/widgets/grid_text_tile.dart';
 import 'package:like_button/like_button.dart';
 
-import '../../shared/widgets/feature_list.dart';
 
 class DogInfoScreen extends GetView<DogInfoController> {
   const DogInfoScreen({super.key});

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:hundopt/modules/tabs/tabs.dart';
-
-import '../../shared/constants/constants.dart';
-import '../../shared/widgets/tab_bar.dart';
+import 'package:hundopt/modules/home/tabs/tabs.dart';
+import '../../shared/shared.dart';
 import 'home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -20,13 +18,11 @@ class HomeScreen extends GetView<HomeController> {
 
   Widget _buildWidget(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: AppTabBar(
-            controller: controller.persistentTabController,
-            screens: _buildScreens(),
-            onItemSelected: (index) => controller.switchTab(index),
-            currentItemColor: currentColor()),
-      ),
+      body: AppTabBar(
+          controller: controller.persistentTabController,
+          screens: _buildScreens(),
+          onItemSelected: (index) => controller.switchTab(index),
+          currentItemColor: currentColor()),
     );
   }
 

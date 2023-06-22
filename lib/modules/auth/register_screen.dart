@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hundopt/modules/auth/auth.dart';
 import 'package:get/get.dart';
-
 import '../../shared/shared.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -62,16 +61,5 @@ class RegisterScreen extends StatelessWidget {
                 onPressed: () => controller.navigateToLogin()),
           ],
         ));
-  }
-
-  Widget _buildForms(BuildContext context) {
-    return Form(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [],
-        ),
-      ),
-    );
   }
 }

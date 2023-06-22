@@ -1,4 +1,4 @@
-import '../../models/chat.dart';
+import '../../../../models/chat.dart';
 
 class ChatSingleton {
   static final ChatSingleton _instance = ChatSingleton._internal();

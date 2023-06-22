@@ -1,4 +1,4 @@
-import '../../models/dog.dart';
+import '../../../../models/dog.dart';
 
 class DogSingleton {
   static final DogSingleton _instance = DogSingleton._internal();

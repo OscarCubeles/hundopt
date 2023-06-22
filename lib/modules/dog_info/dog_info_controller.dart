@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/api/firebase_core/chat_repository.dart';
-import 'package:hundopt/api/firebase_core/shelter_repository.dart';
-import 'package:hundopt/shared/services/dog_singleton.dart';
-import 'package:hundopt/shared/services/shelter_singleton.dart';
-
-import '../../api/firebase_core/auth.dart';
-import '../../api/firebase_core/dog_repository.dart';
-import '../../api/firebase_core/user_repository.dart';
-import '../../models/chat.dart';
-import '../../models/dog.dart';
-import '../../models/shelter.dart';
-import '../../models/user.dart';
+import 'package:hundopt/shared/shared.dart';
+import '../../api/firebase_core/firebase_core.dart';
+import '../../models/model.dart';
 import '../../routes/app_pages.dart';
-import '../../shared/constants/constants.dart';
-import '../../shared/widgets/dialogs.dart';
 
 class DogInfoController extends GetxController {
   RxInt imageIndex = 0.obs;
@@ -25,28 +14,17 @@ class DogInfoController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    if (DogSingleton().dogs == null) {
-      await DogRepository().retrieveDogs();
-    }
-    if(ShelterSingleton().shelters == []){
-      await ShelterRepository().retrieveShelters();
-    }
+    await DogManager().retrieveDogs();
+    await ShelterManager().retrieveShelters();
+
     user.value = (await Auth().retrieveUser())!;
 
     retrieveShelter();
   }
 
   void retrieveShelter(){
-    for(int i = 0; i < ShelterSingleton().shelters.length; i++){
-      if(ShelterSingleton().shelters[i].id == currentDog().shelterID){
-          ShelterSingleton().shelterIndex = i;
-      }
-    }
-    for(Shelter shelter in ShelterSingleton().shelters){
-      if(shelter.id == currentDog().shelterID){
-        copyShelter(shelter);
-      }
-    }
+    ShelterManager().setCurrentShelterByID(currentDog().shelterID);
+    copyShelter(ShelterManager().currentShelter());
   }
 
   void copyShelter(Shelter srcShelter){
@@ -58,13 +36,11 @@ class DogInfoController extends GetxController {
   }
 
   Dog currentDog() {
-    // TODO: Put this as a service
-    return DogSingleton().dogs![DogSingleton().dogIndex!];
+    return DogManager().currentDog();
   }
 
   Shelter currentShelter(){
-    // TODO: Put this as a service
-    return ShelterSingleton().shelters[ShelterSingleton().shelterIndex];
+    return ShelterManager().currentShelter();
   }
 
   void updateIndex(int index) {
@@ -95,8 +71,6 @@ class DogInfoController extends GetxController {
 
 
   void toShowAdoptDetails() {
-    Dog aux = currentDog();
-    // TODO: Check why this redirect does not work
     if(currentDog().isReserved){
       Get.toNamed(Routes.INDIVIDUAL_CHAT);
       return;
@@ -139,7 +113,7 @@ class DogInfoController extends GetxController {
     currentDog().isReserved = true;
     await DogRepository().reserveDog(currentDog().id);
     await UserRepository().addAdoptingDog(user.value.id, currentDog().id);
-    await ChatRepository().getOrCreateChat(user.value.id, currentDog()); //TODO: REMOVE THE RETURN OF THE CHAT AS IT IS NOT NECESSARY
+    await ChatRepository().getOrCreateChat(user.value.id, currentDog());
     Get.toNamed(Routes.INDIVIDUAL_CHAT);
   }
 

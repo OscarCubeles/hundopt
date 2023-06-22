@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/shared/widgets/dialogs.dart';
-
-import '../../routes/app_pages.dart';
-import '../../shared/constants/constants.dart';
-import '../../shared/widgets/widgets.dart';
+import '../../shared/shared.dart';
 import 'auth_controller.dart';
 
 class ForgotPassword extends StatelessWidget {
@@ -42,7 +38,7 @@ class ForgotPassword extends StatelessWidget {
                   ),
                   Obx(() {
                     return CustomTextField(
-                      isPassword: false,
+                        isPassword: false,
                         labelText: StringConstants.emailLabel,
                         errorText: fx.fEmailErrText.value ?? "",
                         initialValue: "",
@@ -51,12 +47,10 @@ class ForgotPassword extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.24)),
-                  Obx(() =>
-                    AppPrimaryButton(
-                      text: StringConstants.sendEmailLabel,
-                      onPressed: fx.submitFunc.value!,
-                    )
-                  ),
+                  Obx(() => AppPrimaryButton(
+                        text: StringConstants.sendEmailLabel,
+                        onPressed: fx.submitFunc.value!,
+                      )),
                   Padding(
                       padding: EdgeInsets.fromLTRB(
                           0, 0, 0, MediaQuery.of(context).size.height * 0.02)),

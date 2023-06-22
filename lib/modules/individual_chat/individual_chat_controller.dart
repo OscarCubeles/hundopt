@@ -1,19 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/api/firebase_core/chat_repository.dart';
-
-import '../../api/firebase_core/auth.dart';
-import '../../api/firebase_core/dog_repository.dart';
-import '../../api/firebase_core/shelter_repository.dart';
-import '../../models/chat.dart';
-import '../../models/dog.dart';
-import '../../models/message.dart';
-import '../../models/shelter.dart';
-import '../../models/user.dart';
+import '../../api/firebase_core/firebase_core.dart';
+import '../../models/model.dart';
 import '../../routes/app_pages.dart';
-import '../../shared/services/dog_singleton.dart';
-import '../../shared/services/shelter_singleton.dart';
-import '../../shared/utils/date_formatter.dart';
+import '../../shared/shared.dart';
 
 class IndividualChatController extends GetxController {
   final ScrollController scrollController = ScrollController();
@@ -26,29 +16,21 @@ class IndividualChatController extends GetxController {
   void onInit() async {
     super.onInit();
     user = (await Auth().retrieveUser())!;
-    if (DogSingleton().dogs == null) {
-      await DogRepository().retrieveDogs();
-    }
-    if (ShelterSingleton().shelters == []) {
-      await ShelterRepository().retrieveShelters();
-    }
+    await DogManager().retrieveDogs();
+    await ShelterManager().retrieveShelters();
     chat.value = (await ChatRepository()
         .fetchChatByUserAndDogIDs(user.id, currentDog().id));
     update();
     scrollToBottom();
-    retrieveShelter();
+    setCurrentShelter();
   }
 
   void messageChanged(String val) {
     messageText.value = val;
   }
 
-  void retrieveShelter() {
-    for (int i = 0; i < ShelterSingleton().shelters.length; i++) {
-      if (ShelterSingleton().shelters[i].id == currentDog().shelterID) {
-        ShelterSingleton().shelterIndex = i;
-      }
-    }
+  void setCurrentShelter() {
+    ShelterManager().setCurrentShelterByID(currentDog().shelterID);
   }
 
   void addChatMessage() async {
@@ -56,9 +38,9 @@ class IndividualChatController extends GetxController {
         text: messageText.value, date: DateTime.now().toString(), isUser: true);
     messageText.value = "";
     textEditingController.clear();
-    if(chat.value.isEmpty()){
-    chat.value = (await ChatRepository()
-        .fetchChatByUserAndDogIDs(user.id, currentDog().id));
+    if (chat.value.isEmpty()) {
+      chat.value = (await ChatRepository()
+          .fetchChatByUserAndDogIDs(user.id, currentDog().id));
     }
     chat.update((val) {
       val?.messages.add(newMsg);
@@ -73,11 +55,11 @@ class IndividualChatController extends GetxController {
   }
 
   Dog currentDog() {
-    return DogSingleton().dogs![DogSingleton().dogIndex!];
+    return DogManager().currentDog();
   }
 
   Shelter currentShelter() {
-    return ShelterSingleton().shelters[ShelterSingleton().shelterIndex];
+    return ShelterManager().currentShelter();
   }
 
   void scrollToBottom() {

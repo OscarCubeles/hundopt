@@ -2,12 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:hundopt/modules/tabs/explore/explore_tab_controller.dart';
+import 'package:hundopt/modules/home/tabs/tabs.dart';
 import 'package:like_button/like_button.dart';
-
-import '../../../../shared/constants/colors.dart';
-
-import '../../../shared/constants/styles.dart';
+import '../../../../shared/shared.dart';
 
 class ExploreTab extends GetView<ExploreController> {
   const ExploreTab({super.key});
@@ -32,7 +29,7 @@ class ExploreTab extends GetView<ExploreController> {
                     ),
                   ),
                   child: GestureDetector(
-                    onTap: () => controller.navigateToDogInfo(index),
+                    onTap: () => controller.navigateToDogInfo(controller.dogList[index]),
                     child: Stack(
                       children: [
                         Align(
@@ -131,49 +128,5 @@ class ExploreTab extends GetView<ExploreController> {
       ),
     );
   }
-/*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        scrollDirection: Axis.vertical,
-        controller: PageController(),
-        children: [
-          Scaffold(
-            backgroundColor: Colors.red,
-          ),
-          Scaffold(
-            backgroundColor: Colors.blue,
-          ),
-          Scaffold(
-            backgroundColor: Colors.green,
-          )
 
-        ],
-      ),
-    );
-  }*/
-/*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-
-        body: Obx(() {
-          return PageView.builder(
-            itemCount: controller.dogList.length,
-            controller: PageController(initialPage: 0, viewportFraction: 1),
-            scrollDirection: Axis.vertical,
-            itemBuilder: (BuildContext context, int index) {
-              final data = controller.dogList[index];
-              return Stack(
-                children: [
-                VideoPlayerItem(
-                videoUrl: data.videoUrl,
-              ),
-              ]);
-
-            },
-          );
-        }));
-  }*/
 }

@@ -3,15 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/models/user.dart';
-
-import '../../api/firebase_core/auth.dart';
-import '../../api/firebase_core/user_repository.dart';
-import '../../models/setting_option.dart';
+import '../../api/firebase_core/firebase_core.dart';
+import '../../models/model.dart';
 import '../../routes/app_pages.dart';
-import '../../shared/constants/constants.dart';
-import '../../shared/utils/validations.dart';
-import '../../shared/widgets/dialogs.dart';
+import '../../shared/shared.dart';
+import '../home/tabs/profile/profile_tab_controller.dart';
 
 class SettingsController extends GetxController {
   RxnString userNameErrText = RxnString(null);
@@ -73,7 +69,10 @@ class SettingsController extends GetxController {
         time: const Duration(milliseconds: 500));
   }
 
-  void navigateToHome() {
+  void navigateToHome() async {
+    final ProfileController profileController =
+    Get.find<ProfileController>();
+    profileController.setScreenValues();
     Get.offNamed(Routes.HOME, arguments: 3);
   }
 
@@ -127,7 +126,7 @@ class SettingsController extends GetxController {
 
   Future<void> sendPwdChangeEmail() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
-    if(firebaseUser != null){
+    if (firebaseUser != null) {
       await Auth().sendPasswordResetEmail(email: firebaseUser.email!);
     }
     Get.back();
@@ -197,7 +196,8 @@ class SettingsController extends GetxController {
         (phoneErrText.value == "" || phoneErrText.value == null);
   }
 
-  void saveChanges() async { // TODO: Change profile picture
+  void saveChanges() async {
+    // TODO: Change profile picture
     bool updateOk = false;
     try {
       EasyLoading.show(status: 'Loading...');
@@ -227,7 +227,7 @@ class SettingsController extends GetxController {
     Get.toNamed(Routes.SETTINGS + Routes.ADOPT_STEPS);
   }
 
-  void navigateBack(){
+  void navigateBack() {
     Get.back();
   }
 
@@ -248,21 +248,12 @@ class SettingsController extends GetxController {
         });
   }
 
-
-
   void uploadImageToFirebase() async {
     final imageUrl = await UserRepository().uploadImage();
     if (imageUrl != null) {
-      // Image uploaded successfully, use the download URL
-      print('Image uploaded: $imageUrl');
       await UserRepository().updatePictureURL(user.value.id, imageUrl);
       user.value.pictureURL = imageUrl;
       update();
-    } else {
-      // Failed to upload image
-      print('Failed to upload image');
     }
   }
-
-
 }

@@ -1,12 +1,5 @@
-import 'package:hundopt/modules/dog_info/dog_info.dart';
-import 'package:hundopt/modules/individual_chat/individual_chat.dart';
 import 'package:hundopt/modules/modules.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/modules/onboarding/onboarding.dart';
-import 'package:hundopt/modules/shelter_profile/shelter_profile.dart';
-
-import '../modules/settings/adopt_steps_screen.dart';
-
 part 'app_routes.dart';
 
 class AppPages {
@@ -14,13 +7,13 @@ class AppPages {
   static final routes = [
     GetPage(
       name: Routes.SPLASH,
-      page: () => SplashScreen(),
+      page: () => const SplashScreen(),
       binding: SplashBinding(),
       transition: Transition.fadeIn,
     ),
     GetPage(
       name: Routes.AUTH,
-      page: () => AuthScreen(),
+      page: () => const AuthScreen(),
       binding: AuthBinding(),
       transition: Transition.fadeIn,
       children: [
@@ -38,13 +31,12 @@ class AppPages {
             transition: Transition.fadeIn)
       ],
     ),
-    // TODO: Posar les pagines de explore, chat, favourite and settings com a children de les de home
     GetPage(
         name: Routes.HOME,
         page: () => const HomeScreen(),
         binding: HomeBinding(),
         transition: Transition.fadeIn,
-        children: []),
+        ),
     GetPage(
         name: Routes.SETTINGS,
         page: () => const SettingsScreen(),
@@ -74,7 +66,7 @@ class AppPages {
         name: Routes.DOG_INFO,
         binding: DogInfoBinding(),
         transition: Transition.fadeIn,
-        page: () => DogInfoScreen(),
+        page: () => const DogInfoScreen(),
         children: [
           GetPage(
               name: Routes.RESERVED_DOG,

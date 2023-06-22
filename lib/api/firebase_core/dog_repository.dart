@@ -1,30 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hundopt/models/user.dart';
-import 'package:hundopt/shared/services/dog_singleton.dart';
-
+import 'package:hundopt/shared/services/data_managers/dog_manager.dart';
 import '../../models/dog.dart';
 
+///  The [DogRepository] class provides methods for managing dogs documents in Firestore.
 class DogRepository {
+
+  /// Uploads a dog to Firestore.
+  ///
+  /// The [dog] parameter represents the dog object to be uploaded.
+  ///
+  /// Throws an error if the upload fails.
   Future<void> uploadDog(Dog dog) async {
     try {
       final CollectionReference dogsCollection =
           FirebaseFirestore.instance.collection('dogs');
-
-      // Create a new document with a generated ID
       final newDogDocRef = dogsCollection.doc();
-
-      // Convert Dog instance to a Map object
       final dogMap = dog.toMap();
-
-      // Upload the dog data to Firestore
       await newDogDocRef.set(dogMap);
-      print("dog ${dog.name} crated");
     } catch (e) {
       print('Error uploading dog to Firestore: $e');
     }
   }
 
+  /// Reserves a dog in Firestore.
+  ///
+  /// The [dogId] parameter represents the ID of the dog to be reserved.
+  ///
+  /// Returns `true` if the reservation is successful, `false` otherwise.
   Future<bool> reserveDog(String dogId) async {
     try {
       final usersCollection = FirebaseFirestore.instance.collection('dogs');
@@ -32,13 +36,18 @@ class DogRepository {
       await userDocRef.update({
         'isReserved': true,
       });
-      print("dog with id $dogId succesfully updated");
       return true;
     } catch (e) {
       return false;
     }
   }
 
+  /// Retrieves all dogs from Firestore.
+  ///
+  /// Fetches the list of dogs from the Firestore collection 'dogs' and converts them into Dog objects.
+  /// The retrieved dogs are then assigned to the DogManager's initial dogs list.
+  ///
+  /// Throws an error if the retrieval fails.
   Future<void> retrieveDogs() async {
     await FirebaseFirestore.instance
         .collection('dogs')
@@ -68,33 +77,39 @@ class DogRepository {
         );
         dogs.add(dog);
       }
-      DogSingleton().dogs = dogs;
-      DogSingleton().dogIndex = 0;
+      DogManager().setInitialDogs(dogs);
     }).catchError((error) {
       print('Error retrieving shelters: $error');
     });
   }
 
+  /// Fetches all dogs associated with a specific shelter.
+  ///
+  /// The [targetShelterID] parameter represents the ID of the target shelter.
+  ///
+  /// Returns a [RxList<Dog>] that emits the list of shelter dogs.
   Future<RxList<Dog>> fetchShelterDogs(String targetShelterID) async {
     final shelterDogs = <Dog>[].obs;
-
     final querySnapshot = await FirebaseFirestore.instance
         .collection('dogs')
         .where('shelterID', isEqualTo: targetShelterID)
         .get();
-
-    final dogs = querySnapshot.docs.map((doc) => Dog.fromMap(doc.data())).toList();
+    final dogs =
+        querySnapshot.docs.map((doc) => Dog.fromMap(doc.data())).toList();
     shelterDogs.assignAll(dogs);
     return shelterDogs;
   }
 
+  /// Fetches all dogs that a user is adopting.
+  ///
+  /// The [user] parameter represents the user object.
+  ///
+  /// Returns a [RxList<Dog>] that emits the list of adopting dogs.
   Future<RxList<Dog>> fetchAdoptingDogs(HundoptUser user) async {
     final adoptingDogs = <Dog>[].obs;
     for (final dogId in user.adoptingDogs) {
-      final dogSnapshot = await FirebaseFirestore.instance
-          .collection('dogs')
-          .doc(dogId)
-          .get();
+      final dogSnapshot =
+          await FirebaseFirestore.instance.collection('dogs').doc(dogId).get();
       if (dogSnapshot.exists) {
         final dogData = dogSnapshot.data() as Map<String, dynamic>;
         final dog = Dog.fromMap(dogData);
@@ -104,13 +119,16 @@ class DogRepository {
     return adoptingDogs;
   }
 
+  /// Fetches all favorite dogs of a user.
+  ///
+  /// The [user] represents the user object.
+  ///
+  /// Returns a [RxList<Dog>] that emits the list of favorite dogs.
   Future<RxList<Dog>> fetchFavDogs(HundoptUser user) async {
     final favDogs = <Dog>[].obs;
     for (final dogId in user.favDogs) {
-      final dogSnapshot = await FirebaseFirestore.instance
-          .collection('dogs')
-          .doc(dogId)
-          .get();
+      final dogSnapshot =
+          await FirebaseFirestore.instance.collection('dogs').doc(dogId).get();
       if (dogSnapshot.exists) {
         final dogData = dogSnapshot.data() as Map<String, dynamic>;
         final dog = Dog.fromMap(dogData);
@@ -119,6 +137,4 @@ class DogRepository {
     }
     return favDogs;
   }
-
-
 }

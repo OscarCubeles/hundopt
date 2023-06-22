@@ -1,5 +1,6 @@
 import 'message.dart';
 
+/// The [Chat] class models a Chat object.
 class Chat {
   String chatID;
   String shelterID;
@@ -8,6 +9,7 @@ class Chat {
   String lastMessageDate;
   List<Message> messages;
 
+  /// Constructs a new instance of the [Chat] class with the specified parameters.
   Chat({
     required this.chatID,
     required this.shelterID,
@@ -17,6 +19,7 @@ class Chat {
     required this.messages,
   });
 
+  /// Creates an empty [Chat] object.
   Chat.empty()
       : chatID = '',
         shelterID = '',
@@ -25,6 +28,7 @@ class Chat {
         lastMessageDate = '',
         messages = [];
 
+  /// Converts the [Chat] object to a Map.
   Map<String, dynamic> toMap() {
     return {
       'shelterID': shelterID,
@@ -35,6 +39,7 @@ class Chat {
     };
   }
 
+  /// Constructs a [Chat] object from a Map.
   factory Chat.fromMap(String chatID, Map<String, dynamic> map) {
     List<dynamic> messagesData = map['messages'] ?? [];
     List<Message> messages =
@@ -49,6 +54,7 @@ class Chat {
     );
   }
 
+  /// Checks if the [Chat] object is empty.
   bool isEmpty() {
     return chatID.isEmpty &&
         shelterID.isEmpty &&

@@ -1,3 +1,4 @@
+/// The [Dog] class models a Dog object.
 class Dog {
   String name;
   String mainPictureURL;
@@ -17,6 +18,7 @@ class Dog {
   List<String> healthNegative;
   List<String> healthPositive;
 
+  /// Constructs a new instance of the [Dog] class with the specified parameters.
   Dog({
     required this.personality,
     required this.name,
@@ -37,6 +39,10 @@ class Dog {
     required this.size,
   });
 
+  /// Constructs a new instance of [Dog] with the given parameters.
+  ///
+  /// The [name], [mainPictureURL], and [location] parameters are required,
+  /// while the remaining properties are set to default values.
   Dog.simplified(
       {required this.name,
       required this.mainPictureURL,
@@ -56,6 +62,7 @@ class Dog {
         personality = [],
         healthPositive = [];
 
+  /// Converts the [Dog] object to a Map.
   Map<String, dynamic> toMap() {
     return {
       'id' : id,
@@ -78,6 +85,7 @@ class Dog {
     };
   }
 
+  /// Constructs a [Dog] object from a Map.
   factory Dog.fromMap(Map<String, dynamic> map) {
     return Dog(
       name: map['name'] ?? '',

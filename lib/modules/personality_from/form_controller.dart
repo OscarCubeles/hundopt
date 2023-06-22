@@ -1,15 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/api/firebase_core/form_repository.dart';
-
-import '../../api/firebase_core/auth.dart';
-import '../../models/personality_form.dart';
+import 'package:hundopt/api/firebase_core/firebase_core.dart';
+import '../../models/model.dart';
 import '../../routes/app_pages.dart';
-import '../../shared/constants/constants.dart';
-import '../../shared/utils/identifiers.dart';
-import '../../shared/widgets/dialogs.dart';
-import '../../shared/widgets/widgets.dart';
+import '../../shared/shared.dart';
 
 class FormController extends GetxController {
   late List<StatelessWidget> questionWidgets;

@@ -1,15 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hundopt/api/firebase_core/dog_repository.dart';
-import 'package:hundopt/api/firebase_core/shelter_repository.dart';
-import 'package:hundopt/models/shelter.dart';
-import 'package:hundopt/modules/tabs/tabs.dart';
-import 'package:hundopt/shared/services/shelter_singleton.dart';
+import 'package:hundopt/api/firebase_core/firebase_core.dart';
+import 'package:hundopt/modules/home/tabs/tabs.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
-import '../tabs/favourite/favourite_tab_controller.dart';
-import '../tabs/profile/profile_tab_controller.dart';
 
 class HomeController extends GetxController {
   int newTab = Get.arguments;
@@ -34,30 +28,28 @@ class HomeController extends GetxController {
     super.onInit();
     initData();
     initTabs();
-    persistentTabController = PersistentTabController(initialIndex: Get.arguments);
+    persistentTabController =
+        PersistentTabController(initialIndex: Get.arguments);
     currentTab.value = tabMap[newTab]!;
-    await ShelterRepository().retrieveShelters();  // Retrieving all the shelters
+    await ShelterRepository().retrieveShelters(); // Retrieving all the shelters
     await DogRepository().retrieveDogs();
     print("object");
-
   }
 
-
-
-
   @override
-  void onReady() { // called after the widget is rendered on screen
+  void onReady() {
+    // called after the widget is rendered on screen
     super.onReady();
     currentTab.value = tabMap[newTab]!;
     print(currentTab.value);
   }
 
   @override
-  void onClose(){
+  void onClose() {
     currentTab.value = MainTabs.explore;
   }
 
-  void initTabs(){
+  void initTabs() {
     currentTab.value = MainTabs.explore;
     exploreTab = ExploreTab();
     chatTab = ChatTab();
@@ -71,12 +63,10 @@ class HomeController extends GetxController {
     };
   }
 
-
-
-
   void switchTab(index) {
     var tab = _getCurrentTab(index);
-    final FavouriteController favouriteController = Get.find<FavouriteController>();
+    final FavouriteController favouriteController =
+        Get.find<FavouriteController>();
     favouriteController.updateValues();
     final ProfileController profileController = Get.find<ProfileController>();
     profileController.updateValues();
@@ -91,9 +81,5 @@ class HomeController extends GetxController {
     return contentMap[currentTab.value] ?? exploreTab;
   }
 
-  void initData() {
-
-  }
-
-
+  void initData() {}
 }

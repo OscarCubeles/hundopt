@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hundopt/shared/shared.dart';
 import 'package:get/get.dart';
-
 import 'auth_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -43,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                   initialValue: controller.lPwd.value,
                 );
               }),
-              Padding(padding: EdgeInsets.all(5)),
+              const Padding(padding: EdgeInsets.all(5)),
               ClickableText(
                   uText: StringConstants.recuperateLabel,
                   text: StringConstants.forgotPwdText,
@@ -66,14 +65,5 @@ class LoginScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildForms(BuildContext context) {
-    return Form(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [],
-        ),
-      ),
-    );
-  }
+
 }
