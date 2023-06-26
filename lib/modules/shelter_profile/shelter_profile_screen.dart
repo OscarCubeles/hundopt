@@ -5,9 +5,20 @@ import 'package:hundopt/modules/shelter_profile/shelter_profile.dart';
 import 'package:like_button/like_button.dart';
 import '../../shared/shared.dart';
 
+/// The [ShelterProfileScreen] class representing the screen showing all the information
+/// of a shelter, including their contact information, picture and dogs
 class ShelterProfileScreen extends GetView<ShelterProfileController> {
+  /// Constructs a new instance of the [ShelterProfileScreen] class.
+  ///
+  /// The [key] parameter is optional and is used to specify a key for the widget.
   const ShelterProfileScreen({super.key});
 
+  /// Builds the widget tree for the personality form questions screen.
+  ///
+  /// This method returns a [Scaffold] widget containing a [SafeArea] widget
+  /// with a [Column] that has the general information of the shelter such as the name,
+  /// profile picture and [getBodyContent] which returns either the Gird with all
+  /// the shelter dogs or the column with all the information of the shelter
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,11 +88,11 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset("assets/images/dog.png", height: 35),
+                        Image.asset(AssetsPath.defaultDogPic, height: 35),
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "Perros en Adopción",
+                            StringConstants.adoptingDogsLabel,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         )
@@ -104,7 +115,7 @@ class ShelterProfileScreen extends GetView<ShelterProfileController> {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "Información",
+                            StringConstants.infoLabel,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         )

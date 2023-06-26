@@ -7,78 +7,29 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dependency_injection.dart';
 
-void main() async{
+/// The [main] function is the entry point of the application.
+///
+/// This function initializes Firebase, runs the `App` widget, and initializes the dependencies of the application using `DependencyInjection.init()`.
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(App());
-  await DenpendencyInjection.init();
+  runApp(const App());
+  await DependencyInjection.init();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Hündopt',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
-
+/// The [App] widget is a [StatelessWidget] that returns a [GetMaterialApp] widget.
+/// The [GetMaterialApp] widget is a [MaterialApp] widget that uses the `Get` package for state management.
+/// It defines the initial route of the application, the default transition animation, the pages of the application,
+/// the initial binding, the smart management strategy, the title of the application, the theme of the application,
+/// and the builder for the `EasyLoading` widget.
 class App extends StatelessWidget {
+  const App({super.key});
+
+  /// Builds the  [GetMaterialApp] widget with a [MaterialApp] widget that uses the `Get` package for state management.
+  /// It defines the initial route of the application, the default transition animation, the pages of the application,
+  /// the initial binding, the smart management strategy, the title of the application, the theme of the application,
+  /// and the builder for the `EasyLoading` widget.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -95,5 +46,3 @@ class App extends StatelessWidget {
     );
   }
 }
-
-

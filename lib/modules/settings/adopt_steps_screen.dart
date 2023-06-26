@@ -3,9 +3,19 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/modules/settings/settings_controller.dart';
 import '../../shared/shared.dart';
 
+/// The [AdoptStepsScreen] class representing the screen with the list of steps
+/// that a user must follow in order to adopt a dog using Húndopt
 class AdoptStepsScreen extends GetView<SettingsController> {
+  /// Constructs a new instance of the [AdoptStepsScreen] class.
+  ///
+  /// The [key] parameter is optional and is used to specify a key for the widget.
   const AdoptStepsScreen({super.key});
 
+  /// Builds the widget tree for the settings screen.
+  ///
+  /// This method returns a [AppScaffold] widget containing a [SingleChildScrollView] widget
+  /// with a [SafeArea] that has [Column] widget that contains the text describing all the adopting
+  /// steps that a user has to follow in order to adopt a dog using Hündopt
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -39,8 +49,7 @@ class AdoptStepsScreen extends GetView<SettingsController> {
                                 Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Align(
                                         alignment: Alignment.centerLeft,
@@ -53,8 +62,7 @@ class AdoptStepsScreen extends GetView<SettingsController> {
                                                   BorderRadius.circular(40)),
                                           child: Align(
                                             alignment: Alignment.center,
-                                            child: Text(
-                                                (index + 1).toString(),
+                                            child: Text((index + 1).toString(),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .displaySmall),
@@ -64,10 +72,9 @@ class AdoptStepsScreen extends GetView<SettingsController> {
                                       Container(
                                         padding: const EdgeInsets.fromLTRB(
                                             7.5, 8.5, 0, 0),
-                                        width: MediaQuery.of(context)
-                                                .size
-                                                .width *
-                                            0.7,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,

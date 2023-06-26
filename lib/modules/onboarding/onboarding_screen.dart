@@ -3,9 +3,19 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:hundopt/shared/shared.dart';
 import 'onboarding.dart';
 
+/// The [OnboardingScreen] class representing the screen with the welcome
+/// message shown to a user that has just registered to the app
 class OnboardingScreen extends GetView<OnboardingController> {
+  /// Constructs a new instance of the [OnboardingScreen] class.
+  ///
+  /// The [key] parameter is optional and is used to specify a key for the widget.
   const OnboardingScreen({super.key});
 
+  /// Builds the widget tree for the onboarding screen.
+  ///
+  /// This method returns a [Container] widget containing a [SafeArea] widget
+  /// with a [Column] with all the welcome messages, the buttons to
+  /// redirect the user to the app or to the personality form
   @override
   Widget build(BuildContext context) {
     return Container(

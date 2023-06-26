@@ -4,9 +4,19 @@ import 'package:hundopt/modules/home/tabs/tabs.dart';
 import 'package:like_button/like_button.dart';
 import '../../../../shared/shared.dart';
 
+/// The [FavouriteTab] class representing the screen with a list in a grid fashion
+/// of all the user favourite shelters and dogs
 class FavouriteTab extends GetView<FavouriteController> {
+  /// Constructs a new instance of the [FavouriteTab] class.
+  ///
+  /// The [key] parameter is optional and is used to specify a key for the widget.
   const FavouriteTab({super.key});
 
+  /// Builds the widget tree for the favourite screen.
+  ///
+  /// This method returns an [FavouriteTab] widget containing a [AppScaffold] widget
+  /// with a [SizedBox] with a [TabBar] where the user can select to see the list of favourite
+  /// shelters or dogs displayed in a [GridView] inside a [SingleChildScrollView].
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -112,9 +122,8 @@ class FavouriteTab extends GetView<FavouriteController> {
                                                             controller
                                                                 .toggleDogLikeStatus(
                                                                     controller
-                                                                        .favDogs[
-                                                                            index]
-                                                            );
+                                                                            .favDogs[
+                                                                        index]);
                                                             return Future.value(
                                                                 !isLiked);
                                                           },
@@ -181,30 +190,48 @@ class FavouriteTab extends GetView<FavouriteController> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.all(0),
+                                                  padding:
+                                                      const EdgeInsets.all(0),
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Expanded(
-                                                        child:  Text(
-                                                            controller.favShelters[index].name,
-                                                            style: Styles.headlineShelterMedium,
-                                                            overflow: TextOverflow.ellipsis,
-                                                          ),
+                                                        child: Text(
+                                                          controller
+                                                              .favShelters[
+                                                                  index]
+                                                              .name,
+                                                          style: Styles
+                                                              .headlineShelterMedium,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
+                                                      ),
                                                       Obx(
-                                                            () => LikeButton(
-                                                          onTap: (bool isLiked) {
-                                                            controller.toggleShelterLikeStatus(controller.favShelters[index]);
-                                                            return Future.value(!isLiked);
+                                                        () => LikeButton(
+                                                          onTap:
+                                                              (bool isLiked) {
+                                                            controller
+                                                                .toggleShelterLikeStatus(
+                                                                    controller
+                                                                            .favShelters[
+                                                                        index]);
+                                                            return Future.value(
+                                                                !isLiked);
                                                           },
-                                                          isLiked: controller.isShelterLiked(controller.favShelters[index].id),
+                                                          isLiked: controller
+                                                              .isShelterLiked(
+                                                                  controller
+                                                                      .favShelters[
+                                                                          index]
+                                                                      .id),
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
-
                                               ],
                                             )),
                                       ));

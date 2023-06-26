@@ -3,11 +3,27 @@ import 'package:get/get.dart';
 import '../../shared/shared.dart';
 import 'auth_controller.dart';
 
+/// The [ForgotPassword] class representing the forgot password screen of the Hundopt app.
+///
+/// This class displays the forgot password screen, which allows users to reset
+/// their password by entering their email address.
+/// The screen contains a text field for entering the email address,
+/// a button for submitting the email address, and a clickable text for returning to the login screen.
 class ForgotPassword extends StatelessWidget {
+  /// The authentication controller for the screen.
   final AuthController controller = Get.arguments;
 
+  /// Constructs a new instance of the [ForgotPassword] class.
+  ///
+  /// The [key] parameter is optional and is used to specify a key for the widget.
   ForgotPassword({super.key});
 
+  /// Builds the widget tree for the forgot password screen.
+  ///
+  /// This method returns a [Scaffold] widget containing a [MainAppBar] widget
+  /// and a [SingleChildScrollView] widget with a [Column] widget containing a
+  /// text field for entering the email address,a button for submitting the email
+  /// address, and a clickable text for returning to the login screen.
   @override
   Widget build(BuildContext context) {
     AuthController fx = Get.put(AuthController()); // controller

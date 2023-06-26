@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
-
 import '../constants/colors.dart';
 
-class SettingsBar extends StatelessWidget{
-  const SettingsBar({super.key, required this.onTap, required this.icon, required this.titleLabel});
-
+/// The [SettingsBar] class custom widget that displays a settings bar with a back button, a title, and an icon.
+class SettingsBar extends StatelessWidget {
+  /// A callback function that is called when the back button is tapped.
   final VoidCallback onTap;
+
+  /// The icon to display in the settings bar.
   final IconData icon;
+
+  /// The title to display in the settings bar.
   final String titleLabel;
 
+  /// Constructs a new instance of the [SettingsBar] class with the specified parameters.
+  ///
+  /// The [onTap], [icon], and [titleLabel] parameters must not be null.
+  const SettingsBar(
+      {super.key,
+      required this.onTap,
+      required this.icon,
+      required this.titleLabel});
 
+  /// Builds the `SettingsBar` widget.
+  ///
+  /// This method returns a `Padding` widget that contains a `SizedBox` widget with
+  /// a specified width and a `Row` widget with a back button, a title, and an icon.
   @override
   Widget build(BuildContext context) {
-
     return Padding(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -33,7 +47,7 @@ class SettingsBar extends StatelessWidget{
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                   width: MediaQuery.of(context).size.width - 88,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,9 +55,7 @@ class SettingsBar extends StatelessWidget{
                     children: [
                       Text(
                         titleLabel,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall,
+                        style: Theme.of(context).textTheme.headlineSmall,
                       )
                     ],
                   )),
@@ -52,5 +64,4 @@ class SettingsBar extends StatelessWidget{
           ),
         ));
   }
-
 }

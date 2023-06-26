@@ -9,15 +9,34 @@ import '../../routes/app_pages.dart';
 import '../../shared/shared.dart';
 import '../home/tabs/profile/profile_tab_controller.dart';
 
+/// The [SettingsController] This class is responsible for managing the settings of the user.
+/// It contains methods for validating and saving user data, as well as navigating to different screens and dialogs.
 class SettingsController extends GetxController {
+  /// A reactive full name error text.
   RxnString userNameErrText = RxnString(null);
+
+  /// A reactive email error text.
   RxnString emailErrText = RxnString(null);
+
+  /// A reactive phone error text.
   RxnString phoneErrText = RxnString(null);
+
+  /// A reactive username.
   RxString userName = RxString('');
+
+  /// A reactive email.
   RxString email = RxString('');
+
+  /// A reactive phone.
   RxString phone = RxString('');
+
+  /// A list of the setting options.
   List<SettingOption> settingOptions = [];
+
+  /// A boolean indicating if the user data is valid.
   bool dataIsValid = false;
+
+  /// A reactive user.
   Rx<HundoptUser> user = HundoptUser.empty().obs;
 
   @override
@@ -31,6 +50,7 @@ class SettingsController extends GetxController {
     phone.value = user.value.phone;
   }
 
+  /// Initializes the setting options.
   void initSettingOptions() {
     settingOptions = [
       SettingOption(
@@ -60,6 +80,7 @@ class SettingsController extends GetxController {
     ];
   }
 
+  /// Initializes the form field validations.
   void initFormFieldValidations() {
     debounce<String>(userName, usernameValidations,
         time: const Duration(milliseconds: 500));
@@ -69,17 +90,20 @@ class SettingsController extends GetxController {
         time: const Duration(milliseconds: 500));
   }
 
+  /// Navigates to the Home screen.
   void navigateToHome() async {
-    final ProfileController profileController =
-    Get.find<ProfileController>();
+    final ProfileController profileController = Get.find<ProfileController>();
     profileController.setScreenValues();
     Get.offNamed(Routes.HOME, arguments: 3);
   }
 
+  /// Navigates to the Personality Form screen.
   void toPersonalityForm() {
     Get.toNamed(Routes.PERSONALITY_FORM);
   }
 
+  /// Shows the delete account dialog warning the user that he/she will not be
+  /// able to recover the account.
   void showDeleteAccountDialog() {
     showDialog(
         context: Get.context!,
@@ -97,11 +121,13 @@ class SettingsController extends GetxController {
         });
   }
 
+  /// Deletes the user account from the DB and deletes everything from Get cache.
   void deleteAccount() {
-    // TODO: Delete the account
+    Auth().deleteUser();
     Get.toNamed(Routes.AUTH, arguments: this);
   }
 
+  /// Shows the close session dialog informing the user that its session will be closed
   void showCloseSessionDialog() {
     showDialog(
         context: Get.context!,
@@ -119,11 +145,13 @@ class SettingsController extends GetxController {
         });
   }
 
+  /// Closes the session of the current user and deletes everything from Get cache
   void closeSession() async {
     await Auth().signOut();
     Get.offNamed(Routes.AUTH);
   }
 
+  /// Sends an email to the user's email with the steps to change its password
   Future<void> sendPwdChangeEmail() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (firebaseUser != null) {
@@ -132,6 +160,8 @@ class SettingsController extends GetxController {
     Get.back();
   }
 
+  /// Shows a dialog informing the user that if he confirms the dialog, an email
+  /// will be sent to its email in order to change its password
   void showChangePasswordDialog() {
     showDialog(
         context: Get.context!,
@@ -149,14 +179,23 @@ class SettingsController extends GetxController {
         });
   }
 
+  /// Handles the username input change.
+  ///
+  /// The [val] parameter is the new value of the username input.
   void userNameChanged(String value) {
     userName.value = value;
   }
 
+  /// Handles the email input change.
+  ///
+  /// The [val] parameter is the new value of the email input.
   void emailChanged(String value) {
     email.value = value;
   }
 
+  /// Handles the phone number input change.
+  ///
+  /// The [val] parameter is the new value of the phone number input.
   void phoneChange(String value) {
     phone.value = value;
   }
@@ -170,6 +209,9 @@ class SettingsController extends GetxController {
     }
   }
 
+  /// Validates the phone input.
+  ///
+  /// The [val] parameter is the phone number input.
   void phoneValidations(String val) {
     phoneErrText.value = null; // reset validation errors to nothing
     if (val.isNotEmpty) {
@@ -180,6 +222,9 @@ class SettingsController extends GetxController {
     }
   }
 
+  /// Validates the username input.
+  ///
+  /// The [val] parameter is the phone username input.
   void usernameValidations(String value) {
     userNameErrText.value = null;
     if (value.isNotEmpty) {
@@ -190,17 +235,20 @@ class SettingsController extends GetxController {
     }
   }
 
+  /// This method returns a boolean value indicating whether the user input is valid.
+  /// It checks if the username, email, and phone number are valid and non-null.
   bool isDataValid() {
     return (userNameErrText.value == "" || userNameErrText.value == null) &&
         (emailErrText.value == "" || emailErrText.value == null) &&
         (phoneErrText.value == "" || phoneErrText.value == null);
   }
 
+  ///This method saves the changes made by the user. It first checks if the user input is valid using the isDataValid method.
+  ///If the input is valid, it updates the user's email, phone number, and username in the Firebase authentication and Firestore database.
   void saveChanges() async {
-    // TODO: Change profile picture
     bool updateOk = false;
     try {
-      EasyLoading.show(status: 'Loading...');
+      EasyLoading.show(status: StringConstants.loadingLabel);
       if (isDataValid()) {
         updateOk = await Auth().changeUserEmail(
             email.value, phoneErrText); // Changing the email in auth
@@ -219,18 +267,22 @@ class SettingsController extends GetxController {
     }
   }
 
+  /// This method navigates the user to the edit profile screen.
   void toEditProfile() {
     Get.toNamed(Routes.SETTINGS + Routes.EDIT_PROFILE);
   }
 
+  /// This method shows the user the steps required to adopt a pet.
   void showAdoptSteps() {
     Get.toNamed(Routes.SETTINGS + Routes.ADOPT_STEPS);
   }
 
+  /// This method navigates the user back to the previous screen.
   void navigateBack() {
     Get.back();
   }
 
+  /// This method shows a dialog to the user asking if they want to exit the form.
   void showExitDialog() {
     showDialog(
         context: Get.context!,
@@ -248,6 +300,8 @@ class SettingsController extends GetxController {
         });
   }
 
+  /// This method uploads the user's profile picture to Firebase storage and
+  /// updates the user's profile picture URL in the Firestore database.
   void uploadImageToFirebase() async {
     final imageUrl = await UserRepository().uploadImage();
     if (imageUrl != null) {

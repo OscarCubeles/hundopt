@@ -124,4 +124,20 @@ class Auth {
       return false;
     }
   }
+
+  /// Deletes the current user from Firebase Authentication.
+  ///
+  /// This method gets the currently signed-in user using the `currentUser` property of the `FirebaseAuth` instance,
+  /// and then calls the `delete()` method of the `User`
+  /// object representing the user to delete the user account permanently.
+  /// If the user is not signed in, this method does nothing.
+  void deleteUser() async {
+    User? user = _firebaseAuth.currentUser;
+    if (user != null) {
+      UserRepository().deleteUser(user.uid);
+      await user.delete();
+    }
+  }
+
+
 }

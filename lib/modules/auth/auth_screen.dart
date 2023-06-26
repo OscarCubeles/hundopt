@@ -5,9 +5,21 @@ import '../../shared/constants/constants.dart';
 import '../../shared/widgets/widgets.dart';
 import 'auth_controller.dart';
 
+/// The [AuthScreen] class representing the authentication screen of the Hundopt app.
+///
+/// This class displays the authentication screen, which allows users to either
+/// create an account or log in to an existing account. The screen contains an
+/// app logo, the name of the app, and two buttons for creating an account or logging in.
 class AuthScreen extends GetView<AuthController> {
+  /// Constructs a new instance of the [AuthScreen] class.
+  ///
+  /// The [key] parameter is optional and is used to specify a key for the widget.
   const AuthScreen({super.key});
 
+  /// Builds the widget tree for the authentication screen.
+  ///
+  /// This method returns a [SingleChildScrollView] widget containing a [Column] widget with the app logo,
+  /// the name of the app, and two buttons for creating an account or logging in.
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

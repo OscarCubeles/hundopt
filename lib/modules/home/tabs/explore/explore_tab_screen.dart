@@ -6,17 +6,27 @@ import 'package:hundopt/modules/home/tabs/tabs.dart';
 import 'package:like_button/like_button.dart';
 import '../../../../shared/shared.dart';
 
+/// The [ExploreTab] class representing the screen with the scroll view with all
+/// the dogs that a user can explore
+/// This class displays individually each dog with its name and like status, and
+/// the user can scroll up or down to the previous or next dog
 class ExploreTab extends GetView<ExploreController> {
+  /// Constructs a new instance of the [ExploreTab] class.
+  ///
+  /// The [key] parameter is optional and is used to specify a key for the widget.
   const ExploreTab({super.key});
 
+  /// Builds the widget tree for the Explore screen.
+  ///
+  /// This method returns an [ExploreTab] widget containing a [Scaffold] widget
+  /// with a [PageView] where the user can explore more doges, with each page displaying a dog.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Obx(() => PageView.builder(
               controller: PageController(initialPage: controller.initialPage()),
-              // TODO: Create custom page controller to set the initial one to a custom one
               scrollDirection: Axis.vertical,
               itemCount: controller.dogList.length,
               itemBuilder: (context, index) {
@@ -29,7 +39,8 @@ class ExploreTab extends GetView<ExploreController> {
                     ),
                   ),
                   child: GestureDetector(
-                    onTap: () => controller.navigateToDogInfo(controller.dogList[index]),
+                    onTap: () =>
+                        controller.navigateToDogInfo(controller.dogList[index]),
                     child: Stack(
                       children: [
                         Align(
@@ -49,7 +60,6 @@ class ExploreTab extends GetView<ExploreController> {
                                 ),
                               ),
                               child: GestureDetector(
-                                onTap: () => print("tapped colunm"),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -86,25 +96,29 @@ class ExploreTab extends GetView<ExploreController> {
                                               ),
                                             ],
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
                                           Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 10, 20),
-                                            child: Obx(
-                                              () =>  LikeButton(
-                                                onTap: (bool isLiked) {
-                                                  controller.toggleLikeStatus(controller
-                                                      .dogList[index].id);
-                                                  return Future.value(!isLiked);
-                                                },
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 0, 10, 20),
+                                              child: Obx(
+                                                () => LikeButton(
+                                                    onTap: (bool isLiked) {
+                                                      controller
+                                                          .toggleLikeStatus(
+                                                              controller
+                                                                  .dogList[
+                                                                      index]
+                                                                  .id);
+                                                      return Future.value(
+                                                          !isLiked);
+                                                    },
                                                     size: 50,
                                                     isLiked: controller
                                                         .isDogLiked(controller
-                                                        .dogList[index].id)),
-
-                                              )
-                                            ),
-
+                                                            .dogList[index]
+                                                            .id)),
+                                              )),
                                           const SizedBox(width: 8),
                                         ],
                                       ),
@@ -113,12 +127,6 @@ class ExploreTab extends GetView<ExploreController> {
                                 ),
                               )),
                         ),
-                        /*Positioned.fill(
-                      child: InkWell(
-                        onTap: () => print("tapped"),
-                        onDoubleTap: controller.likeDog,
-                      ),
-                    ),*/
                       ],
                     ),
                   ),
@@ -128,5 +136,4 @@ class ExploreTab extends GetView<ExploreController> {
       ),
     );
   }
-
 }

@@ -6,7 +6,6 @@ import '../../models/user.dart';
 
 ///  The [ShelterRepository] class provides methods for managing personality form documents in Firestore.
 class ShelterRepository {
-
   /// Retrieves all shelters from Firestore.
   ///
   /// Returns a [Future] that completes with the list of retrieved shelters.

@@ -6,12 +6,21 @@ import '../../models/model.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/shared.dart';
 
+/// The [ShelterProfileController] class manages all actions and data for the Shelter Profile view.
 class ShelterProfileController extends GetxController {
+  /// List of social media links.
   List<String> socialMediaList = [];
+
+  /// The current user.
   late Rx<HundoptUser> user = HundoptUser.empty().obs;
+
+  /// Whether the left or right tab is selected.
   RxBool isBarLeft = true.obs;
+
+  /// List of dogs in the shelter.
   RxList shelterDogs = [].obs;
 
+  /// Gathers all the user, dogs and shelter data to display it in screen.
   @override
   void onInit() async {
     super.onInit();
@@ -19,28 +28,36 @@ class ShelterProfileController extends GetxController {
     user.value = (await Auth().retrieveUser())!;
     await DogManager().retrieveDogs();
     await ShelterManager().retrieveShelters();
-
     shelterDogs
         .assignAll(await DogRepository().fetchShelterDogs(currentShelter().id));
     update();
   }
 
+  /// Returns the current dog stored in the DogManager.
   Dog currentDog() {
     return DogManager().currentDog();
   }
 
+  /// Returns the current shelter stored in the ShelterManager.
   Shelter currentShelter() {
     return ShelterManager().currentShelter();
   }
 
+  /// Navigates back to the previous screen.
   void navigateBack() {
     Get.back();
   }
 
+  /// Switches between the left and right tabs.
   void switchTab() {
     isBarLeft.value = !isBarLeft.value;
   }
 
+  /// Toggles the like status of a shelter.
+  ///
+  /// The [shelter] parameter is the shelter to toggle the like status.
+  /// If the shelter is already liked, it calls the `dislikeShelter` method.
+  /// Otherwise, it calls the `likeShelter` method.
   void toggleShelterLikeStatus(Shelter shelter) {
     if (isShelterLiked(shelter.id)) {
       dislikeShelter(shelter);
@@ -48,15 +65,31 @@ class ShelterProfileController extends GetxController {
     }
     likeShelter(shelter);
   }
+
+  /// Removes a shelter from the user's favorite shelters list.
+  ///
+  /// The [shelter] parameter is the shelter to remove from the user's favorite shelters list.
+  /// It removes the shelter from the database using the `UserRepository` class and removes it from the `favShelters` list of the user.
+
   void dislikeShelter(Shelter shelter) async {
     await UserRepository().removeFavShelter(user.value.id, shelter.id);
     user.value.favShelters.remove(shelter.id);
   }
 
+  /// Adds a shelter to the user's favorite shelters list.
+  ///
+  /// The [shelter] parameter is the shelter to add to the user's favorite shelters list.
+  /// It adds the shelter to the database using the `UserRepository` class and adds it to the `favShelters` list of the user.
+
   void likeShelter(Shelter shelter) async {
     await UserRepository().addFavShelter(user.value.id, shelter.id);
     user.value.favShelters.add(shelter.id);
   }
+
+  /// Checks if a shelter is liked by the user.
+  ///
+  /// The [shelterID] parameter is the id of the shelter to check if it is liked by the user.
+  /// It returns true if the shelter is in the `favShelters` list of the user, otherwise, it returns false.
 
   bool isShelterLiked(String shelterID) {
     for (int i = 0; i < user.value.favShelters.length; i++) {
@@ -67,17 +100,21 @@ class ShelterProfileController extends GetxController {
     return false;
   }
 
+  /// Navigates to the Dog Info screen setting the current dog and current shelter in the data managers
+
   void navigateToDogInfo(Dog dog) {
     DogManager().setCurrentDog(dog);
     Get.offNamed(Routes.DOG_INFO);
   }
 
+  /// Returns a  Widget with a grid of dogs of the current shelter or the shelter
+  /// contact information depending on the current tab
   Widget getBodyContent(double screenWidth) {
     update();
     return isBarLeft.value ? dogGrid(screenWidth) : shelterInfo();
   }
 
-  // TODO: Put this widget as widget constant
+  /// Returns an expanded widget containing a GridView with all the dogs of a shelter
   Widget dogGrid(double screenWidth) {
     return Expanded(
       child: SingleChildScrollView(
@@ -141,37 +178,39 @@ class ShelterProfileController extends GetxController {
     );
   }
 
-  // TODO CHange this strings to constants and put this widget as a widget constant
+  /// Returns an Expanded widget with a ListView containing all the data of a shelter
   Widget shelterInfo() {
     return Expanded(
         child: ListView(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       children: [
-        Text("Ubicación", style: Styles.headlineMedium),
+        Text(StringConstants.locationLabel, style: Styles.headlineMedium),
         Text(
           currentShelter().location,
           style: Styles.bodySmall,
         ),
         const Padding(padding: EdgeInsets.all(10)),
-        Text("Teléfono", style: Styles.headlineMedium),
+        Text(StringConstants.phoneLabel, style: Styles.headlineMedium),
         Text(
           currentShelter().phone,
           style: Styles.bodySmall,
         ),
         const Padding(padding: EdgeInsets.all(10)),
-        Text("Correo Electrónico", style: Styles.headlineMedium),
+        Text(StringConstants.fullEmailLabel, style: Styles.headlineMedium),
         Text(
           currentShelter().email,
           style: Styles.bodySmall,
         ),
         const Padding(padding: EdgeInsets.all(10)),
-        Text("Redes Sociales", style: Styles.headlineMedium),
+        Text(StringConstants.socialNetworksLabel, style: Styles.headlineMedium),
         const Padding(padding: EdgeInsets.all(5)),
         socialNetworksListView()
       ],
     ));
   }
 
+  /// Returns a ListView with all the social networks of the shelter or an empty
+  /// container depending if the shelter has social networks or not
   Widget socialNetworksListView() {
     return currentShelter().hasSocialNetworks()
         ? SizedBox(

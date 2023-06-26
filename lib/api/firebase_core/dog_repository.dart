@@ -6,7 +6,6 @@ import '../../models/dog.dart';
 
 ///  The [DogRepository] class provides methods for managing dogs documents in Firestore.
 class DogRepository {
-
   /// Uploads a dog to Firestore.
   ///
   /// The [dog] parameter represents the dog object to be uploaded.

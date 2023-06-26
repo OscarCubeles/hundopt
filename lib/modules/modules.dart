@@ -7,4 +7,3 @@ export 'personality_from/personality_form.dart';
 export 'settings/settings.dart';
 export 'shelter_profile/shelter_profile.dart';
 export 'splash/splash.dart';
-

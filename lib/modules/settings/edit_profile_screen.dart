@@ -4,11 +4,20 @@ import 'package:get/get.dart';
 import 'package:hundopt/modules/settings/settings_controller.dart';
 import 'package:hundopt/shared/shared.dart';
 
-
+/// The [EditProfileScreen] class representing the screen the text fields
+/// that allow the user to change their email, username and phone number.
+/// Also, it allows the user to change its profile image.
 class EditProfileScreen extends GetView<SettingsController> {
+  /// Constructs a new instance of the [EditProfileScreen] class.
+  ///
+  /// The [key] parameter is optional and is used to specify a key for the widget.
   const EditProfileScreen({super.key});
 
-  // TODO: Change the content for the user content
+  /// Builds the widget tree for the personality form questions screen.
+  ///
+  /// This method returns a [Container] widget containing a [SafeArea] widget
+  /// with a [AppScaffold] that has a [Column] widget with all the [EditProfileTextField]
+  /// that allow the user to modify its user data
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,35 +30,36 @@ class EditProfileScreen extends GetView<SettingsController> {
                       onTap: () => Get.back(),
                       icon: Icons.arrow_back,
                       titleLabel: StringConstants.editProfileLabel),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
-                        Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+                        const Padding(
+                            padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
                         Stack(
                           children: [
                             Align(
                                 alignment: Alignment.centerLeft,
                                 child: GestureDetector(
-                                  onTap: () => {
-                                    // TODO: Add open image gallery
-                                    controller.uploadImageToFirebase()
-                                  },
+                                  onTap: () =>
+                                      {controller.uploadImageToFirebase()},
                                   child: Obx(() => CircleAvatar(
-                                    radius: 50,
-                                    // TODO: Add actual user image
-                                    backgroundImage:
-                                    controller.user.value.pictureURL != ""
-                                        ? NetworkImage(
-                                        controller.user.value.pictureURL)
-                                        : Image.asset(
-                                      fit: BoxFit.fill,
-                                      AssetsPath.defaultProfilePic,
-                                    ).image,
-                                    child: Icon(CupertinoIcons.switch_camera,
-                                        size: 50,
-                                        color: ColorConstants.transparentWhite),
-                                  )),
+                                        radius: 50,
+                                        backgroundImage: controller
+                                                    .user.value.pictureURL !=
+                                                ""
+                                            ? NetworkImage(controller
+                                                .user.value.pictureURL)
+                                            : Image.asset(
+                                                fit: BoxFit.fill,
+                                                AssetsPath.defaultProfilePic,
+                                              ).image,
+                                        child: Icon(
+                                            CupertinoIcons.switch_camera,
+                                            size: 50,
+                                            color: ColorConstants
+                                                .transparentWhite),
+                                      )),
                                 )),
                           ],
                         ),
@@ -58,7 +68,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
+                              const Padding(
                                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
                               Text(StringConstants.userNameLabel,
                                   style: Theme.of(context)
@@ -68,11 +78,10 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     labelText: StringConstants.userNameLabel,
                                     errorText:
                                         controller.userNameErrText.value ?? "",
-                                    initialValue: controller.userName.value ??
-                                        "", // TODO: Add initial value
+                                    initialValue: controller.userName.value,
                                     onChanged: controller.userNameChanged,
                                   )),
-                              Padding(
+                              const Padding(
                                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
                               Text(StringConstants.emailLabel,
                                   style: Theme.of(context)
@@ -82,10 +91,10 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     labelText: StringConstants.emailLabel,
                                     errorText:
                                         controller.emailErrText.value ?? "",
-                                    initialValue: controller.email.value ?? "",
+                                    initialValue: controller.email.value,
                                     onChanged: controller.emailChanged,
                                   )),
-                              Padding(
+                              const Padding(
                                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
                               Text(StringConstants.phoneNumberLabel,
                                   style: Theme.of(context)

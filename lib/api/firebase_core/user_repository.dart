@@ -33,7 +33,7 @@ class UserRepository {
         'id': userID,
         'phone': "",
         'personalityFormID': "",
-        'pictureURL': "pwd:$pwd"
+        'pictureURL': ""
       });
     } catch (e) {
       print('Error creating user in Firestore: $e');
@@ -227,5 +227,9 @@ class UserRepository {
     }).catchError((error) {
       print('Failed to remove dog from favorites: $error');
     });
+  }
+
+  void deleteUser(String userId) async {
+    await FirebaseFirestore.instance.collection('users').doc(userId).delete();
   }
 }

@@ -3,35 +3,64 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hundopt/api/firebase_core/firebase_core.dart';
+import 'package:hundopt/modules/home/home.dart';
 import '../../models/model.dart';
 import '../../routes/app_pages.dart';
 import '../../shared/services/data_managers/singletons/user_singleton.dart';
 import '../../shared/shared.dart';
 
+/// The [AuthController] class handles user authentication and form field validation.
 class AuthController extends GetxController {
   final userManager = UserSingleton();
+
+  /// The error message for the first email field.
   RxnString fEmailErrText = RxnString(null);
+
+  /// The error message for the second email field.
   RxnString rEmailErrText = RxnString(null);
+
+  /// The error message for the username field.
   RxnString rUsernameErrText = RxnString("");
+
+  /// The error message for the password field.
   RxnString rPwdErrText = RxnString(null);
+
+  /// The error message for the login email field.
   RxnString lEmailErrText = RxnString(null);
+
+  /// The error message for the login password field.
   RxnString lPwdErrText = RxnString(null);
+
+  /// The first email field.
   RxString fEmail = RxString('');
+
+  /// The second email field.
   RxString rEmail = RxString('');
+
+  /// The username field.
   RxString rUsername = RxString('');
+
+  /// The password field.
   RxString rPwd = RxString('');
+
+  /// The login email field.
   RxString lEmail = RxString('');
+
+  /// The login password field.
   RxString lPwd = RxString('');
 
+  /// The function to be called when the submit button is pressed.
   Rxn<Function()> submitFunc = Rxn<Function()>(() => {});
 
+  /// The onInit method is called when the AuthController is initialized.
+  /// It calls the initFormFieldValidators method to initialize the form field validators.
   @override
   void onInit() {
     super.onInit();
     initFormFieldValidators();
   }
 
-
+  /// Initializes the form field validators.
   void initFormFieldValidators() {
     debounce<String>(fEmail, fEmailValidations,
         time: const Duration(milliseconds: 500));
@@ -47,6 +76,15 @@ class AuthController extends GetxController {
         time: const Duration(milliseconds: 500));
   }
 
+  /// Validates the forgot password email field.
+  ///
+  /// The [val] parameter is the value of the first email field.
+  /// The [fEmailErrText] parameter is a reactive string that holds the error message for the first email field.
+  ///
+  /// This method resets the validation errors to nothing and disables the submit button while validating.
+  /// If the [val] is not empty, it calls the [isValidEmail] method from the [Validations] class to check if the email is valid.
+  /// If the email is valid, it sets the submit function to call the [sendResetPwdEmail] method and sets the error message to an empty string.
+  /// If the email is not valid, it sets the error message to "Formato de email no válido." and returns false.
   void fEmailValidations(String val) async {
     fEmailErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
@@ -60,6 +98,14 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Validates the login email field.
+  ///
+  /// The [val] parameter is the value of the login email field.
+  /// The [lEmailErrText] parameter is a reactive string that holds the error message for the login email field.
+  ///
+  /// This method resets the validation errors to nothing and disables the submit button while validating.
+  /// If the [val] is not empty, it calls the [isValidEmail] method from the [Validations] class to check if the email is valid.
+  /// If the email is valid, it sets the submit function to an empty function and sets the error message to an empty string.
   void lEmailValidations(String val) async {
     lEmailErrText.value = null; // reset validation errors to nothing
     submitFunc.value = () => {}; // disable submit while validating
@@ -71,6 +117,14 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Validates the login password field.
+  ///
+  /// The [val] parameter is the value of the login password field.
+  /// The [lPwdErrText] parameter is a reactive string that holds the error message for the login password field.
+  ///
+  /// This method resets the validation errors to nothing and disables the submit button while validating.
+  /// If the [val] is not empty, it calls the [lengthOK] and [isValidPassword] methods from the [Validations] class to check if the password is valid.
+  /// If the password is valid, it sets the submit function to an empty function and sets the error message to an empty string.
   void lPwdValidations(String val) async {
     lPwdErrText.value = null;
     submitFunc.value = () => {};
@@ -82,6 +136,14 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Validates the register email field.
+  ///
+  /// The [val] parameter is the value of the second email field.
+  /// The [rEmailErrText] parameter is a reactive string that holds the error message for the second email field.
+  ///
+  /// This method resets the validation errors to nothing and disables the submit button while validating.
+  /// If the [val] is not empty, it calls the [isValidEmail] method from the [Validations] class to check if the email is valid.
+  /// If the email is valid, it sets the submit function to an empty function and sets the error message to an empty string.
   void rEmailValidations(String val) async {
     rEmailErrText.value = null;
     submitFunc.value = () => {};
@@ -93,6 +155,14 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Validates the register username field.
+  ///
+  /// The [val] parameter is the value of the username field.
+  /// The [rUsernameErrText] parameter is a reactive string that holds the error message for the username field.
+  ///
+  /// This method resets the validation errors to nothing and disables the submit button while validating.
+  /// If the [val] is not empty, it calls the [isValidUsername] and [lengthOK] methods from the [Validations] class to check if the username is valid.
+  /// If the username is valid, it sets the submit function to an empty function and sets the error message to an empty string.
   void rUsernameValidations(String val) async {
     rUsernameErrText.value = null;
     submitFunc.value = () => {};
@@ -105,6 +175,14 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Validates the register password field.
+  ///
+  /// The [val] parameter is the value of the password field.
+  /// The [rPwdErrText] parameter is a reactive string that holds the error message for the password field.
+  ///
+  /// This method resets the validation errors to nothing and disables the submit button while validating.
+  /// If the [val] is not empty, it calls the [isValidPassword] and [lengthOK] methods from the [Validations] class to check if the password is valid.
+  /// If the password is valid, it sets the submit function to an empty function and sets the error message to an empty string.
   void rPwdValidations(String val) async {
     rPwdErrText.value = "";
     submitFunc.value = () => {};
@@ -117,39 +195,66 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Updates the value of the forgot password email field.
+  ///
+  /// The [val] parameter is the new value of the first email field.
   void fEmailChanged(String val) {
     fEmail.value = val;
   }
 
+  /// Updates the value of the login email field.
+  ///
+  /// The [val] parameter is the new value of the login email field.
   void lEmailChanged(String val) {
     lEmail.value = val;
   }
 
+  /// Updates the value of the register email field.
+  ///
+  /// The [val] parameter is the new value of the second email field.
   void rEmailChanged(String val) {
     rEmail.value = val;
   }
 
+  /// Updates the value of the register username field.
+  ///
+  /// The [val] parameter is the new value of the username field.
   void rUsernameChanged(String val) {
     rUsername.value = val;
   }
 
+  /// Updates the value of the login password field.
+  ///
+  /// The [val] parameter is the new value of the login password field.
   void lPwdChanged(String val) {
     lPwd.value = val;
   }
 
+  /// Updates the value of the register password field.
+  ///
+  /// The [val] parameter is the new value of the password field.
   void rPwdChanged(String val) {
     rPwd.value = val;
   }
 
+  /// Triggers the Firebase Authentication backend to send a password reset email to the given email address.
+  ///
+  /// This method shows a loading indicator while the email is being sent.
+  /// If the email is sent successfully, it shows a dialog with a success message and a button to navigate to the login screen.
+  /// If there is an error sending the email, it sets the error message to the `fEmailErrText` reactive string.
   void sendResetPwdEmail() async {
     try {
-      EasyLoading.show(status: 'Loading...');
+      EasyLoading.show(status: StringConstants.loadingLabel);
       await sendPasswordResetEmail();
     } finally {
       EasyLoading.dismiss();
     }
   }
 
+  /// Sends a password reset email to the email address in the first email field.
+  ///
+  /// This method shows a dialog with a success message and a button to navigate to the login screen if the email is sent successfully.
+  /// If there is an error sending the email, it sets the error message to the `fEmailErrText` reactive string.
   Future<void> sendPasswordResetEmail() async {
     try {
       await Auth().sendPasswordResetEmail(
@@ -170,48 +275,66 @@ class AuthController extends GetxController {
             );
           });
     } on FirebaseAuthException catch (e) {
-      //TODO: Error messages are in english, should be translated
       fEmailErrText.value = e.message;
     }
   }
 
+  /// Sets the current tab of the HomeController to the explore tab
+  void setInitialHomeTab(){
+    final ProfileController profileController = Get.find<ProfileController>();
+    profileController.setScreenValues();
+  }
+
+  /// Triggers the Firebase Authentication backend to sign in a user with the given email address and password.
+  ///
+  /// This method shows a loading indicator while the user is being signed in. If sign in is successful, it sets the current user and navigates to the home screen.
+  /// If there is an error signing in, it sets the error message to the `lPwdErrText` reactive string.
   Future<void> login() async {
     try {
-      EasyLoading.show(status: 'Loading...');
+      EasyLoading.show(status: StringConstants.loadingLabel);
       await signInWithEmailAndPassword();
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         HundoptUser hundoptUser = await UserRepository().getUser(user.uid);
-        //userManager.userData = hundoptUser; //TODO: CHeck if this can be commented
         UserManager().setUser(hundoptUser);
+        setInitialHomeTab();
         Get.toNamed(Routes.HOME, arguments: 0);
       }
     } finally {
       EasyLoading.dismiss();
+      lEmail.value = "";
+      lPwd.value = "";
     }
   }
 
+  /// Triggers the Firebase Authentication backend to create a new user with the given email address and password.
+  ///
+  /// This method shows a loading indicator while the user is being created.
+  /// If user creation is successful, it sets the current user and navigates to the onboarding screen.
+  /// If there is an error creating the user, it sets the error message to the `lPwdErrText` reactive string.
   void register() async {
     try {
-      EasyLoading.show(status: 'Loading...');
+      EasyLoading.show(status: StringConstants.loadingLabel);
       await createUserWithEmailAndPassword();
       final firebaseUser = FirebaseAuth.instance.currentUser;
       if (firebaseUser != null) {
         await UserRepository().createUser(
             rUsername.value, firebaseUser.email!, firebaseUser.uid, "");
         UserManager().setUser(HundoptUser.withEmailAndUsername(
-            email: firebaseUser.email!, username: rUsername.value)
-        );
-        //TOD0: REMOVE THIS COMMENT IF NECESSARY
-        //userManager.userData = HundoptUser.withEmailAndUsername(
-        //    email: firebaseUser.email!, username: rUsername.value);
+            email: firebaseUser.email!, username: rUsername.value));
         Get.toNamed(Routes.ONBOARDING);
       }
     } finally {
       EasyLoading.dismiss();
+      rEmail.value = "";
+      rUsername.value = "";
+      rPwd.value = "";
     }
   }
 
+  /// Triggers the Firebase Authentication backend to create a new user with the given email address and password.
+  ///
+  /// This method sets the error message to the `lPwdErrText` reactive string if there is an error creating the user.
   Future<void> createUserWithEmailAndPassword() async {
     try {
       await Auth().createUserWithEmailAndPassword(
@@ -223,6 +346,9 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Triggers the Firebase Authentication backend to sign in a user with the given email address and password.
+  ///
+  /// This method sets the error message to the `lPwdErrText` reactive string if there is an error signing in.
   Future<void> signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
@@ -235,14 +361,23 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Navigates to the login screen.
+  ///
+  /// This method uses the Get package to navigate to the login screen.
   void navigateToLogin() {
     Get.offAndToNamed(Routes.AUTH + Routes.LOGIN, arguments: this);
   }
 
+  /// Navigates to the register screen.
+  ///
+  /// This method uses the Get package to navigate to the login screen.
   void navigateToRegister() {
     Get.toNamed(Routes.AUTH + Routes.REGISTER, arguments: this);
   }
 
+  /// Navigates to the forgot password screen.
+  ///
+  /// This method uses the Get package to navigate to the login screen.
   void navigateToForgotPwd() {
     Get.toNamed(Routes.AUTH + Routes.FORGOT_PASSWORD, arguments: this);
   }

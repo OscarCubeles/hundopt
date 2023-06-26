@@ -1,9 +1,14 @@
 import 'package:hundopt/modules/modules.dart';
 import 'package:get/get.dart';
+
 part 'app_routes.dart';
 
+/// The [AppPages] class defines the routes and pages of the app.
 class AppPages {
+  /// The initial route of the app.
   static const INITIAL = Routes.SPLASH;
+
+  /// A list of [GetPage] objects that define the pages of the app.
   static final routes = [
     GetPage(
       name: Routes.SPLASH,
@@ -32,11 +37,11 @@ class AppPages {
       ],
     ),
     GetPage(
-        name: Routes.HOME,
-        page: () => const HomeScreen(),
-        binding: HomeBinding(),
-        transition: Transition.fadeIn,
-        ),
+      name: Routes.HOME,
+      page: () => const HomeScreen(),
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
     GetPage(
         name: Routes.SETTINGS,
         page: () => const SettingsScreen(),
