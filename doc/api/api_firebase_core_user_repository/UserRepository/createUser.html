@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the createUser method from the UserRepository class, for the Dart programming language.">
+  <title>createUser method - UserRepository class - user_repository library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">hundopt</a></li>
+    <li><a href="../../api_firebase_core_user_repository/api_firebase_core_user_repository-library.html">user_repository</a></li>
+    <li><a href="../../api_firebase_core_user_repository/UserRepository-class.html">UserRepository</a></li>
+    <li class="self-crumb">createUser method</li>
+  </ol>
+  <div class="self-name">createUser</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">createUser</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">createUser</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="createUser-param-username"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">username</span>, </span></li>
+<li><span class="parameter" id="createUser-param-email"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">email</span>, </span></li>
+<li><span class="parameter" id="createUser-param-userID"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">userID</span>, </span></li>
+<li><span class="parameter" id="createUser-param-pwd"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">pwd</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Creates a new user in Firestore.</p>
+<p>The <code>username</code>, <code>email</code>, <code>userID</code>, and <code>pwd</code> parameters represent the user's
+username, email, unique user ID, and password, respectively.</p>
+<p>Throws an error if there's an issue creating the user in Firestore.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; createUser(
+    String username, String email, String userID, String pwd) async {
+  try {
+    final usersCollection = FirebaseFirestore.instance.collection(&#39;users&#39;);
+    final newUserDocRef = usersCollection.doc(userID);
+    await newUserDocRef.set({
+      &#39;username&#39;: username,
+      &#39;fullname&#39;: &#39;&#39;,
+      &#39;email&#39;: email,
+      &#39;adoptingDogs&#39;: [],
+      &#39;favDogs&#39;: [],
+      &#39;favShelters&#39;: [],
+      &#39;id&#39;: userID,
+      &#39;phone&#39;: &quot;&quot;,
+      &#39;personalityFormID&#39;: &quot;&quot;,
+      &#39;pictureURL&#39;: &quot;&quot;
+    });
+  } catch (e) {
+    print(&#39;Error creating user in Firestore: $e&#39;);
+  }
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">hundopt</a></li>
+  <li><a href="../../api_firebase_core_user_repository/api_firebase_core_user_repository-library.html">user_repository</a></li>
+  <li><a href="../../api_firebase_core_user_repository/UserRepository-class.html">UserRepository</a></li>
+  <li class="self-crumb">createUser method</li>
+</ol>
+
+
+    <h5>UserRepository class</h5>
+    <ol>
+
+        <li class="section-title"><a href="../../api_firebase_core_user_repository/UserRepository-class.html#constructors">Constructors</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/UserRepository.html">UserRepository</a></li>
+
+
+        <li class="section-title">
+          <a href="../../api_firebase_core_user_repository/UserRepository-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/usersCollection.html">usersCollection</a></li>
+
+        <li class="section-title"><a href="../../api_firebase_core_user_repository/UserRepository-class.html#instance-methods">Methods</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/addAdoptingDog.html">addAdoptingDog</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/addFavDog.html">addFavDog</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/addFavShelter.html">addFavShelter</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/createUser.html">createUser</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/deleteUser.html">deleteUser</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/getUser.html">getUser</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/removeAdoptingDog.html">removeAdoptingDog</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/removeFavDog.html">removeFavDog</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/removeFavShelter.html">removeFavShelter</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/updatePictureURL.html">updatePictureURL</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/updateUser.html">updateUser</a></li>
+          <li><a href="../../api_firebase_core_user_repository/UserRepository/uploadImage.html">uploadImage</a></li>
+
+        <li class="section-title inherited"><a href="../../api_firebase_core_user_repository/UserRepository-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    hundopt
+      1.0.0+1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
