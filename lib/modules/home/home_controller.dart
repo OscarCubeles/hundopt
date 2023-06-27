@@ -93,6 +93,8 @@ class HomeController extends GetxController {
     favouriteController.updateValues();
     final ProfileController profileController = Get.find<ProfileController>();
     profileController.setScreenValues();
+    final ChatController chatController = Get.find<ChatController>();
+    chatController.updateChats();
     currentTab.value = tab!;
   }
 

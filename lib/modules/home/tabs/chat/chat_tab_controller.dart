@@ -23,6 +23,13 @@ class ChatController extends GetxController {
     update();
   }
 
+  /// Retrieves all the chats and updates the screen accordingly
+  void updateChats() async {
+    userChats.assignAll(await ChatRepository().fetchUserChats(user.id));
+    await ShelterManager().retrieveShelters();
+    update();
+  }
+
   /// Navigates to the individual chat screen.
   ///
   /// The [chatIndex] parameter is the index of the chat to navigate to.
