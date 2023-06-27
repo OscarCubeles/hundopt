@@ -20,7 +20,7 @@ Inside Hündopt, users can do the following actions:
 2. **Log In**: to the app using your account credentials.
 3. **Change Password**: Reset the password in case of forgotten password.
 4. **Explore**: Explore and find potential dogs to adopt.
-5. **Find Dog Data**: See detailed information of the dog such as multiple pictures, name, age, description, health status, location, friendliness, shelter, etc.
+5. **Find Dog Data**: See detailed information of each individual dog such as multiple pictures, name, age, description, health status, location, friendliness, shelter, etc.
 6. **Like Dogs**: Mark a dog as liked.
 7. **Like Shelters**: Mark a shelter as liked.
 8. **Reserve Dogs**: Mark a dog as reserved to start the adoption process.
