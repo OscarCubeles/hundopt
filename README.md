@@ -6,6 +6,26 @@ The app is designed to help solve the problem of animal and especially dog aband
 
 ![Showcase image](assets/images/Showcase.png)
 
+## App Features
+
+Inside Hündopt, users can do the following actions: 
+
+1. **Register**: Create an account using username, email and password.
+2. **Log In**: to the app using your account credentials.
+3. **Change Password**: Reset the password in case of forgotten password.
+4. **Explore**: Explore and find potential dogs to adopt.
+5. **Find Dog Data**: See detailed information of the dog such as multiple pictures, name, age, description, health status, location, friendliness, shelter, etc.
+6. **Like Dogs**: Mark a dog as liked.
+7. **Like Shelters**: Mark a shelter as liked.
+8. **Reserve Dogs**: Mark a dog as reserved to start the adoption process.
+9. **Chats**: Chat with the shelter of the dog to set up a visit to the dog shelter.
+10. **See Shelter Dogs**: Find all dogs in a concrete Shelter.
+11. **See Shelter Info**: See contact information of a shelter such as phone number, email, and social media.
+12. **Adopt Guide**: See a guide of the steps to follow in order to adopt a dog in Spain.
+13. **Personality Form**: Fill a personality form to know which type of dog is its best match.
+14. **Edit Profile**: Edit its account details such as username, picture, email, or phone number.
+15. **Log Out**: Close current session.
+16. **Delete Account**: Delete the account and all user data associated with it.
 
 ## Technologies Used
 
