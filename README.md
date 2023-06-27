@@ -2,7 +2,9 @@
 
 The project is a mobile application developed with Flutter using the state management with GetX. 
 The app is designed to help solve the problem of animal and especially dog abandonment in Spain by putting dog shelters and potential dog adopters in contact.
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+`![Showcase image](assets/images/Showcase.png)`
+![Showcase image](assets/images/Showcase.png)
+
 
 ## Technologies Used
 
