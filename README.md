@@ -16,6 +16,7 @@ The app is designed to help solve the problem of animal and especially dog aband
 ## How to make the code work
 
 To make the code work, firstly you must have Flutter installed in your machine. To install Flutter, follow the instructions from the official website [here](https://flutter.dev/docs/get-started/install).
+
 Then, follow these steps:
 
 1. Clone the repository to your local machine.
